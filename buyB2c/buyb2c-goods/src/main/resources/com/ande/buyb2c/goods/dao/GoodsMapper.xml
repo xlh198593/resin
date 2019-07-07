@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.goods.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.goods.entity.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="platform_type_id" property="platformTypeId" jdbcType="INTEGER" />
+    <result column="platform_type_parent_id" property="platformTypeParentId" jdbcType="INTEGER" />
+    <result column="platform_type_grand_parent_id" property="platformTypeGrandParentId" jdbcType="INTEGER" />
+    <result column="good_type_id" property="goodTypeId" jdbcType="INTEGER" />
+    <result column="good_type_parent_id" property="goodTypeParentId" jdbcType="INTEGER" />
+    <result column="good_type_grand_parent_id" property="goodTypeGrandParentId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+      <result column="pinyin_goods_name" property="pinyinGoodsName" jdbcType="VARCHAR" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_image_urls" property="goodsImageUrls" jdbcType="VARCHAR" />
+    <result column="goods_detail" property="goodsDetail" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="del_state" property="delState" jdbcType="CHAR" />
+     <result column="sale_state" property="saleState" jdbcType="CHAR" />
+     <result column="up_sale_time" property="upSaleTime" jdbcType="TIMESTAMP" />
+     <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ande.buyb2c.goods.entity.Goods" extends="BaseResultMap" >
+    <result column="goods_detail" property="goodsDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, platform_type_id, platform_type_parent_id, platform_type_grand_parent_id, 
+    good_type_id, good_type_parent_id, good_type_grand_parent_id, goods_name, goods_no, 
+    goods_price, goods_image_urls, create_time, update_time, admin_id, del_state,sale_state,up_sale_time,main_image
+  </sql>
+  <sql id="Blob_Column_List" >
+    goods_detail
+  </sql>
+  <select id="getGoodsByTypeId" resultType="java.lang.Integer">
+   select 
+   count(goods_id)
+     from t_goods
+     where good_type_id=#{typeId}
+  </select>
+  <select id="getGoodsPageByColumn" resultMap="BaseResultMap">
+  select goods_id,goods_no,goods_name
+  from t_goods where del_state=2 and sale_state=1 and goods_id not in(select goods_id from t_column_goods where column_id=#{columnId}) 
+  <if test="goodsName!=null and goodsName!=''">
+  	and (goods_name LIKE concat('%', #{goodsName},'%')or pinyin_goods_name LIKE concat(#{goodsName},'%') or goods_no LIKE concat('%', #{goodsName},'%'))
+  </if>
+  </select>
+   <select id="ifCanDel" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where del_state=2
+    <if test="level==1">
+     and good_type_grand_parent_id = #{goodTypeId,jdbcType=INTEGER}
+    </if>
+       <if test="level==2">
+     and good_type_parent_id = #{goodTypeId,jdbcType=INTEGER}
+    </if>
+    <if test="level==3">
+     and good_type_id = #{goodTypeId,jdbcType=INTEGER}
+    </if>
+  </select>
+  <resultMap id="goodsMap" type="com.ande.buyb2c.goods.entity.Goods" extends="BaseResultMap">
+  <collection property="goodsAttributeList" ofType="com.ande.buyb2c.goods.entity.GoodsAttribute">
+  	 <id column="goods_attribute_id" property="goodsAttributeId" jdbcType="INTEGER" />
+	    <result column="goods_attribute_name" property="goodsAttributeName" jdbcType="VARCHAR" />
+	    <result column="good" property="goodsId" jdbcType="INTEGER" />
+	    <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
+	    <result column="goods_attribute_type" property="goodsAttributeType" jdbcType="CHAR" />
+	    <result column="goods_attribute_val" property="goodsAttributeVal" jdbcType="VARCHAR" />
+	    <collection property="goodsAttributeValList" ofType="com.ande.buyb2c.goods.entity.GoodsAttributeVal">
+	    	<id column="goods_attribute_val_id" property="goodsAttributeValId" jdbcType="INTEGER" />
+		    <result column="av" property="goodsAttributeVal" jdbcType="VARCHAR" />
+		    <result column="avId" property="attributeValId" jdbcType="INTEGER" />
+		    <result column="gaId" property="goodsAttributeId" jdbcType="INTEGER" />
+	    </collection>
+  </collection>
+  </resultMap>
+  
+  <resultMap id="goodsCopyMap" type="com.ande.buyb2c.goods.entity.Goods" extends="BaseResultMap">
+  <collection property="goodsAttributeList" ofType="com.ande.buyb2c.goods.entity.GoodsAttribute">
+	    <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
+	    <result column="goods_attribute_type" property="goodsAttributeType" jdbcType="CHAR" />
+	    <result column="goods_attribute_val" property="goodsAttributeVal" jdbcType="VARCHAR" />
+	    <collection property="goodsAttributeValList" ofType="com.ande.buyb2c.goods.entity.GoodsAttributeVal">
+		    <result column="avId" property="attributeValId" jdbcType="INTEGER" />
+	    </collection>
+  </collection>
+  </resultMap>
+  <!-- 复制商品时查询所用 -->
+  <select id="getGoodsByCopy" resultMap="goodsCopyMap">
+   select 
+   g.goods_id,
+   g.platform_type_id,
+   g.platform_type_parent_id, 
+   g.platform_type_grand_parent_id, 
+    g.good_type_id,
+     g.good_type_parent_id, 
+     g.good_type_grand_parent_id, g.goods_name,
+    g.goods_price, g.goods_image_urls,g.admin_id,g.main_image,g.pinyin_goods_name,g.goods_detail,
+  	 ga.attribute_id,
+  	 ga.goods_attribute_type, 
+    ga.goods_attribute_val,
+   gav.attribute_val_id as avId
+  from t_goods g
+left join t_goods_attribute ga
+on ga.goods_id=g.goods_id
+left join t_goods_attribute_val gav
+on ga.goods_attribute_id=gav.goods_attribute_id
+join t_attribute_val av
+on av.attribute_val_id=gav.attribute_val_id
+join t_attribute a
+on a.attribute_id=av.attribute_id
+where g.goods_id=#{goodsId} 
+  </select>
+  <select id="getGoodsById" resultMap="goodsMap">
+  select g.*,
+   ga.goods_attribute_id,ga.goods_id as good, ga.attribute_id, ga.goods_attribute_type, 
+    ga.goods_attribute_val,
+   gav.goods_attribute_val_id,gav.attribute_val_id as avId, gav.goods_attribute_id as gaId ,av.attribute_val as av,
+a.attribute_name as goods_attribute_name
+  from t_goods g
+left join t_goods_attribute ga
+on ga.goods_id=g.goods_id
+left join t_goods_attribute_val gav
+on ga.goods_attribute_id=gav.goods_attribute_id
+join t_attribute_val av
+on av.attribute_val_id=gav.attribute_val_id
+join t_attribute a
+on a.attribute_id=av.attribute_id
+where g.goods_id=#{goodsId} 
+  </select>
+  <select id="getPage" resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+     from t_goods
+     where del_state=2
+      <if test="saleState!=null and saleState!=''">
+     	and sale_state=#{saleState}
+     </if>
+     <if test="goodsName!=null and goodsName!=''">
+     	and (goods_no LIKE concat('%', #{goodsName},'%')or pinyin_goods_name LIKE concat(#{goodsName},'%') or goods_name LIKE concat('%',#{goodsName},'%'))
+     </if>
+     order by create_time desc
+  </select>
+  <!-- web端查询 -->
+  <!-- 通过商品分类查询 -->
+    <select id="getPageFront" resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+     from t_goods
+     where del_state=2 and sale_state=1
+      <if test="goodTypeId!=null">
+     	and good_type_id=#{goodTypeId}
+     </if>
+     <if test="goodsName!=null and goodsName!=''">
+     	and (goods_no LIKE concat('%', #{goodsName},'%')  or pinyin_goods_name LIKE concat(#{goodsName},'%') or goods_name LIKE concat('%',#{goodsName},'%'))
+     </if>
+     order by create_time desc
+  </select>
+  <!-- 通过栏目查询 -->
+  <select id="getGoodsPageByColumnId" resultMap="BaseResultMap">
+  	  select g.* from t_goods g
+		left join t_column_goods cg
+		on g.goods_id=cg.goods_id
+		where cg.column_id=#{columnId} and del_state=2 and sale_state=1
+		<if test="goodsName!=null and goodsName!=''">
+			and (g.goods_name LIKE concat('%',#{goodsName},'%') or g.pinyin_goods_name LIKE concat(#{goodsName},'%'))
+		</if>	
+		order by g.create_time desc	
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_goods
+    where goods_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods
+    where goods_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.goods.entity.Goods" >
+    insert into t_goods (goods_id, platform_type_id, platform_type_parent_id, 
+      platform_type_grand_parent_id, good_type_id, 
+      good_type_parent_id, good_type_grand_parent_id, 
+      goods_name, goods_no, goods_price, 
+      goods_image_urls, create_time, update_time, 
+      admin_id, del_state, goods_detail
+      )
+    values (#{goodsId,jdbcType=INTEGER}, #{platformTypeId,jdbcType=INTEGER}, #{platformTypeParentId,jdbcType=INTEGER}, 
+      #{platformTypeGrandParentId,jdbcType=INTEGER}, #{goodTypeId,jdbcType=INTEGER}, 
+      #{goodTypeParentId,jdbcType=INTEGER}, #{goodTypeGrandParentId,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsNo,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsImageUrls,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{adminId,jdbcType=INTEGER}, #{delState,jdbcType=CHAR}, #{goodsDetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.goods.entity.Goods" useGeneratedKeys="true" keyProperty="goodsId">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="platformTypeId != null" >
+        platform_type_id,
+      </if>
+      <if test="platformTypeParentId != null" >
+        platform_type_parent_id,
+      </if>
+      <if test="platformTypeGrandParentId != null" >
+        platform_type_grand_parent_id,
+      </if>
+      <if test="goodTypeId != null" >
+        good_type_id,
+      </if>
+      <if test="goodTypeParentId != null" >
+        good_type_parent_id,
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        good_type_grand_parent_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+       <if test="pinyinGoodsName != null" >
+        pinyin_goods_name,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsImageUrls != null" >
+        goods_image_urls,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail,
+      </if>
+       <if test="saleState != null" >
+        sale_state,
+      </if>
+       <if test="upSaleTime != null" >
+        up_sale_time,
+      </if>
+         <if test="mainImage != null" >
+        main_image,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeId != null" >
+        #{platformTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeParentId != null" >
+        #{platformTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeGrandParentId != null" >
+        #{platformTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeId != null" >
+        #{goodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeParentId != null" >
+        #{goodTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        #{goodTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyinGoodsName != null" >
+         #{pinyinGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsImageUrls != null" >
+        #{goodsImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="delState != null" >
+        #{delState,jdbcType=CHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+        <if test="saleState != null" >
+         #{saleState,jdbcType=CHAR},
+      </if>
+       <if test="upSaleTime != null" >
+        #{upSaleTime,jdbcType=TIMESTAMP},
+      </if>
+          <if test="mainImage != null" >
+         #{mainImage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.goods.entity.Goods" >
+    update t_goods
+    <set >
+      <if test="platformTypeId != null" >
+        platform_type_id = #{platformTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeParentId != null" >
+        platform_type_parent_id = #{platformTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="platformTypeGrandParentId != null" >
+        platform_type_grand_parent_id = #{platformTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeId != null" >
+        good_type_id = #{goodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeParentId != null" >
+        good_type_parent_id = #{goodTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        good_type_grand_parent_id = #{goodTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+        <if test="pinyinGoodsName != null" >
+         pinyin_goods_name=#{pinyinGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsImageUrls != null" >
+        goods_image_urls = #{goodsImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="saleState != null" >
+         sale_state=#{saleState,jdbcType=CHAR},
+      </if>
+       <if test="upSaleTime != null" >
+        up_sale_time=#{upSaleTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="mainImage != null" >
+         main_image=#{mainImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ande.buyb2c.goods.entity.Goods" >
+    update t_goods
+    set platform_type_id = #{platformTypeId,jdbcType=INTEGER},
+      platform_type_parent_id = #{platformTypeParentId,jdbcType=INTEGER},
+      platform_type_grand_parent_id = #{platformTypeGrandParentId,jdbcType=INTEGER},
+      good_type_id = #{goodTypeId,jdbcType=INTEGER},
+      good_type_parent_id = #{goodTypeParentId,jdbcType=INTEGER},
+      good_type_grand_parent_id = #{goodTypeGrandParentId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_image_urls = #{goodsImageUrls,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      del_state = #{delState,jdbcType=CHAR},
+      goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateState">
+    update t_goods
+    <set >
+      <if test="saleState != null" >
+        sale_state = #{saleState,jdbcType=VARCHAR},
+      </if>
+        <if test="delState != null" >
+        del_state = #{delState,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        up_sale_time = #{date,jdbcType=TIMESTAMP},
+      </if>
+     </set>
+    where goods_id in (${ids})
+  </update>
+   <update id="updateByTypeId" parameterType="com.ande.buyb2c.goods.entity.Goods" >
+    update t_goods
+    <set >
+      <if test="goodTypeId != null" >
+        good_type_id = 0,
+      </if>
+      <if test="goodTypeParentId != null" >
+        good_type_parent_id = 0,
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        good_type_grand_parent_id = 0,
+      </if>
+    </set>
+    where  good_type_id = #{goodTypeId,jdbcType=INTEGER},
+  </update>
+</mapper>

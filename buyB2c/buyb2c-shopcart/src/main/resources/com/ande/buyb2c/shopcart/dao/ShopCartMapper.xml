@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.shopcart.dao.ShopCartMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.shopcart.entity.ShopCart" >
+    <id column="shop_cart_id" property="shopCartId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+     <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_num" property="goodsNum" jdbcType="TINYINT" />
+    <result column="goods_attribute" property="goodsAttribute" jdbcType="VARCHAR" />
+    <result column="good_type_id" property="goodTypeId" jdbcType="INTEGER" />
+    <result column="good_type_parent_id" property="goodTypeParentId" jdbcType="INTEGER" />
+    <result column="good_type_grand_parent_id" property="goodTypeGrandParentId" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sale_state" property="goodsSaleState" jdbcType="CHAR" />
+    <result column="del_state" property="goodsDelState" jdbcType="CHAR" />
+    <result column="goodsAttributeValIds" property="goodsAttributeValIds" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_cart_id, goods_id, goods_num, goods_attribute, 
+ 	 customer_id, create_time, 
+    update_time
+  </sql>
+<select id="getPageFront" resultMap="BaseResultMap">
+   <!--  select 
+    shop_cart_id, c.goods_id, goods_name, goods_price, goods_num, main_image as goodsImage, goods_attribute, 
+    good_type_id, good_type_parent_id, good_type_grand_parent_id, customer_id,sale_state,del_state
+    from t_shop_cart c
+    left join t_goods g
+    on g.goods_id=c.goods_id
+    where customer_id=#{customerId}
+    order by c.create_time desc -->
+    select 
+    c.shop_cart_id, c.goods_id,goods_no,goods_name, goods_price, goods_num, main_image as goodsImage,
+    good_type_id, good_type_parent_id, good_type_grand_parent_id, customer_id,sale_state,del_state,GROUP_CONCAT(v.attribute_val) as goods_attribute
+    from t_shop_cart c
+    left join t_goods g
+    on g.goods_id=c.goods_id
+left join t_shop_cart_attribute sa
+on c.shop_cart_id=sa.shop_cart_id
+left join 
+t_goods_attribute_val av
+on sa.goods_attribute_val_id=av.goods_attribute_val_id
+left join t_attribute_val v
+on v.attribute_val_id=av.attribute_val_id
+    where customer_id=#{customerId}  and g.del_state=2
+group by c.shop_cart_id
+    order by c.create_time desc 
+</select>
+  <select id="getShopCart" resultMap="BaseResultMap">
+   <!--  select 
+    <include refid="Base_Column_List" />
+    from t_shop_cart
+    where customer_id=#{customerId} and goods_id=#{goodsId}  -->
+    select s.*,GROUP_CONCAT(goods_attribute_val_id) as goodsAttributeValIds from t_shop_cart s
+left join t_shop_cart_attribute sca
+on s.shop_cart_id=sca.shop_cart_id
+where customer_id=#{customerId} and s.goods_id=#{goodsId}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shop_cart
+    where shop_cart_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delShopCart">
+  	delete from t_shop_cart
+    where shop_cart_id in(${shopCartIds})
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_shop_cart
+    where shop_cart_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.shopcart.entity.ShopCart" useGeneratedKeys="true" keyProperty="shopCartId">
+    insert into t_shop_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopCartId != null" >
+        shop_cart_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopCartId != null" >
+        #{shopCartId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsAttribute != null" >
+        #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.shopcart.entity.ShopCart" >
+    update t_shop_cart
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute = #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shop_cart_id = #{shopCartId,jdbcType=INTEGER}
+  </update>
+</mapper>

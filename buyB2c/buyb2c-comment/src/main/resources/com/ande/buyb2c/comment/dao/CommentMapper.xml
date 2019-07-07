@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.comment.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.comment.entity.Comment" >
+    <id column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_total_amount" property="goodsTotalAmount" jdbcType="DECIMAL" />
+    <result column="goods_attribute" property="goodsAttribute" jdbcType="VARCHAR" />
+    <result column="comment_type" property="commentType" jdbcType="CHAR" />
+    <result column="comment_image" property="commentImage" jdbcType="VARCHAR" />
+    <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
+    <result column="comment_count" property="commentCount" jdbcType="TINYINT" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_create_time" property="orderCreateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_show" property="isShow" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comment_id, goods_id, goods_no, goods_image, goods_name, goods_num, goods_price, 
+    goods_total_amount, goods_attribute, comment_type, comment_image, comment_content, 
+    comment_count, customer_id, customer_name, customer_phone, order_detail_id, order_id, 
+    order_no, order_create_time, create_time, is_show
+  </sql>
+  <insert id="addBatch">
+   insert into t_comment (comment_id, goods_id, goods_no, 
+      goods_image, goods_name, goods_num, 
+      goods_price, goods_total_amount, goods_attribute, 
+      comment_type, comment_image, comment_content, 
+      comment_count, customer_id, customer_name, 
+      customer_phone, order_detail_id, order_id, 
+      order_no, order_create_time, create_time, 
+      is_show) values
+<foreach collection="list" item="item" separator=",">
+  (#{item.commentId,jdbcType=INTEGER}, #{item.goodsId,jdbcType=INTEGER}, #{item.goodsNo,jdbcType=VARCHAR}, 
+      #{item.goodsImage,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsNum,jdbcType=INTEGER}, 
+      #{item.goodsPrice,jdbcType=DECIMAL}, #{item.goodsTotalAmount,jdbcType=DECIMAL}, #{item.goodsAttribute,jdbcType=VARCHAR}, 
+      #{item.commentType,jdbcType=CHAR}, #{item.commentImage,jdbcType=VARCHAR}, #{item.commentContent,jdbcType=VARCHAR}, 
+      #{item.commentCount,jdbcType=TINYINT}, #{item.customerId,jdbcType=INTEGER}, #{item.customerName,jdbcType=VARCHAR}, 
+      #{item.customerPhone,jdbcType=VARCHAR}, #{item.orderDetailId,jdbcType=INTEGER}, #{item.orderId,jdbcType=INTEGER}, 
+      #{item.orderNo,jdbcType=VARCHAR}, #{item.orderCreateTime,jdbcType=TIMESTAMP}, #{item.createTime,jdbcType=TIMESTAMP}, 
+      #{item.isShow,jdbcType=CHAR})
+</foreach>
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+   <select id="getPage" resultMap="BaseResultMap">
+  	  select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where 1=1
+    <if test="startTime!=null">
+  	and DATE_FORMAT(o.create_time,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTime,jdbcType=DATE}
+    </if>
+    <if test="endTime!=null">
+  	and #{endTime,jdbcType=DATE} <![CDATA[ >= ]]> DATE_FORMAT(o.create_time,'%Y-%m-%d')
+    </if>
+    <if test="commentType!=null and commentType!=''">
+    and comment_type=#{commentType}
+    </if>
+    <if test="goodsName!=null and goodsName!=''">
+    and goods_name=#{goodsName} 
+    or order_no=#{goodsName} 
+    or customer_phone=#{goodsName} 
+    or customer_name=#{goodsName}
+    </if>
+    order by create_time desc
+  </select>
+  <!-- web端 -->
+  <select id="getPageFront" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where goods_id=#{goodsId} and is_show=1  
+    order by create_time desc
+  </select>
+   <select id="getCommentCount" resultType="java.lang.Integer">
+	  select count(um.comment_type) from 
+	t_comment_state t
+		 left JOIN 
+		(select * from 
+		t_comment 
+where goods_id=#{goodsId} and is_show=1)
+ um 
+	on t.state=um.comment_type
+	GROUP BY t.state
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_comment
+    where comment_id = #{commentId,jdbcType=INTEGER} 
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.comment.entity.Comment" >
+    insert into t_comment (comment_id, goods_id, goods_no, 
+      goods_image, goods_name, goods_num, 
+      goods_price, goods_total_amount, goods_attribute, 
+      comment_type, comment_image, comment_content, 
+      comment_count, customer_id, customer_name, 
+      customer_phone, order_detail_id, order_id, 
+      order_no, order_create_time, create_time, 
+      is_show)
+    values (#{commentId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsNo,jdbcType=VARCHAR}, 
+      #{goodsImage,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{goodsTotalAmount,jdbcType=DECIMAL}, #{goodsAttribute,jdbcType=VARCHAR}, 
+      #{commentType,jdbcType=CHAR}, #{commentImage,jdbcType=VARCHAR}, #{commentContent,jdbcType=VARCHAR}, 
+      #{commentCount,jdbcType=TINYINT}, #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
+      #{customerPhone,jdbcType=VARCHAR}, #{orderDetailId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{orderNo,jdbcType=VARCHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isShow,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.comment.entity.Comment" >
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsImage != null" >
+        goods_image,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsTotalAmount != null" >
+        goods_total_amount,
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute,
+      </if>
+      <if test="commentType != null" >
+        comment_type,
+      </if>
+      <if test="commentImage != null" >
+        comment_image,
+      </if>
+      <if test="commentContent != null" >
+        comment_content,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null" >
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsTotalAmount != null" >
+        #{goodsTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAttribute != null" >
+        #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="commentType != null" >
+        #{commentType,jdbcType=CHAR},
+      </if>
+      <if test="commentImage != null" >
+        #{commentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null" >
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=TINYINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.comment.entity.Comment" >
+    update t_comment
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null" >
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsTotalAmount != null" >
+        goods_total_amount = #{goodsTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute = #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="commentType != null" >
+        comment_type = #{commentType,jdbcType=CHAR},
+      </if>
+      <if test="commentImage != null" >
+        comment_image = #{commentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null" >
+        comment_content = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=TINYINT},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=CHAR},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.comment.entity.Comment" >
+    update t_comment
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_image = #{goodsImage,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_total_amount = #{goodsTotalAmount,jdbcType=DECIMAL},
+      goods_attribute = #{goodsAttribute,jdbcType=VARCHAR},
+      comment_type = #{commentType,jdbcType=CHAR},
+      comment_image = #{commentImage,jdbcType=VARCHAR},
+      comment_content = #{commentContent,jdbcType=VARCHAR},
+      comment_count = #{commentCount,jdbcType=TINYINT},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_show = #{isShow,jdbcType=CHAR}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>

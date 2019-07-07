@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+<generatorConfiguration>  
+    <classPathEntry  location="D:/chengzb/jar/mvn_lib/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar"/>  
+    <context id="DB2Tables"  targetRuntime="MyBatis3">  
+        <commentGenerator>  
+            <property name="suppressDate" value="true"/>  
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/buyb2c?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=round" userId="root" password="root">
+        </jdbcConnection> 
+        <javaTypeResolver>  
+            <property name="forceBigDecimals" value="false"/>  
+        </javaTypeResolver>  
+        
+        <javaModelGenerator targetPackage="com.ande.buyb2c.content.entity" targetProject="buyb2c-content/src/main/java">
+            <property name="enableSubPackages" value="true"/>  
+            <property name="trimStrings" value="true"/>  
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.ande.buyb2c.content.dao" targetProject="buyb2c-content/src/main/resources">
+            <property name="enableSubPackages" value="true"/>  
+        </sqlMapGenerator>  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ande.buyb2c.content.dao" targetProject="buyb2c-content/src/main/java">
+            <property name="enableSubPackages" value="true"/>  
+        </javaClientGenerator>  
+		<table tableName="t_content" domainObjectName="Content" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+	 </context>
+</generatorConfiguration>

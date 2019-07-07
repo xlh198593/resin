@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.goods.dao.GoodsTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.goods.entity.GoodsType" >
+    <id column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="goods_type_level" property="goodsTypeLevel" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_state" property="delState" jdbcType="CHAR" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="TINYINT" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+    <result column="grand_parent_id" property="grandParentId" jdbcType="INTEGER" />
+    <result column="grand_parent_name" property="grandParentName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_type_id, goods_type, goods_type_level, create_time, update_time, del_state, 
+    admin_id, parent_id, logo, sort, parent_name, grand_parent_id, grand_parent_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_type
+    where goods_type_id = #{id,jdbcType=INTEGER}
+  </select>
+ <select id="getGoodsTypeList" resultMap="BaseResultMap">
+ select 
+    <include refid="Base_Column_List" />
+    from t_goods_type
+    where parent_id = #{goodsTypeId,jdbcType=INTEGER} and del_state=2
+   order by sort,create_time desc
+ </select>
+ <delete id="delByParentId">
+    delete from t_goods_type
+    <if test="level==1">
+    	where grand_parent_id=#{goodsTypeId} or parent_id=#{goodsTypeId}
+    </if>
+    <if test="level==2">
+    	where parent_id=#{goodsTypeId}
+    </if>
+ </delete>
+ <update id="updateByParentId">
+  update t_goods_type
+    <if test="level==1">
+      set grand_parent_name = #{goodsTypeName,jdbcType=VARCHAR}
+    where grand_parent_id=#{goodsTypeId}
+    </if>
+      <if test="level==2">
+      set parent_name = #{goodsTypeName,jdbcType=VARCHAR}
+    where parent_id=#{goodsTypeId}
+    </if>
+ </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods_type
+    where goods_type_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.goods.entity.GoodsType" >
+    insert into t_goods_type (goods_type_id, goods_type, goods_type_level, 
+      create_time, update_time, del_state, 
+      admin_id, parent_id, logo, 
+      sort, parent_name, grand_parent_id, 
+      grand_parent_name)
+    values (#{goodsTypeId,jdbcType=INTEGER}, #{goodsType,jdbcType=VARCHAR}, #{goodsTypeLevel,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delState,jdbcType=CHAR}, 
+      #{adminId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=TINYINT}, #{parentName,jdbcType=VARCHAR}, #{grandParentId,jdbcType=INTEGER}, 
+      #{grandParentName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.goods.entity.GoodsType" >
+    insert into t_goods_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsTypeId != null" >
+        goods_type_id,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="goodsTypeLevel != null" >
+        goods_type_level,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+      <if test="grandParentId != null" >
+        grand_parent_id,
+      </if>
+      <if test="grandParentName != null" >
+        grand_parent_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsTypeId != null" >
+        #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeLevel != null" >
+        #{goodsTypeLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delState != null" >
+        #{delState,jdbcType=CHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="grandParentId != null" >
+        #{grandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="grandParentName != null" >
+        #{grandParentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.goods.entity.GoodsType" >
+    update t_goods_type
+    <set >
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeLevel != null" >
+        goods_type_level = #{goodsTypeLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="grandParentId != null" >
+        grand_parent_id = #{grandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="grandParentName != null" >
+        grand_parent_name = #{grandParentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_type_id = #{goodsTypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.goods.entity.GoodsType" >
+    update t_goods_type
+    set goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_type_level = #{goodsTypeLevel,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_state = #{delState,jdbcType=CHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=TINYINT},
+      parent_name = #{parentName,jdbcType=VARCHAR},
+      grand_parent_id = #{grandParentId,jdbcType=INTEGER},
+      grand_parent_name = #{grandParentName,jdbcType=VARCHAR}
+    where goods_type_id = #{goodsTypeId,jdbcType=INTEGER}
+  </update>
+</mapper>

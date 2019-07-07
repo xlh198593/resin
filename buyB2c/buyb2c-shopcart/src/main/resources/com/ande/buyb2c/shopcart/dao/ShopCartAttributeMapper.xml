@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.shopcart.dao.ShopCartAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.shopcart.entity.ShopCartAttribute" >
+    <id column="shop_cart_attribute_id" property="shopCartAttributeId" jdbcType="INTEGER" />
+    <result column="shop_cart_id" property="shopCartId" jdbcType="INTEGER" />
+    <result column="goods_attribute_id" property="goodsAttributeId" jdbcType="INTEGER" />
+    <result column="goods_attribute_val_id" property="goodsAttributeValId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_cart_attribute_id, shop_cart_id, attribute_id, attribute_val_id, goods_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shop_cart_attribute
+    where shop_cart_attribute_id = #{shopCartAttributeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_shop_cart_attribute
+    where shop_cart_attribute_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="delShopCartAttribute" parameterType="java.lang.Integer" >
+   delete from t_shop_cart_attribute
+    where shop_cart_id = #{shopCartId,jdbcType=INTEGER}
+  </delete>
+  <insert id="addBatch">
+    insert into t_shop_cart_attribute (shop_cart_attribute_id, shop_cart_id, 
+      goods_attribute_id, goods_attribute_val_id, goods_id, 
+      create_time) values
+<foreach collection="list" item="item" separator=",">
+  (#{item.shopCartAttributeId,jdbcType=INTEGER}, #{item.shopCartId,jdbcType=INTEGER}, 
+      #{item.goodsAttributeId,jdbcType=INTEGER}, #{item.goodsAttributeValId,jdbcType=INTEGER}, #{item.goodsId,jdbcType=INTEGER}, 
+      #{item.createTime,jdbcType=TIMESTAMP})
+</foreach>
+  </insert>
+</mapper>

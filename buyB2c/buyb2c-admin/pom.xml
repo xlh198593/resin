@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ande</groupId>
+    <artifactId>buyb2c-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>buyb2c-admin</artifactId>
+  <packaging>war</packaging>
+  <name>buyb2c-admin Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+   <!-- 支付 -->
+  <dependency>
+  	 <groupId>com.ande</groupId>
+	  <artifactId>base-pay</artifactId>
+	 <version>2.0-SNAPSHOT</version>
+	 <exclusions>
+	 	<exclusion>
+	 	 	<groupId>org.slf4j</groupId>
+	 		<artifactId>slf4j-simple</artifactId>
+	 	</exclusion>
+	 </exclusions>
+  </dependency>
+   <!-- 流水号 -->
+    <dependency>
+    	<groupId>com.ande</groupId>
+  		<artifactId>buyb2c-common-generateOrderNo</artifactId>
+  		 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  <!-- 用户 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-user</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <!-- 物流 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-logistics</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+        <!-- 内容 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-content</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+      <!-- 网店 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-shop</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+      <!-- 栏目 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-column</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+     <!-- 属性 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-attribute</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+       <!-- 商品 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-goods</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+        <!-- 订单 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-order</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+     <!-- 评价 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-comment</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+          <!-- 广告位 -->
+    <dependency>
+      <groupId>com.ande</groupId>
+   	 <artifactId>buyb2c-advertPosition</artifactId>
+   	 <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>buyb2c-admin</finalName>
+  </build>
+</project>

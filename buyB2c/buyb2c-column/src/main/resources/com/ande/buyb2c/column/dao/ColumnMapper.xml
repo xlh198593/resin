@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.column.dao.ColumnMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.column.entity.Column" >
+    <id column="column_id" property="columnId" jdbcType="INTEGER" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sort" property="sort" jdbcType="TINYINT" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="goods_sort" property="goodsSort" jdbcType="CHAR" />
+    <result column="show_goods_num" property="showGoodsNum" jdbcType="TINYINT" />
+    <result column="column_logo" property="columnLogo" jdbcType="VARCHAR" />
+    <result column="is_recommend_index" property="isRecommendIndex" jdbcType="CHAR" />
+    <result column="del_state" property="delState" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    column_id, column_name, create_time, update_time, sort, admin_id, goods_sort, show_goods_num, 
+    column_logo, is_recommend_index, del_state
+  </sql>
+  
+  <select id="getPage" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_column
+    where del_state=2
+    order by sort,create_time desc
+  </select>
+  <!-- 前端 -->
+   <select id="getPageFront" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_column
+    where del_state=2
+    order by sort,create_time desc
+  </select>
+  <!-- 查询栏目下的商品 -->
+  <resultMap type="com.ande.buyb2c.column.vo.FrontColumnVo" id="FrontColumGoods">
+  	 <id column="column_id" property="columnId" jdbcType="INTEGER" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="goods_sort" property="goodsSort" jdbcType="VARCHAR" />
+    <result column="show_goods_num" property="showGoodsNum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getColumnByPage" resultMap="FrontColumGoods">
+  SELECT
+			c.column_name,
+			c.column_id,
+			c.goods_sort,
+			c.show_goods_num
+		FROM
+			t_column c
+		WHERE
+			c.is_recommend_index = 1 and c.del_state=2
+			 order by sort,create_time desc
+  </select>
+   <resultMap type="com.ande.buyb2c.column.vo.FrontColumnGoodsVo" id="golumnGoods">
+	     <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+	    <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
+	    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getGolumnGoodsList" resultMap="golumnGoods">
+  SELECT g.goods_id,
+			g.goods_name,
+			g.main_image,
+			g.goods_price
+			from 
+			t_column_goods cg 
+		LEFT JOIN t_goods g ON g.goods_id = cg.goods_id
+		where cg.column_id=#{columnId} and g.del_state=2 and g.sale_state=1
+		order by ${sort} ${desc}
+		limit ${num}
+  </select>
+  <resultMap type="com.ande.buyb2c.column.entity.Column" id="columnMap" extends="BaseResultMap">
+  	<collection property="list" ofType="com.ande.buyb2c.column.entity.ColumnGoods">
+  		 <id column="column_goods_id" property="columnGoodsId" jdbcType="INTEGER" />
+	    <result column="columnIds" property="columnId" jdbcType="INTEGER" />
+	    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+	    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+  	</collection>
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="columnMap" parameterType="java.lang.Integer" >
+    select 
+    c.column_id, column_name, c.create_time, update_time, sort, c.admin_id, goods_sort, show_goods_num, 
+    column_logo, is_recommend_index, del_state,
+     cg.column_goods_id,  cg.column_id as columnIds,  cg.goods_id
+    from t_column c
+    left join t_column_goods cg
+    on c.column_id=cg.column_id
+    where c.column_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_column
+    where column_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.column.entity.Column" >
+    insert into t_column (column_id, column_name, create_time, 
+      update_time, sort, admin_id, 
+      goods_sort, show_goods_num, column_logo, 
+      is_recommend_index, del_state)
+    values (#{columnId,jdbcType=INTEGER}, #{columnName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{sort,jdbcType=TINYINT}, #{adminId,jdbcType=INTEGER}, 
+      #{goodsSort,jdbcType=CHAR}, #{showGoodsNum,jdbcType=TINYINT}, #{columnLogo,jdbcType=VARCHAR}, 
+      #{isRecommendIndex,jdbcType=CHAR}, #{delState,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.column.entity.Column" useGeneratedKeys="true" keyProperty="columnId">
+    insert into t_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnName != null" >
+        column_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="goodsSort != null" >
+        goods_sort,
+      </if>
+      <if test="showGoodsNum != null" >
+        show_goods_num,
+      </if>
+      <if test="columnLogo != null" >
+        column_logo,
+      </if>
+      <if test="isRecommendIndex != null" >
+        is_recommend_index,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        #{columnId,jdbcType=INTEGER},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSort != null" >
+        #{goodsSort,jdbcType=CHAR},
+      </if>
+      <if test="showGoodsNum != null" >
+        #{showGoodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="columnLogo != null" >
+        #{columnLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommendIndex != null" >
+        #{isRecommendIndex,jdbcType=CHAR},
+      </if>
+      <if test="delState != null" >
+        #{delState,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.column.entity.Column" >
+    update t_column
+    <set >
+      <if test="columnName != null" >
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSort != null" >
+        goods_sort = #{goodsSort,jdbcType=CHAR},
+      </if>
+      <if test="showGoodsNum != null" >
+        show_goods_num = #{showGoodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="columnLogo != null" >
+        column_logo = #{columnLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommendIndex != null" >
+        is_recommend_index = #{isRecommendIndex,jdbcType=CHAR},
+      </if>
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+    </set>
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.column.entity.Column" >
+    update t_column
+    set column_name = #{columnName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort = #{sort,jdbcType=TINYINT},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      goods_sort = #{goodsSort,jdbcType=CHAR},
+      show_goods_num = #{showGoodsNum,jdbcType=TINYINT},
+      column_logo = #{columnLogo,jdbcType=VARCHAR},
+      is_recommend_index = #{isRecommendIndex,jdbcType=CHAR},
+      del_state = #{delState,jdbcType=CHAR}
+    where column_id = #{columnId,jdbcType=INTEGER}
+  </update>
+</mapper>

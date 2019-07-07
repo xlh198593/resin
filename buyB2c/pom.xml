@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ande</groupId>
+  <artifactId>buyb2c-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>buyb2c-common</module>
+    <module>buyb2c-web</module>
+    <module>buyb2c-user</module>
+    <module>buyb2c-sms</module>
+    <module></module>  <module>buyb2c-admin</module>
+  <module>buyb2c-logistics</module>
+  <module>buyb2c-content</module>
+  <module>buyb2c-shop</module>
+  <module>buyb2c-column</module>
+  <module>buyb2c-attribute</module>
+  <module>buyb2c-goods</module>
+  <module>buyb2c-order</module>
+  <module>buyb2c-comment</module>
+  <module>buyb2c-collection</module>
+  <module>buyb2c-shopcart</module>
+  <module>buyb2c-receiptAddress</module>
+  <module>buyb2c-advertPosition</module>
+  </modules>
+  <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+     	 <druid>1.0.18</druid>
+     	 <pagehelper>4.1.6</pagehelper>
+     	 <mybatis.version>3.3.1</mybatis.version>
+	</properties>
+  <dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-classic</artifactId>
+		</dependency> -->
+	<!-- 	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency> -->
+		<!-- 监控模块 -->
+			<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency> -->
+		
+		<!--  springboot 集成mybatis-->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		   <version>1.0.0</version>
+		</dependency>
+		
+		 <!-- MySQL 连接驱动依赖 -->
+       <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+       </dependency>
+       <!-- Druid 数据连接池依�?? -->
+       <dependency>
+           <groupId>com.alibaba</groupId>
+           <artifactId>druid</artifactId>
+           <version>${druid}</version>
+       </dependency>
+
+       <!-- 分页插件 -->  
+       <dependency>  
+           <groupId>com.github.pagehelper</groupId>  
+           <artifactId>pagehelper</artifactId>  
+           <version>${pagehelper}</version>  
+       </dependency>  
+       <!-- redis -->  
+       <dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-redis</artifactId>  
+     <version>1.4.6.RELEASE</version>
+</dependency>  
+	</dependencies>
+		<distributionManagement>
+  <snapshotRepository>
+    <id>snapshots</id>
+    <url>http://112.74.41.176:8081/nexus/content/repositories/snapshots</url>
+  </snapshotRepository>
+</distributionManagement>
+</project>

@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.order.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.order.entity.Order" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pay_state" property="payState" jdbcType="CHAR" />
+    <result column="order_state" property="orderState" jdbcType="CHAR" />
+    <result column="pay_type" property="payType" jdbcType="CHAR" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="order_total_amount" property="orderTotalAmount" jdbcType="DECIMAL" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
+    <result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="customer_feedback" property="customerFeedback" jdbcType="VARCHAR" />
+    <result column="goods_pieces" property="goodsPieces" jdbcType="TINYINT" />
+    <result column="goods_num" property="goodsNum" jdbcType="TINYINT" />
+    <result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
+     <result column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+      <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+      <result column="send_logistics_name" property="sendLogisticsName" jdbcType="VARCHAR" />
+       <result column="send_logistics_id" property="sendLogisticsId" jdbcType="INTEGER" />
+    <result column="del_state" property="delState" jdbcType="CHAR" />
+    <result column="send_goods_time" property="sendGoodsTime" jdbcType="TIMESTAMP" />
+     <result column="confirm_time" property="confirmTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_no, create_time, update_time, pay_state, order_state, pay_type, freight, 
+    order_amount, order_total_amount, customer_id, customer_name, customer_phone, customer_address, 
+    pay_time, customer_feedback, goods_pieces, goods_num, 
+	send_logistics_id,send_logistics_name,logistics_id,logistics_name,logistics_no, del_state
+  </sql>
+   <resultMap id="OrderList" type="com.ande.buyb2c.order.entity.Order" extends="BaseResultMap">
+    <collection property="orderDetailList" ofType="com.ande.buyb2c.order.entity.OrderDetail">
+    	<id column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+	    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+	    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	    <result column="good_type_id" property="goodTypeId" jdbcType="INTEGER" />
+	    <result column="good_type_parent_id" property="goodTypeParentId" jdbcType="INTEGER" />
+	    <result column="good_type_grand_parent_id" property="goodTypeGrandParentId" jdbcType="INTEGER" />
+	    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+	    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+	    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+	    <result column="good_num" property="goodsNum" jdbcType="TINYINT" />
+	    <result column="goods_total_price" property="goodsTotalPrice" jdbcType="DECIMAL" />
+	    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+	    <result column="goods_attribute" property="goodsAttribute" jdbcType="VARCHAR" />
+	     <result column="goods_state" property="goodsState" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <!-- 后台首页统计查询 -->
+  <select id="getOrderTotalAmount" resultType="java.math.BigDecimal">
+  	select sum(order_total_amount) from t_order
+  </select>
+  <select id="getTodayOrderTotalAmount" resultType="java.math.BigDecimal">
+  	select sum(order_total_amount) from t_order
+   where DATE_FORMAT(create_time,'%Y-%m-%d')=curdate()
+  </select>
+  <select id="getAllOrderCount" resultType="java.lang.Integer">
+  select count(um.order_state) from 
+t_order_count_state t
+	 left JOIN 
+	(select * from t_order where DATE_FORMAT(create_time,'%Y-%m-%d') >= date_sub(curdate(), interval 30 day)) um 
+on t.state=um.order_state
+GROUP BY t.state
+  </select>
+  <select id="getPage" resultMap="OrderList" parameterType="com.ande.buyb2c.order.vo.RequestOrderVo">
+    select o.order_id,o.order_no,
+    o.customer_name,o.customer_phone,
+    o.pay_state,o.order_total_amount,
+    o.freight,o.create_time,
+    o.order_state,o.pay_type,
+		o.goods_pieces,
+		o.goods_num,
+    d.goods_image,d.goods_name,d.goods_price,d.goods_num as good_num
+    from t_order o
+    left join t_order_detail d
+    on o.order_id=d.order_id
+    where 1=1
+    <if test="startTime!=null">
+  	and DATE_FORMAT(o.create_time,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTime,jdbcType=DATE}
+    </if>
+    <if test="endTime!=null">
+  	and #{endTime,jdbcType=DATE} <![CDATA[ >= ]]> DATE_FORMAT(o.create_time,'%Y-%m-%d')
+    </if>
+     <if test="orderState!=null and orderState!=''">
+  	and order_state=#{orderState}
+    </if>
+    <if test="payState!=null and payState!=''">
+  	and pay_state=#{payState}
+    </if>
+    <if test="payType!=null and payType!=''">
+  	and pay_type=#{payType}
+    </if>
+    <if test="customerPhone!=null and customerPhone!=''">
+    and customer_phone=#{customerPhone} or order_no=#{customerPhone}
+    </if>
+    order by o.create_time desc
+  </select>
+  <select id="getOrderById" resultMap="OrderList">
+  	 select o.*,
+    d.goods_image,d.goods_name,d.goods_price,d.goods_num as good_num,d.goods_attribute,
+    d.goods_no,d.goods_total_price,d.goods_state
+    from t_order o
+    left join t_order_detail d
+    on o.order_id=d.order_id
+    where o.order_id=#{orderId}
+  </select>
+  <!-- web端 -->
+  <select id="getOrderCount" resultType="java.lang.Integer">
+  	select count(um.order_state) from 
+t_order_state t
+	 left JOIN 
+	(select * from t_order where customer_id=#{customerId}) um 
+on t.state=um.order_state
+GROUP BY t.state
+  </select>
+  <!-- 查用户最新订单使用的收货地址 -->
+    <select id="getOrderLast" resultType="java.lang.Integer">
+  	 select receipt_address_id  
+  	 from t_order
+  	 where customer_id=#{customerId}
+  	 order by create_time desc
+  	 limit 1
+  </select>
+  <select id="getOrderByNo" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <!-- 订单列表 -->
+  <select id="getPageFront" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from t_order
+  where customer_id=#{customerId}
+  <if test="orderState!=null and orderState!=''">
+  	and order_state=#{orderState}
+  </if>
+  order by create_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order
+    where order_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.order.entity.Order" >
+    insert into t_order (order_id, order_no, create_time, 
+      update_time, pay_state, order_state, 
+      pay_type, freight, order_amount, 
+      order_total_amount, customer_id, customer_name, 
+      customer_phone, customer_address, pay_time, 
+      customer_feedback, goods_pieces, goods_num, 
+logistics_no, del_state)
+    values (#{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{payState,jdbcType=CHAR}, #{orderState,jdbcType=CHAR}, 
+      #{payType,jdbcType=CHAR}, #{freight,jdbcType=DECIMAL}, #{orderAmount,jdbcType=DECIMAL}, 
+      #{orderTotalAmount,jdbcType=DECIMAL}, #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
+      #{customerPhone,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{customerFeedback,jdbcType=VARCHAR}, #{goodsPieces,jdbcType=TINYINT}, #{goodsNum,jdbcType=TINYINT}, 
+      #{logisticsNo,jdbcType=VARCHAR}, #{delState,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.order.entity.Order" useGeneratedKeys="true" keyProperty="orderId">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="payState != null" >
+        pay_state,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="orderTotalAmount != null" >
+        order_total_amount,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="receiptAddressId != null" >
+        receipt_address_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone,
+      </if>
+      <if test="customerAddress != null" >
+        customer_address,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="customerFeedback != null" >
+        customer_feedback,
+      </if>
+      <if test="goodsPieces != null" >
+        goods_pieces,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+       <if test="logisticsId != null" >      
+		logistics_id ,
+      </if>
+      <if test="logisticsName != null" >      
+		logistics_name ,
+      </if>  
+      <if test="logisticsNo != null" >
+      logistics_no,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+        <if test="transactionId != null" >
+        transaction_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=CHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTotalAmount != null" >
+        #{orderTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+       <if test="receiptAddressId != null" >
+        #{receiptAddressId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerFeedback != null" >
+        #{customerFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPieces != null" >
+        #{goodsPieces,jdbcType=TINYINT},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="logisticsNo != null" >
+        #{logisticsNo,jdbcType=VARCHAR},
+      </if>
+       <if test="logisticsId != null" >      
+		 #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >      
+		 #{logisticsName,jdbcType=VARCHAR},
+      </if>  
+      <if test="delState != null" >
+        #{delState,jdbcType=CHAR},
+      </if>
+        <if test="transactionId != null" >
+       #{transactionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.order.entity.Order" >
+    update t_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTotalAmount != null" >
+        order_total_amount = #{orderTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerFeedback != null" >
+        customer_feedback = #{customerFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPieces != null" >
+        goods_pieces = #{goodsPieces,jdbcType=TINYINT},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="logisticsNo != null" >      
+		logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsId != null" >      
+		logistics_id = #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >      
+		logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>  
+       <if test="sendLogisticsId != null" >      
+		send_logistics_id = #{sendLogisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="sendLogisticsName != null" >      
+		send_logistics_name = #{sendLogisticsName,jdbcType=VARCHAR},
+      </if>  
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+       <if test="sendGoodsTime != null" >
+        send_goods_time = #{sendGoodsTime,jdbcType=CHAR},
+      </if>
+       <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTime != null" >
+        confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.order.entity.Order" >
+    update t_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pay_state = #{payState,jdbcType=CHAR},
+      order_state = #{orderState,jdbcType=CHAR},
+      pay_type = #{payType,jdbcType=CHAR},
+      freight = #{freight,jdbcType=DECIMAL},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      order_total_amount = #{orderTotalAmount,jdbcType=DECIMAL},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      customer_address = #{customerAddress,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      customer_feedback = #{customerFeedback,jdbcType=VARCHAR},
+      goods_pieces = #{goodsPieces,jdbcType=TINYINT},
+      goods_num = #{goodsNum,jdbcType=TINYINT},
+		logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+      del_state = #{delState,jdbcType=CHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateOrderByOrderNo" parameterType="com.ande.buyb2c.order.entity.Order">
+     update t_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderTotalAmount != null" >
+        order_total_amount = #{orderTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerFeedback != null" >
+        customer_feedback = #{customerFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPieces != null" >
+        goods_pieces = #{goodsPieces,jdbcType=TINYINT},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="logisticsNo != null" >      
+		logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsId != null" >      
+		logistics_id = #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >      
+		logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>  
+         <if test="sendLogisticsId != null" >      
+		send_logistics_id = #{sendLogisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="sendLogisticsName != null" >      
+		send_logistics_name = #{sendLogisticsName,jdbcType=VARCHAR},
+      </if>  
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+       <if test="sendGoodsTime != null" >
+        send_goods_time = #{sendGoodsTime,jdbcType=CHAR},
+      </if>
+      <if test="confirmTime != null" >
+        confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where  order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="cancelOrder">
+  	   update t_order 
+  	   set order_state=6
+  	   where order_id = #{orderId,jdbcType=INTEGER} and order_state=1
+  </update>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.collection.dao.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.collection.entity.Collection" >
+    <id column="collection_id" property="collectionId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    <result column="good_type_id" property="goodTypeId" jdbcType="INTEGER" />
+    <result column="good_type_parent_id" property="goodTypeParentId" jdbcType="INTEGER" />
+    <result column="good_type_grand_parent_id" property="goodTypeGrandParentId" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+     <result column="sale_state" property="goodsSaleState" jdbcType="CHAR" />
+      <result column="del_state" property="goodsDelState" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collection_id, goods_id,customer_id, create_time, update_time
+  </sql>
+  <select id="getCollection" resultMap="BaseResultMap">
+      select 
+    <include refid="Base_Column_List" />
+    from t_collection
+    where customer_id=#{customerId} and goods_id=#{goodsId}
+  </select>
+   <select id="getPageFront" resultMap="BaseResultMap">
+       select 
+    collection_id, c.goods_id, goods_name, goods_price, main_image as goods_image, good_type_id,sale_state,del_state, 
+    good_type_parent_id, good_type_grand_parent_id, customer_id
+    from t_collection c
+left join t_goods g
+on g.goods_id=c.goods_id
+    where customer_id=#{customerId}
+   order by c.create_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_collection
+    where collection_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_collection
+    where collection_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="cancelCollection">
+   delete from t_collection
+   where customer_id=#{customerId} and goods_id=#{goodsId} 
+  </delete>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.collection.entity.Collection" >
+    insert into t_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collectionId != null" >
+        collection_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collectionId != null" >
+        #{collectionId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.collection.entity.Collection" >
+    update t_collection
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where collection_id = #{collectionId,jdbcType=INTEGER}
+  </update>
+</mapper>

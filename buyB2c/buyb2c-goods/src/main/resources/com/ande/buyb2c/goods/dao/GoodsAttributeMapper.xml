@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.goods.dao.GoodsAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.goods.entity.GoodsAttribute" >
+    <id column="goods_attribute_id" property="goodsAttributeId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
+    <result column="goods_attribute_type" property="goodsAttributeType" jdbcType="CHAR" />
+    <result column="goods_attribute_val" property="goodsAttributeVal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_attribute_id, goods_attribute_name, goods_id, attribute_id, goods_attribute_type, 
+    goods_attribute_val
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_attribute
+    where goods_attribute_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods_attribute
+    where goods_attribute_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="delGoodsAttribute">
+   delete from t_goods_attribute
+    where goods_attribute_id in (${ids})
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.goods.entity.GoodsAttribute" >
+    insert into t_goods_attribute (goods_attribute_id,
+      goods_id, attribute_id, goods_attribute_type, 
+      goods_attribute_val)
+    values (#{goodsAttributeId,jdbcType=INTEGER}, 
+      #{goodsId,jdbcType=INTEGER}, #{attributeId,jdbcType=INTEGER}, #{goodsAttributeType,jdbcType=CHAR}, 
+      #{goodsAttributeVal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.goods.entity.GoodsAttribute" useGeneratedKeys="true" keyProperty="goodsAttributeId">
+    insert into t_goods_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsAttributeId != null" >
+        goods_attribute_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="attributeId != null" >
+        attribute_id,
+      </if>
+      <if test="goodsAttributeType != null" >
+        goods_attribute_type,
+      </if>
+      <if test="goodsAttributeVal != null" >
+        goods_attribute_val,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsAttributeId != null" >
+        #{goodsAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeId != null" >
+        #{attributeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttributeType != null" >
+        #{goodsAttributeType,jdbcType=CHAR},
+      </if>
+      <if test="goodsAttributeVal != null" >
+        #{goodsAttributeVal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.goods.entity.GoodsAttribute" >
+    update t_goods_attribute
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeId != null" >
+        attribute_id = #{attributeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttributeType != null" >
+        goods_attribute_type = #{goodsAttributeType,jdbcType=CHAR},
+      </if>
+      <if test="goodsAttributeVal != null" >
+        goods_attribute_val = #{goodsAttributeVal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_attribute_id = #{goodsAttributeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.goods.entity.GoodsAttribute" >
+    update t_goods_attribute
+    set 
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      attribute_id = #{attributeId,jdbcType=INTEGER},
+      goods_attribute_type = #{goodsAttributeType,jdbcType=CHAR},
+      goods_attribute_val = #{goodsAttributeVal,jdbcType=VARCHAR}
+    where goods_attribute_id = #{goodsAttributeId,jdbcType=INTEGER}
+  </update>
+</mapper>

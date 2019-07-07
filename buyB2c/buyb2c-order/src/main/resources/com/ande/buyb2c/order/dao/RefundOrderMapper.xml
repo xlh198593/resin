@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.order.dao.RefundOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.order.entity.RefundOrder" >
+    <id column="refund_order_id" property="refundOrderId" jdbcType="INTEGER" />
+     <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="refund_price" property="refundPrice" jdbcType="DECIMAL" />
+    <result column="refund_freight_price" property="refundFreightPrice" jdbcType="DECIMAL" />
+    <result column="reund_goods_price" property="reundGoodsPrice" jdbcType="DECIMAL" />
+    <result column="refund_apply_price" property="refundApplyPrice" jdbcType="DECIMAL" />
+    <result column="refund_apply_time" property="refundApplyTime" jdbcType="TIMESTAMP" />
+    <result column="refund_num" property="refundNum" jdbcType="INTEGER" />
+    <result column="refund_reason" property="refundReason" jdbcType="CHAR" />
+    <result column="refund_remarks" property="refundRemarks" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="good_num" property="goodNum" jdbcType="TINYINT" />
+    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    <result column="goods_attribute" property="goodsAttribute" jdbcType="VARCHAR" />
+    <result column="refund_state" property="refundState" jdbcType="CHAR" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+      <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
+    <result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
+     <result column="send_state" property="sendState" jdbcType="VARCHAR" />
+      <result column="payType" property="payType" jdbcType="VARCHAR" />
+      <result column="image" property="image" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    refund_order_id, refund_order_no,order_id,order_no, order_detail_id, refund_time, refund_price, refund_freight_price,reund_goods_price,refund_apply_price, 
+    refund_apply_time, refund_num, refund_reason, refund_remarks, goods_id, goods_no, 
+    goods_name, goods_price, good_num, goods_image, goods_attribute, 
+    refund_state, customer_id,customer_name, customer_phone, customer_address,send_state,image
+  </sql>
+  <select id="getPage" resultMap="BaseResultMap">
+    select 
+     refund_order_id, refund_order_no,r.order_id,r.order_no, order_detail_id, refund_time, refund_price, refund_freight_price,reund_goods_price,refund_apply_price, 
+    refund_apply_time, refund_num, refund_reason, refund_remarks, goods_id, goods_no, 
+    goods_name, goods_price, good_num,  goods_image, goods_attribute, 
+    refund_state, r.customer_id,r.customer_name, r.customer_phone, r.customer_address,send_state,
+    o.pay_type as payType,o.order_total_amount as totalPrice
+    from t_refund_order r
+    left join t_order o
+    on r.order_id=o.order_id
+    where 1=1
+  	 <if test="startTime!=null">
+  	and DATE_FORMAT(refund_apply_time,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTime,jdbcType=DATE}
+    </if>
+    <if test="endTime!=null">
+  	and #{endTime,jdbcType=DATE} <![CDATA[ >= ]]> DATE_FORMAT(refund_apply_time,'%Y-%m-%d')
+    </if>
+    <if test="refundState!=null and refundState!=''">
+    and refund_state=#{refundState}
+    </if>
+    <if test="customerPhone!=null and customerPhone!=''">
+    and r.customer_phone=#{customerPhone} or r.order_no=#{customerPhone}  or r.customer_name=#{customerPhone}
+    </if>
+    order by r.refund_apply_time desc
+  </select>
+  <select id="getPageFront" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from t_refund_order
+    where customer_id=#{customerId}
+    order by refund_apply_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_refund_order
+    where refund_order_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_refund_order
+    where refund_order_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.order.entity.RefundOrder" >
+    insert into t_refund_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="refundOrderId != null" >
+        refund_order_id,
+      </if>
+       <if test="refundOrderNo != null" >
+        refund_order_no,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+       <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="refundTime != null" >
+        refund_time,
+      </if>
+      <if test="refundPrice != null" >
+        refund_price,
+      </if>
+       <if test="refundFreightPrice != null" >
+        refund_freight_price,
+      </if>
+       <if test="reundGoodsPrice != null" >
+        reund_goods_price,
+      </if>
+      <if test="refundApplyPrice != null" >
+        refund_apply_price,
+      </if>
+      <if test="refundApplyTime != null" >
+        refund_apply_time,
+      </if>
+      <if test="refundNum != null" >
+        refund_num,
+      </if>
+      <if test="refundReason != null" >
+        refund_reason,
+      </if>
+      <if test="refundRemarks != null" >
+        refund_remarks,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="goodsImage != null" >
+        goods_image,
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute,
+      </if>
+      <if test="refundState != null" >
+        refund_state,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+        <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone,
+      </if>
+      <if test="customerAddress != null" >
+        customer_address,
+      </if>
+         <if test="sendState != null" >
+        send_state,
+      </if>
+       <if test="image != null" >
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="refundOrderId != null" >
+        #{refundOrderId,jdbcType=INTEGER},
+      </if>
+       <if test="refundOrderNo != null" >
+        #{refundOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+       <if test="orderNo != null" >
+         #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundPrice != null" >
+        #{refundPrice,jdbcType=DECIMAL},
+      </if>
+       <if test="refundFreightPrice != null" >
+        #{refundFreightPrice,jdbcType=DECIMAL},
+      </if>
+       <if test="reundGoodsPrice != null" >
+       #{reundGoodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundApplyPrice != null" >
+        #{refundApplyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundApplyTime != null" >
+        #{refundApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundNum != null" >
+        #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundReason != null" >
+        #{refundReason,jdbcType=CHAR},
+      </if>
+      <if test="refundRemarks != null" >
+        #{refundRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsImage != null" >
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttribute != null" >
+        #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        #{refundState,jdbcType=CHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+       <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+       <if test="sendState != null" >
+        #{sendState,jdbcType=VARCHAR},
+      </if>
+          <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.order.entity.RefundOrder" >
+    update t_refund_order
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+        <if test="orderNo != null" >
+        order_no= #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundOrderNo != null" >
+       refund_order_no= #{refundOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="refundTime != null" >
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundPrice != null" >
+        refund_price = #{refundPrice,jdbcType=DECIMAL},
+      </if>
+        <if test="refundFreightPrice != null" >
+        refund_freight_price=#{refundFreightPrice,jdbcType=DECIMAL},
+      </if>
+       <if test="reundGoodsPrice != null" >
+       reund_goods_price=#{reundGoodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundApplyPrice != null" >
+        refund_apply_price = #{refundApplyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundApplyTime != null" >
+        refund_apply_time = #{refundApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundNum != null" >
+        refund_num = #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundReason != null" >
+        refund_reason = #{refundReason,jdbcType=CHAR},
+      </if>
+      <if test="refundRemarks != null" >
+        refund_remarks = #{refundRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsImage != null" >
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute = #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        refund_state = #{refundState,jdbcType=CHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+       <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where refund_order_id = #{refundOrderId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.goods.dao.GoodsAttributeValMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.goods.entity.GoodsAttributeVal" >
+    <id column="goods_attribute_val_id" property="goodsAttributeValId" jdbcType="INTEGER" />
+    <result column="goods_attribute_val" property="goodsAttributeVal" jdbcType="VARCHAR" />
+    <result column="attribute_val_id" property="attributeValId" jdbcType="INTEGER" />
+    <result column="goods_attribute_id" property="goodsAttributeId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_attribute_val_id, goods_attribute_val, attribute_val_id, goods_attribute_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_attribute_val
+    where goods_attribute_val_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods_attribute_val
+    where goods_attribute_val_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--通过 goods_attribute_id 删除  -->
+  <delete id="delGoodsAttributeVal">
+   delete from t_goods_attribute_val
+    where goods_attribute_id in (${ids})
+  </delete>
+   <!--通过 goods_attribute_val_id 删除  -->
+  <delete id="delGoodsAttributeValById">
+  delete from t_goods_attribute_val
+    where goods_attribute_val_id in (${ids})
+  </delete>
+  <insert id="addBatch">
+  insert into t_goods_attribute_val (goods_attribute_val_id,
+      attribute_val_id, goods_attribute_id) values
+<foreach collection="list" item="item" separator=",">
+ (#{item.goodsAttributeValId,jdbcType=INTEGER},
+      #{item.attributeValId,jdbcType=INTEGER}, #{item.goodsAttributeId,jdbcType=INTEGER})
+</foreach>
+</insert>
+  <insert id="insert" parameterType="com.ande.buyb2c.goods.entity.GoodsAttributeVal" >
+    insert into t_goods_attribute_val (goods_attribute_val_id, goods_attribute_val, 
+      attribute_val_id, goods_attribute_id)
+    values (#{goodsAttributeValId,jdbcType=INTEGER}, #{goodsAttributeVal,jdbcType=VARCHAR}, 
+      #{attributeValId,jdbcType=INTEGER}, #{goodsAttributeId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.goods.entity.GoodsAttributeVal" >
+    insert into t_goods_attribute_val
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsAttributeValId != null" >
+        goods_attribute_val_id,
+      </if>
+      <if test="attributeValId != null" >
+        attribute_val_id,
+      </if>
+      <if test="goodsAttributeId != null" >
+        goods_attribute_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsAttributeValId != null" >
+        #{goodsAttributeValId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeValId != null" >
+        #{attributeValId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttributeId != null" >
+        #{goodsAttributeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.goods.entity.GoodsAttributeVal" >
+    update t_goods_attribute_val
+    <set >
+      <if test="attributeValId != null" >
+        attribute_val_id = #{attributeValId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttributeId != null" >
+        goods_attribute_id = #{goodsAttributeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where goods_attribute_val_id = #{goodsAttributeValId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.goods.entity.GoodsAttributeVal" >
+    update t_goods_attribute_val
+    set  attribute_val_id = #{attributeValId,jdbcType=INTEGER},
+      goods_attribute_id = #{goodsAttributeId,jdbcType=INTEGER}
+    where goods_attribute_val_id = #{goodsAttributeValId,jdbcType=INTEGER}
+  </update>
+</mapper>

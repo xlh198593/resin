@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.order.dao.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.order.entity.OrderDetail" >
+    <id column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+     <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="good_type_id" property="goodTypeId" jdbcType="INTEGER" />
+    <result column="good_type_parent_id" property="goodTypeParentId" jdbcType="INTEGER" />
+    <result column="good_type_grand_parent_id" property="goodTypeGrandParentId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_num" property="goodsNum" jdbcType="TINYINT" />
+    <result column="goods_total_price" property="goodsTotalPrice" jdbcType="DECIMAL" />
+    <result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    <result column="goods_attribute" property="goodsAttribute" jdbcType="VARCHAR" />
+    <result column="goods_state" property="goodsState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_detail_id, order_id, goods_id,goods_no, good_type_id, good_type_parent_id, good_type_grand_parent_id, 
+    goods_name, goods_price, goods_num, goods_total_price, goods_image, goods_attribute,goods_state
+  </sql>
+  <select id="getAllBySelect" resultMap="BaseResultMap">
+  	  select 
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+    <!-- 查询可退款的订单 -->
+  <select id="getCanRefundOrderList" resultType="java.util.Map">
+  	select o.order_no as orderNo,o.order_state as orderState,o.freight,o.customer_name as customerName, o.customer_phone as customerPhone, o.customer_address as customerAddress,
+  	o.create_time as createTime,
+ order_detail_id as orderDetailId, d.order_id as orderId, goods_id as goodsId,goods_no as goodsNo,
+    goods_name as goodsName, goods_price as goodsPrice, d.goods_num as goodsNum, goods_total_price as goodsTotalPrice, goods_image as goodsImage, 
+goods_attribute as goodsAttribute
+ from t_order o
+LEFT JOIN t_order_detail d
+on o.order_id=d.order_id
+where o.customer_id=#{customerId} and (
+(o.order_state='2' and d.goods_state='0') 
+or (o.order_state='3' and d.goods_state='0') 
+or (o.order_state='4' and d.goods_state='0' and date_add(o.confirm_time, interval 15 day) >now())
+)
+  </select>
+  <!-- 查询当前这笔订单单品是否应该退运费 -->
+  <select id="getCanRefundFreight" resultType="java.lang.Integer">
+  select count(order_detail_id) from t_order_detail 
+where order_id=#{orderId} and goods_state='0'
+  </select>
+   <!-- 判断该订单下的商品是否全部退款 -->
+  <select id="getRefundCount" resultType="java.lang.Integer">
+  	 select count(order_detail_id) from t_order_detail 
+	where order_id=#{orderId} and goods_state!='2'
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    where order_detail_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order_detail
+    where order_detail_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addBatch">
+   insert into t_order_detail (order_detail_id, order_id, goods_id,goods_no, 
+      good_type_id, good_type_parent_id, good_type_grand_parent_id, 
+      goods_name, goods_price, goods_num, 
+      goods_total_price, goods_image, goods_attribute
+      ) values
+<foreach collection="list" item="item" separator=",">
+ (#{item.orderDetailId,jdbcType=INTEGER}, #{item.orderId,jdbcType=INTEGER}, #{item.goodsId,jdbcType=INTEGER},#{item.goodsNo,jdbcType=VARCHAR},  
+      #{item.goodTypeId,jdbcType=INTEGER}, #{item.goodTypeParentId,jdbcType=INTEGER}, #{item.goodTypeGrandParentId,jdbcType=INTEGER}, 
+      #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsPrice,jdbcType=DECIMAL}, #{item.goodsNum,jdbcType=TINYINT}, 
+      #{item.goodsTotalPrice,jdbcType=DECIMAL}, #{item.goodsImage,jdbcType=VARCHAR}, #{item.goodsAttribute,jdbcType=VARCHAR}
+      )
+</foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.order.entity.OrderDetail" >
+    insert into t_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodTypeId != null" >
+        good_type_id,
+      </if>
+      <if test="goodTypeParentId != null" >
+        good_type_parent_id,
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        good_type_grand_parent_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsTotalPrice != null" >
+        goods_total_price,
+      </if>
+      <if test="goodsImage != null" >
+        goods_image,
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeId != null" >
+        #{goodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeParentId != null" >
+        #{goodTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        #{goodTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsTotalPrice != null" >
+        #{goodsTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsImage != null" >
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttribute != null" >
+        #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.order.entity.OrderDetail" >
+    update t_order_detail
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeId != null" >
+        good_type_id = #{goodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeParentId != null" >
+        good_type_parent_id = #{goodTypeParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodTypeGrandParentId != null" >
+        good_type_grand_parent_id = #{goodTypeGrandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=TINYINT},
+      </if>
+      <if test="goodsTotalPrice != null" >
+        goods_total_price = #{goodsTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsImage != null" >
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttribute != null" >
+        goods_attribute = #{goodsAttribute,jdbcType=VARCHAR},
+      </if>
+        <if test="goodsState != null" >
+        goods_state = #{goodsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_detail_id = #{orderDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.order.entity.OrderDetail" >
+    update t_order_detail
+    set order_id = #{orderId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      good_type_id = #{goodTypeId,jdbcType=INTEGER},
+      good_type_parent_id = #{goodTypeParentId,jdbcType=INTEGER},
+      good_type_grand_parent_id = #{goodTypeGrandParentId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_num = #{goodsNum,jdbcType=TINYINT},
+      goods_total_price = #{goodsTotalPrice,jdbcType=DECIMAL},
+      goods_image = #{goodsImage,jdbcType=VARCHAR},
+      goods_attribute = #{goodsAttribute,jdbcType=VARCHAR}
+    where order_detail_id = #{orderDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

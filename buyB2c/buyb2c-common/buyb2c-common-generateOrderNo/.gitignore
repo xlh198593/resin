@@ -1,0 +1,7 @@
+/target/
+.classpath
+.project
+.settings
+/bin/
+/src/main/webapp/WEB-INF/classes
+/logs/

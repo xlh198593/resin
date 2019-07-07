@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ande.buyb2c.attribute.dao.AttributeTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ande.buyb2c.attribute.entity.AttributeType" >
+    <id column="attribute_type_id" property="attributeTypeId" jdbcType="INTEGER" />
+    <result column="attribute_type_name" property="attributeTypeName" jdbcType="VARCHAR" />
+    <result column="attribute_type_level" property="attributeTypeLevel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_state" property="delState" jdbcType="CHAR" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="TINYINT" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+    <result column="grand_parent_id" property="grandParentId" jdbcType="INTEGER" />
+    <result column="grand_parent_name" property="grandParentName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    attribute_type_id, attribute_type_name, attribute_type_level, create_time, update_time, 
+    del_state, admin_id, parent_id, logo, sort, parent_name, grand_parent_id, grand_parent_name
+  </sql>
+  <select id="getAttributeTypeList" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from t_attribute_type
+    where parent_id = #{attributeTypeId,jdbcType=INTEGER}
+     order by sort,create_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attribute_type
+    where attribute_type_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delByParentId">
+    delete from t_attribute_type
+    <if test="level==1">
+    	where grand_parent_id=#{attributeTypeId} or parent_id=#{attributeTypeId}
+    </if>
+    <if test="level==2">
+    	where parent_id=#{attributeTypeId}
+    </if>
+  </delete>
+  <update id="updateByParentId">
+   update t_attribute_type
+    <if test="level==1">
+      set grand_parent_name = #{attributeTypeName,jdbcType=VARCHAR}
+    where grand_parent_id=#{attributeTypeId}
+    </if>
+      <if test="level==2">
+      set parent_name = #{attributeTypeName,jdbcType=VARCHAR}
+    where parent_id=#{attributeTypeId}
+    </if>
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_attribute_type
+    where attribute_type_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ande.buyb2c.attribute.entity.AttributeType" >
+    insert into t_attribute_type (attribute_type_id, attribute_type_name, 
+      attribute_type_level, create_time, update_time, 
+      del_state, admin_id, parent_id, 
+      logo, sort, parent_name, 
+      grand_parent_id, grand_parent_name)
+    values (#{attributeTypeId,jdbcType=INTEGER}, #{attributeTypeName,jdbcType=VARCHAR}, 
+      #{attributeTypeLevel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delState,jdbcType=CHAR}, #{adminId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{logo,jdbcType=VARCHAR}, #{sort,jdbcType=TINYINT}, #{parentName,jdbcType=VARCHAR}, 
+      #{grandParentId,jdbcType=INTEGER}, #{grandParentName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ande.buyb2c.attribute.entity.AttributeType" useGeneratedKeys="true" keyProperty="attributeTypeId">
+    insert into t_attribute_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attributeTypeId != null" >
+        attribute_type_id,
+      </if>
+      <if test="attributeTypeName != null" >
+        attribute_type_name,
+      </if>
+      <if test="attributeTypeLevel != null" >
+        attribute_type_level,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+      <if test="grandParentId != null" >
+        grand_parent_id,
+      </if>
+      <if test="grandParentName != null" >
+        grand_parent_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attributeTypeId != null" >
+        #{attributeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeTypeName != null" >
+        #{attributeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeTypeLevel != null" >
+        #{attributeTypeLevel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delState != null" >
+        #{delState,jdbcType=CHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="grandParentId != null" >
+        #{grandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="grandParentName != null" >
+        #{grandParentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ande.buyb2c.attribute.entity.AttributeType" >
+    update t_attribute_type
+    <set >
+      <if test="attributeTypeName != null" >
+        attribute_type_name = #{attributeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeTypeLevel != null" >
+        attribute_type_level = #{attributeTypeLevel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delState != null" >
+        del_state = #{delState,jdbcType=CHAR},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="grandParentId != null" >
+        grand_parent_id = #{grandParentId,jdbcType=INTEGER},
+      </if>
+      <if test="grandParentName != null" >
+        grand_parent_name = #{grandParentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where attribute_type_id = #{attributeTypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ande.buyb2c.attribute.entity.AttributeType" >
+    update t_attribute_type
+    set attribute_type_name = #{attributeTypeName,jdbcType=VARCHAR},
+      attribute_type_level = #{attributeTypeLevel,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_state = #{delState,jdbcType=CHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=TINYINT},
+      parent_name = #{parentName,jdbcType=VARCHAR},
+      grand_parent_id = #{grandParentId,jdbcType=INTEGER},
+      grand_parent_name = #{grandParentName,jdbcType=VARCHAR}
+    where attribute_type_id = #{attributeTypeId,jdbcType=INTEGER}
+  </update>
+</mapper>
