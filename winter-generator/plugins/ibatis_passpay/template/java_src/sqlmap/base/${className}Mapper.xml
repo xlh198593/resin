@@ -1,0 +1,144 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+
+<mapper namespace="${basepackage}.entity.${className}">
+	<resultMap id="${className}Result" type="${basepackage}.entity.${className}">
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="${classNameFirstLower}Columns">
+	    <![CDATA[
+		<#list table.columns as column>
+	        	${column.dbSqlName} as ${column.columnNameFirstLower}<#if column_has_next>,</#if>
+        </#list>
+	    ]]>
+	</sql>
+	<#if table.isTable>
+		<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+		<insert id="insert" parameterType="${basepackage}.entity.${className}" 
+			useGeneratedKeys="true" keyProperty="${table.idColumn.columnNameFirstLower}" 
+		 flushCache="true">
+	    <![CDATA[
+	        INSERT INTO
+	        ${table.sqlName} (
+	        <#list table.insertColumns as column>
+	        	${column.dbSqlName} <#if column_has_next>,</#if>
+	        </#list>
+	        ) VALUES (
+	        <#list table.insertColumns as column>
+	        	<@mapperEl column.columnNameFirstLower+',javaType='+column.javaTypeAlias+',jdbcType='+column.jdbcSqlTypeName/> <#if column_has_next>,</#if>
+	        </#list>        
+	        )
+	    ]]>	
+	
+		</insert>
+	    
+		<update id="update" parameterType="${basepackage}.entity.${className}">
+
+	        UPDATE ${table.sqlName} SET
+		        <#list table.updateColumns as column>
+		        <if test="${column.columnNameFirstLower} != null">
+		        ${column.sqlName} = <@mapperEl column.columnNameFirstLower+',javaType='+column.javaTypeAlias+',jdbcType='+column.jdbcSqlTypeName/> <#if column_has_next>,</#if>
+		        </if>
+		        </#list>
+	        WHERE 
+	        	<#list table.compositeIdColumns as column>
+		        ${column.dbSqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next>,</#if>
+		        </#list>		        
+
+		</update>
+	   <delete id="delete" parameterType="${table.idColumn.javaType}">
+	    <![CDATA[
+	        delete from ${table.sqlName} where
+	        <#list table.compositeIdColumns as column>
+		        ${column.dbSqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next>,</#if>
+		    </#list>
+	    ]]>
+	    </delete>   
+	   	</#if>   
+	    <select id="getById" parameterType="${table.idColumn.javaTypeAlias}" resultMap="${className}Result" flushCache="false">
+			select <include refid="${classNameFirstLower}Columns" />
+		    <![CDATA[
+			    from ${table.sqlName} 
+		        where 
+					<#list table.compositeIdColumns as column>
+		        ${column.dbSqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next>,</#if>
+		        </#list> 
+		    ]]>
+		</select>	
+		<select id="getByIds" parameterType="list"  resultMap="${className}Result" flushCache="false">
+			select <include refid="${classNameFirstLower}Columns" />
+			    from ${table.sqlName} 
+		        where id in
+				<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+					  <@mapperEl "item"/>
+				</foreach>					
+		</select>	
+
+	<sql id="${classNameFirstLower}DynamicWhere">
+		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+		<where>
+	       <#list table.columns as column>
+	       <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
+				and ${column.dbSqlName} = <@mapperEl column.columnNameFirstLower/>
+			</if>
+	       </#list>			
+		</where>
+	</sql>
+	
+	<select id="getAll" resultMap="${className}Result"  flushCache="false">
+    	select <include refid="${classNameFirstLower}Columns" />
+	    from ${table.sqlName} 
+
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY <@jspEl 'sortColumns'/>
+		</if>
+    </select>	
+	<select id="getCount" resultType="${table.idColumn.javaTypeAlias}">
+        select count(*) from ${table.sqlName} 
+    </select>
+    <select id="getCountByPage" resultType="${table.idColumn.javaTypeAlias}">
+        select count(*) from ${table.sqlName} 
+		<include refid="${classNameFirstLower}DynamicWhere"/>    
+    </select>
+    
+    <!--
+        plugins-ibatis3
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="getByPage" resultMap="${className}Result">
+    	select <include refid="${classNameFirstLower}Columns" />
+	    from ${table.sqlName} 
+		<include refid="${classNameFirstLower}DynamicWhere"/>
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY <@jspEl 'sortColumns'/>
+		</if>
+    </select>
+
+    <select id="getObjByAttribute" resultMap="${className}Result">
+    	select <include refid="${classNameFirstLower}Columns" />
+	    from ${table.sqlName} 
+		<include refid="${classNameFirstLower}DynamicWhere"/>
+    </select>
+
+    <#list table.columns as column>
+    <#if column.unique && !column.pk>
+    <select id="getBy${column.columnName}" resultMap="${className}Result" parameterType="${column.javaType}">
+	    select <include refid="${classNameFirstLower}Columns"/>
+	    <![CDATA[
+	        from ${table.sqlName} where ${column.sqlName} = <@mapperEl column.columnNameLower/>
+	    ]]>
+    </select>
+    
+    </#if>
+	</#list>
+	
+</mapper>
