@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.order.dao.FgShareDao">
+
+
+	<insert id="insertFgShare" parameterType="FgShare">
+		INSERT INTO
+		fg_share (
+		share_name
+		,share_content
+		,picture_link
+		,share_status
+		,create_time
+		)
+		VALUES (
+		#{share_name}
+		,#{share_content}
+		,#{picture_link}
+		,#{share_status}
+		,#{create_time}
+		
+		)
+	</insert>
+
+	<select id="selectFgShare" parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+			    share_id,
+				share_name
+				,share_content
+				,picture_link
+				,share_status
+				,is_open
+				,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') as create_time
+				from fg_share 
+		]]>
+		 <where>
+           		is_open = 1
+			<if test="share_id != null and share_id != ''">
+				AND share_id = #{share_id}
+			</if>
+			<if test="share_name != null and share_name != ''">
+				AND share_name like '%${share_name}%'
+			</if>
+			<if test="share_status != null and share_status != ''">
+				AND share_status = #{share_status}
+			</if>
+		 </where>
+		order by create_time DESC
+	</select>
+
+	<select id="queryShareList" parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+			    share_id
+				,share_name
+				,share_content
+				,picture_link
+				,share_status
+				,is_open
+				,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') as create_time2
+				FROM fg_share 
+		]]>
+		 <where>
+           1=1 
+			<if test="share_id != null and share_id != ''">
+				AND share_id = #{share_id}
+			</if>
+			<if test="share_name != null and share_name != ''">
+				AND share_name like '%${share_name}%'
+			</if>
+			<if test="share_status != null and share_status != ''">
+				AND share_status = #{share_status}
+			</if>
+		 </where>
+		ORDER BY create_time DESC
+	</select>
+	
+	<update id="updateFgShare" parameterType="Map">
+		UPDATE fg_share SET
+		<trim suffixOverrides=",">
+			<if test="share_name != null and share_name != ''">
+				share_name = #{share_name},
+			</if>
+			<if test="share_content != null and share_content != ''">
+				share_content = #{share_content},
+			</if>
+			<if test="picture_link != null and picture_link != ''">
+				picture_link = #{picture_link},
+			</if>
+			<if test="share_status != null and share_status != ''">
+				share_status = #{share_status},
+			</if>
+			<if test="is_open != null and is_open != ''">
+				is_open = #{is_open},
+			</if>
+		</trim>
+		<where>
+				share_id=#{share_id}
+		</where>
+	</update>
+	
+
+	
+</mapper>

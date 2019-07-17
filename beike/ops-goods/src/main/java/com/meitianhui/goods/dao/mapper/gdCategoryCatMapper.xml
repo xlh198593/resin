@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.goods.dao.GdCategoryCatDao">
+
+	<insert id="insertGdCategoryCat" parameterType="GdCategoryCat">
+		INSERT INTO
+		gd_category_cat (cat_id, 
+		parent_id, 
+		cat_name, 
+        cat_path, 
+        level, 
+        is_leaf, 
+        disabled, 
+        child_count, 
+        order_sort, 
+        create_time,
+        modified_time, 
+        cat_template)
+		VALUES
+		(
+		#{cat_id}, #{parent_id}, #{cat_name}, 
+        #{cat_path}, #{level}, #{is_leaf}, 
+        #{disabled}, #{child_count}, #{order_sort},#{create_time}, 
+        #{modified_time}, #{cat_template}
+		)
+	</insert>
+
+	<select id="selectGdCategoryCatList" parameterType="Map" resultType="Map">
+		SELECT
+		cat_id, 
+		parent_id, 
+		cat_name, 
+        cat_path, 
+        level, 
+        is_leaf, 
+        disabled, 
+        child_count, 
+        order_sort, 
+        create_time,
+        modified_time, 
+        cat_template, 
+        addon
+		FROM
+		gd_category_cat WHERE disabled='0' 
+		<if test="parent_id != null and parent_id != ''">
+			AND parent_id = #{parent_id}
+		</if>
+		<if test="cat_name != null and cat_name != ''">
+			AND cat_name like CONCAT('%',#{cat_name},'%')
+		</if>
+		<if test="cat_id != null and cat_id != ''">
+			AND cat_id = #{cat_id}
+		</if>
+		<if test="level != null and level != ''">
+			AND level = #{level}
+		</if>
+	</select>
+
+
+	<update id="updateGdCategoryCat" parameterType="Map">
+		UPDATE gd_category_cat SET
+		<trim suffixOverrides=",">
+			modified_time = UNIX_TIMESTAMP(SYSDATE()),
+			<if test="cat_name != null and cat_name != ''">
+				cat_name = #{cat_name},
+			</if>
+			<if test="disabled != null and disabled != ''">
+				disabled = #{disabled},
+			</if>
+		</trim>
+		<where>
+			cat_id = #{cat_id} 
+		</where>
+	</update>
+
+
+   <update id="updateCountByCatId" parameterType="Map">
+		UPDATE gd_category_cat SET child_count=#{child_count} where cat_id = #{cat_id}
+	</update>
+	
+	
+	<delete id="deleteGdCategoryCat" parameterType="Map">
+		DELETE FROM gd_category_cat WHERE cat_id = #{cat_id}
+	</delete>
+	
+
+</mapper>

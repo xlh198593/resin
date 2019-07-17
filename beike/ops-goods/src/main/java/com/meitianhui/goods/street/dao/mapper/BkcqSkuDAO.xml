@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.goods.street.dao.BkcqSkuDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.goods.street.entity.BkcqSku">
+        <id column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="goods_id" jdbcType="VARCHAR" property="goodsId"/>
+        <result column="sale_price" jdbcType="DECIMAL" property="salePrice"/>
+        <result column="vip_price" jdbcType="DECIMAL" property="vipPrice"/>
+        <result column="settled_price" jdbcType="DECIMAL" property="settledPrice"/>
+        <result column="beike_credit" jdbcType="INTEGER" property="beikeCredit"/>
+        <result column="goods_code" jdbcType="VARCHAR" property="goodsCode"/>
+        <result column="stock" jdbcType="INTEGER" property="stock"/>
+        <result column="prop_spec" jdbcType="VARCHAR" property="propSpec"/>
+        <result column="spec_info" jdbcType="VARCHAR" property="specInfo"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    sku_id, goods_id, sale_price, vip_price, settled_price, beike_credit, goods_code, stock, prop_spec,
+    spec_info, created_time, modified_time, remark
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_sku
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

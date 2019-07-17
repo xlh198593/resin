@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MemberInvitationCodeDao" >
+	<resultMap type="com.meitianhui.member.entity.MDMemberInvitationCode" id="memberInvitationCodeMap">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="invite_code" property="inviteCode" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	
+	<select id="findMemberInviteCode" resultMap="memberInvitationCodeMap" parameterType="java.util.Map">
+		select 
+			 id
+			,member_id
+			,invite_code
+			,status
+			,create_time
+			,remark  
+		from  md_member_invitation_code
+		<where>
+			1=1
+			<if test="invite_code != null and invite_code != ''">
+				AND invite_code=#{invite_code}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findMemberInfo" resultType="com.meitianhui.member.entity.MDConsumer" parameterType="java.util.Map">
+		select 
+			 mc.head_pic_path
+			,mc.nick_name
+			,mc.mobile
+		from  
+			md_consumer mc  
+		left join 
+			md_member_invitation_code mi 
+		on 
+			mc.consumer_id = mi.member_id
+		<where>
+			1=1
+			<if test="invite_code != null and invite_code != ''">
+				AND mi.invite_code=#{invite_code}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="addMemberInvitationCode" parameterType="com.meitianhui.member.entity.MDMemberInvitationCode">
+		INSERT INTO
+		md_member_invitation_code (
+		 member_id
+		,invite_code
+		,status
+		,create_time
+		,remark
+		)
+		VALUES (
+		#{memberId}
+		,#{inviteCode}
+		,#{status}
+		,NOW()
+		,#{remark}
+		)
+	</insert>
+	
+</mapper>

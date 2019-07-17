@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.goods.dao.GdGoodsSkuidDao" >
+
+  <sql id="Base_Column_List" >
+    sku_id, goods_code, attr_zid, attr_fid, attr_zvalue, attr_fvalue, attr_zpic, attr_fpic, 
+     sale_price, vip_price, beike_credit, barcode, stock,
+    created_time, modified_time
+  </sql>
+
+  <insert id="insert" parameterType="com.meitianhui.goods.entity.GdGoodsSkuid" >
+    insert into ps_goods_skuid (sku_id, goods_code, attr_zid,
+      attr_fid, attr_zvalue, attr_fvalue,
+      attr_zpic, attr_fpic, 
+      sale_price, vip_price,beike_credit,
+      barcode, stock,
+      created_time, modified_time)
+    values (#{sku_id}, #{goods_code}, #{attr_zid},
+      #{attr_fid}, #{attr_zvalue}, #{attr_fvalue},
+      #{attr_zpic}, #{attr_fpic}, 
+      #{sale_price}, #{vip_price}, #{beike_credit},
+      #{barcode}, #{stock},
+      #{created_time}, #{modified_time})
+  </insert>
+
+  <update id="updateGdGoodsSkuid" parameterType="com.meitianhui.goods.entity.GdGoodsSkuid" >
+    update ps_goods_skuid
+    set attr_zid = #{attr_zid},
+      attr_fid = #{attr_fid},
+      attr_zvalue = #{attr_zvalue},
+      attr_fvalue = #{attr_fvalue},
+      attr_zpic = #{attr_zpic},
+      attr_fpic = #{attr_fpic},
+      sale_price = #{sale_price},
+      vip_price = #{vip_price},
+      beike_credit = #{beike_credit},
+      barcode = #{barcode},
+      stock = #{stock},
+      modified_time = #{modified_time}
+    where sku_id = #{sku_id} and  goods_code = #{goods_code}
+  </update>
+
+
+	<select id="selectGdGoodsSkuidList" parameterType="Map" resultType="GdGoodsSkuid">
+		<![CDATA[
+			SELECT
+			pgs.sku_id,
+			pgs.goods_code,
+			pgs.attr_zid,
+			pgs.attr_fid,
+			(SELECT prop_name FROM gd_category_props WHERE prop_id =pgs.attr_zid) AS prop_zname ,
+			(SELECT prop_name FROM gd_category_props WHERE prop_id =pgs.attr_fid) AS prop_fname ,
+			pgs.attr_zvalue,
+			pgs.attr_fvalue,
+			pgs.attr_zpic,
+			pgs.attr_fpic,
+            pgs.sale_price,
+            pgs.vip_price,
+            pgs.beike_credit,
+            pgs.barcode,
+            pgs.stock,
+            pgs.created_time,
+            pgs.modified_time
+			 FROM
+				ps_goods_skuid as pgs
+		]]>
+		<where>
+			<if test="goods_code != null and goods_code != ''">
+				AND pgs.goods_code = #{goods_code}
+			</if>
+		</where>
+		ORDER BY pgs.created_time ASC
+	</select>
+	
+  <select id="selectGdGoodsSkuidListNew" parameterType="Map" resultType="GdGoodsSkuid">
+		<![CDATA[
+			SELECT
+				pgs.goods_code,
+				pgs.attr_zid,
+				pgs.attr_fid,
+				(SELECT prop_name FROM gd_category_props WHERE prop_id =pgs.attr_zid) AS prop_zname ,
+				pgs.attr_zvalue,
+				pgs.attr_zpic,
+				pgs.stock,
+				pgs.sale_price,
+            	pgs.vip_price,
+            	pgs.beike_credit,
+            	pgs.sku_id
+			 FROM
+				ps_goods_skuid as pgs
+		]]>
+		<where>
+			<if test="goods_code != null and goods_code != ''">
+				AND pgs.goods_code = #{goods_code}
+			</if>
+		</where>
+		GROUP BY pgs.attr_zvalue
+		ORDER BY pgs.created_time ASC
+	</select>
+
+	<select id="selectOneGdGoodsSkuid" parameterType="Map" resultType="GdGoodsSkuid">
+	<![CDATA[
+			SELECT
+			sku_id,
+			goods_code,
+			attr_zid,
+			attr_fid,
+			attr_zvalue,
+			attr_fvalue,
+			attr_zpic,
+			attr_fpic,
+            sale_price,
+            vip_price,
+            beike_credit,
+            barcode,
+            stock,
+            created_time,
+            modified_time
+			 FROM
+				ps_goods_skuid
+		]]>
+		<where>
+			<if test="goods_code != null and goods_code != ''">
+				AND goods_code = #{goods_code}
+			</if>
+			<if test="sku_id != null and sku_id != ''">
+				AND sku_id = #{sku_id}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryGdGoodsSkuidBySkuId" parameterType="Map" resultType="Map">
+	<![CDATA[
+	    SELECT
+		pgs.sku_id,
+		pgs.goods_code,
+		pgs.attr_zid,
+		pgs.attr_fid,
+	    gcp.prop_name AS attr_zname,
+	    gcp2.prop_name AS attr_fname,
+		pgs.attr_zvalue,
+		pgs.attr_fvalue,
+		pgs.attr_zpic,
+		pgs.attr_fpic,
+	    pgs.sale_price,
+	    pgs.vip_price, 
+	    pgs.beike_credit,
+	    pgs.barcode, 
+	    pgs.stock,
+	    pgs.created_time, 
+	    pgs.modified_time
+	        FROM
+		ps_goods_skuid pgs
+		LEFT JOIN gd_category_props gcp ON pgs.attr_zid=gcp.prop_id
+		LEFT JOIN gd_category_props gcp2 ON pgs.attr_fid=gcp2.prop_id
+		]]>
+		<where>
+			<if test="goods_code != null and goods_code != ''">
+				AND pgs.goods_code = #{goods_code}
+			</if>
+			<if test="sku_id != null and sku_id != ''">
+				AND pgs.sku_id = #{sku_id}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updatePsGoodsSkuidStockForOwnRestore" parameterType="Map">
+		UPDATE
+		ps_goods_skuid SET
+		stock = stock+#{restore_qty}
+		WHERE
+		goods_code = #{goods_code}
+		AND sku_id = #{sku_id}
+	</update>
+  
+  
+  <select id="selectGdGoodsSkuidListForFvaule" parameterType="Map" resultType="GdGoodsSkuid">
+		<![CDATA[
+			SELECT
+				pgs.sku_id,
+				pgs.goods_code,
+				pgs.attr_fid,
+				(SELECT prop_name FROM gd_category_props WHERE prop_id =pgs.attr_fid) AS prop_fname ,
+				pgs.attr_fvalue,
+				pgs.attr_fpic,
+	     		pgs.sale_price,
+	     		pgs.vip_price,
+	     		pgs.beike_credit,
+	     		pgs.barcode,
+	      		pgs.stock,
+	      		pgs.created_time,
+	      		pgs.modified_time
+			 FROM
+				ps_goods_skuid as pgs
+		]]>
+		<where>
+			<if test="goods_code != null and goods_code != ''">
+				AND pgs.goods_code = #{goods_code}
+			</if>
+			<if test="attr_zid != null and attr_zid != ''">
+				AND pgs.attr_zid = #{attr_zid}
+			</if>
+			<if test="attr_zvalue != null and attr_zvalue != ''">
+				AND pgs.attr_zvalue = #{attr_zvalue}
+			</if>
+		</where>
+		ORDER BY pgs.vip_price ASC
+	</select>
+  
+</mapper>

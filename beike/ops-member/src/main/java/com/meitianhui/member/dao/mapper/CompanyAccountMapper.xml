@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.CompanyAccountDao">
+
+	<select id="findByPhone" resultType="Map">
+		select ca.account_id, ca.account_type, ca.login_name, ca.profile_pic,
+				ca.account_name, a.area_name
+		from md_company_account ca left join md_area a on ca.area_id = a.area_id
+		where ca.disabled = 0
+			and ca.account_type = (CASE #{account_type}
+				WHEN 'sub-company' THEN 'sub-company'
+				WHEN 'co-partner' THEN 'co-partner'
+				ElSE '' END)
+			and ca.login_name = #{login_name}
+	</select>
+
+
+	<select id="findMemberInvitationCode" resultType="String">
+		select invite_code
+		from md_member_invitation_code
+		where member_id = #{member_id} and status = 0
+		limit 1
+	</select>
+
+
+	<select id="findMemberDistribution" resultType="Map">
+		select *
+		from md_member_distribution
+		where member_id = #{member_id}
+		limit 1
+	</select>
+
+	<insert id="createCompanyAccount">
+		INSERT into md_company_account
+		(account_id, account_type, login_name)
+		VALUES (#{account_id},#{account_type},#{login_name})
+	</insert>
+
+	<insert id="createMemberDistributionInfo">
+		INSERT into md_member_distribution_info
+		(member_id, parent_id, status, create_time)
+		VALUES (#{member_id}, #{parent_id}, 0, now())
+	</insert>
+
+
+
+
+</mapper>
+
+
+
+

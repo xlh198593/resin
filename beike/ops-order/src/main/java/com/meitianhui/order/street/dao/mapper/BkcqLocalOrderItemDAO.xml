@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.order.street.dao.BkcqLocalOrderItemDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.order.street.entity.BkcqLocalOrderItem">
+        <id column="order_item_id" jdbcType="BIGINT" property="orderItemId"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="item_store_id" jdbcType="VARCHAR" property="itemStoreId"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="image_info" jdbcType="VARCHAR" property="imageInfo"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+        <result column="specification" jdbcType="VARCHAR" property="specification"/>
+        <result column="weight" jdbcType="INTEGER" property="weight"/>
+        <result column="service_level" jdbcType="VARCHAR" property="serviceLevel"/>
+        <result column="perchase_notice" jdbcType="VARCHAR" property="perchaseNotice"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    order_item_id, order_id, sku_id, goods_id, item_store_id, item_name, image_info, qty, specification,
+    weight, service_level, perchase_notice, created_date, modified_date, remark
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder_item
+        where order_item_id = #{orderItemId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder_item
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.order.street.entity.BkcqLocalOrderItem"
+            useGeneratedKeys="true" keyProperty="orderItemId">
+        insert into bkcq_localorder_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="skuId != null">
+                sku_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="itemStoreId != null">
+                item_store_id,
+            </if>
+            <if test="itemName != null">
+                item_name,
+            </if>
+            <if test="imageInfo != null">
+                image_info,
+            </if>
+            <if test="qty != null">
+                qty,
+            </if>
+            <if test="specification != null">
+                specification,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="serviceLevel != null">
+                service_level,
+            </if>
+            <if test="perchaseNotice != null">
+                perchase_notice,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="modifiedDate != null">
+                modified_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="skuId != null">
+                #{skuId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="itemStoreId != null">
+                #{itemStoreId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="imageInfo != null">
+                #{imageInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="qty != null">
+                #{qty,jdbcType=INTEGER},
+            </if>
+            <if test="specification != null">
+                #{specification,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="serviceLevel != null">
+                #{serviceLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="perchaseNotice != null">
+                #{perchaseNotice,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.order.street.entity.BkcqLocalOrderItem">
+        update bkcq_localorder_item
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="skuId != null">
+                sku_id = #{skuId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="itemStoreId != null">
+                item_store_id = #{itemStoreId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="imageInfo != null">
+                image_info = #{imageInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="qty != null">
+                qty = #{qty,jdbcType=INTEGER},
+            </if>
+            <if test="specification != null">
+                specification = #{specification,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="serviceLevel != null">
+                service_level = #{serviceLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="perchaseNotice != null">
+                perchase_notice = #{perchaseNotice,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_item_id = #{orderItemId,jdbcType=BIGINT}
+    </update>
+
+</mapper>

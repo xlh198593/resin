@@ -1,0 +1,29 @@
+ 
+	/* Tab切换 */
+	.tabBox{ margin:0 auto;   }
+	.tabBox .hd{ height:40px; line-height:40px; font-size:20px; overflow:hidden; background:#54C375;box-shadow:0 3px 6px #54C375; border-top:1px solid #ccc;  padding:0 10px;  }
+	.tabBox .hd h3{ float:left; font-size:24px; }
+	.tabBox .hd h3 span{color:#ccc; font-family:Georgia; margin-left:10px;  }
+	.tabBox .hd ul{ overflow:hidden; }
+	.tabBox .hd ul li{   padding:0 5px; vertical-align:top;  }
+	.tabBox .hd ul li a{font-size:1.5rem;color:#fff;}
+
+	.tabBox .hd ul{box-shadow:0 5px 10px #54C375;}
+	.tabBox .hd ul li.on a{ display:block; height:38px; line-height:38px; font-size:1.8rem;  border-bottom:2px solid #fff;  }
+	.tabBox .bd ul{ padding:10px;  }
+	.tabBox .bd ul li{ border-bottom:1px dotted #ddd;  }
+	.tabBox .bd li a{ -webkit-tap-highlight-color:rgba(0,0,0,0); }  /* 去掉链接触摸高亮 */
+	.readMore{ display:block; height:30px; line-height:30px; margin:10px auto 20px auto;  text-align:center; text-decoration:underline;   }
+
+	 
+.mercantile_agent_list{
+ 
+	border:1px solid green;
+}
+.total_con{
+	height:2rem;
+	margin:0.5rem 0;
+	
+	border:1px solid green;
+}
+

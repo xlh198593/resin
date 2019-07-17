@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <title>乐分享</title>
+    <style>
+    /* body {
+        overflow-y: scroll;
+    }
+    body::-webkit-scrollbar {
+        width:0rem;
+    } */
+    .contain {
+        width:10rem;
+        margin:0 auto;
+       
+    }
+    .contain .title {
+        height:1rem;
+        line-height: 1rem;
+        padding-left:0.2rem;
+        font-size:0.4rem;
+        border-top:1px solid #ebebeb;
+        border-bottom: 1px solid #ebebeb;
+
+    }
+    .contain .text_contain {
+        width:10rem;
+        position: relative;
+        padding-top:0.1rem;
+    }
+    .share_titile {
+        width:9.5rem;
+        font-size: 0.38rem;
+        margin-left:0.2rem;
+        margin-bottom:0.2rem;
+        margin-top:0.2rem;
+        color:#333333;
+        font-family: "PingFangSC-Regular";
+    }
+    .share_content {
+        padding:0 0.2rem;
+        width:10rem;
+        overflow-x: hidden;
+    }
+    
+    .share_content p {
+       /* text-indent: 1rem; */
+       font-size:0.38rem;
+       color: #333333;
+       letter-spacing:0.02rem;
+       /* margin-bottom:0.2rem; */
+       /* margin-left:0.2rem; */
+       line-height:0.6rem;   
+       font-family: "PingFangSC-Regular"; 
+       }
+    .text_contain .share_btn {
+      padding:0.3rem;
+      padding-top:0rem;
+      position: absolute;
+      width:0.5rem;
+      height:0.5rem;
+      top:0.2rem;
+      right:0.4rem;
+    }
+    .contain .share_imgs_contain {
+        margin:0 auto;
+        height:10rem;
+        width:9.5rem;
+        padding-left:0.5rem;
+        margin-bottom:0.2rem;
+        margin-top:0.2rem;
+    }
+    .share_imgs_contain img {
+        height:2.9rem;
+        width:2.9rem;
+        margin-right:0.2rem;
+        margin-bottom:0.2rem;
+        float:left;
+    }
+    .share_imgs_contain li {
+        height:3rem;
+        width:3rem;
+        float:left;
+    }
+    .share_imgs_contain .single_img {
+        position:relative;
+        height:2.8rem;
+        width:2.8rem;
+        margin-left:0.1rem;
+        margin-top:0.1rem;
+    }
+    .share_imgs_contain .single_img img {
+        height:2.8rem;
+        width:2.8rem;
+    }
+    .single_img .price{
+        height:0.6rem;
+        width:1.6rem;
+        position: absolute;
+        bottom:0rem;
+        right:0rem;
+        line-height:0.6rem;
+        font-size:0.35rem;
+        background-image: url("/image/common/pricebgc.png");
+        color:ghostwhite;
+        background-size: 1.6rem 0.6rem;
+        
+    }
+    /* .money {
+        margin-right:0.1rem;
+    } */
+    .symbol {
+        /* margin-right:0.2rem; */
+        margin-left:0.1rem;
+    }
+    /* .message_contain {
+        height:16.7rem;
+        overflow-y: scroll;
+    }
+    .message_contain::-webkit-scrollbar {
+        display:none;
+    } */
+    </style>
+   
+    
+</head>
+<body class="body">
+    <div class="contain" id="app">
+        <div class="title">每日精选</div>
+        <ul class="message_contain">
+            <li v-for="item in list">
+                <div class="text_contain">
+                    <div class="share_titile" v-html="item.share_name"></div>
+                    <img class="share_btn" src="/image/common/share.png" alt="" v-on:click="share(item.pic_info)">
+                    <div class="share_content" v-html="item.share_content"></div>
+                </div>
+                 <div class="share_imgs_contain">
+                     <ul>
+                         <li v-for="img in item.pic_info">
+                             <div class="single_img">
+                               <img v-bind:src="img.image_url" v-on:click="toDetail(img)">
+                               <div class="price">
+                                   <div><span class="symbol">￥</span><span class="money">{{img.discount_price}}</span></div>
+                               </div>
+                            </div>
+                         </li>
+                     </ul>
+                 </div>
+            </li>
+        </ul>
+       
+    </div>
+</body> 
+<script>
+
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            list:[],
+        },
+        methods:{
+            htmlDecodeByRegExp:function(str) {
+             var s = "";
+             if(str.length == 0) return "";
+             s = str.replace(/&amp;/g,"&");
+             s = s.replace(/&lt;/g,"<");
+             s = s.replace(/&gt;/g,">");
+             s = s.replace(/&nbsp;/g," ");
+             s = s.replace(/&#39;/g,"\'");
+             s = s.replace(/&quot;/g,"\"");
+             return s;  
+            },
+            toDetail:function(obj) {
+                console.log("toDetail:::",JSON.stringify({goods_id:obj.goods_id,data_source:obj.data_source}))
+                if(window.jsObj) {  // Android
+                     // 传递分享数据
+                   if(window.jsObj.clickSharedImage) {
+                         window.jsObj.clickSharedImage(JSON.stringify({goods_id:obj.goods_id,data_source:obj.data_source}));
+                   }
+                } else {    // IOS
+                    setupWebViewJavascriptBridge(function(bridge) {
+                      // 传递分享数据
+                    bridge.callHandler('clickSharedImage',JSON.stringify({goods_id:obj.goods_id,data_source:obj.data_source}));
+                })
+            }
+            },
+            share:function(obj) {
+                console.log("share:::::",obj)
+                if(window.jsObj) {  // Android
+                     // 传递分享数据
+                   if(window.jsObj.shareNineImages) {
+                         window.jsObj.shareNineImages(JSON.stringify(obj));
+                   }
+                } else {    // IOS
+                    setupWebViewJavascriptBridge(function(bridge) {
+                      // 传递分享数据
+                    bridge.callHandler('shareNineImages', obj);
+                })
+            }
+          }
+       },
+        mounted:function() {
+            var self = this;
+            $.ajax({
+                type: 'POST',
+                url: '/openapi/h5/share/getimgs',
+                data:{},
+                success: function (data) {
+                      for(var i = 0; i < data.length; i++) {
+                          data[i]["share_content"] = self.htmlDecodeByRegExp(data[i]["share_content"]);
+                      }
+                      self.list = data;
+                      console.log(self.list)
+                    }
+                });
+        }
+    })
+
+</script>
+
+
+
+</html>

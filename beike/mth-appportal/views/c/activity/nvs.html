@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../commonHead.html %>
+    <title>女神节活动</title>
+    <style>
+       #app {
+           width:10rem;
+           position: relative;
+       }
+       #app img {
+           width:10rem;
+       }
+       #app div {
+           position:absolute;
+           width:4rem;
+           height:7rem;
+       }
+       .s1 {
+          top:10rem;
+          left:0.5rem; 
+       }
+       .s2 {
+          top:10rem;
+          left:5.5rem; 
+       }
+       .s3 {
+          top:17.5rem;
+          left:0.5rem; 
+       }
+       .s4 {
+          top:17.5rem;
+          left:5.5rem; 
+       }
+       .s5 {
+          top:25.5rem;
+          left:0.5rem; 
+       }
+       .s6 {
+          top:25.5rem;
+          left:5.5rem; 
+       }
+       .s7 {
+          top:33rem;
+          left:0.5rem; 
+       }
+       .s8 {
+          top:33rem;
+          left:5.5rem; 
+       }
+       .s9 {
+          top:45.5rem;
+          left:0.5rem; 
+       }
+       .s10 {
+          top:45.5rem;
+          left:5.5rem; 
+       }
+       /* #app .s11, #app .s12, #app .s13, #app .s14 {
+           width:9rem;
+           height:4rem;
+       } */
+       #app .s11 {
+           top:53rem;
+           left:0.5rem;
+       }
+       #app .s12 {
+           top:53rem;
+           left:5.5rem;
+       }
+       #app .s13 {
+           top:61rem;
+           left:0.5rem;
+       }
+       #app .s14 {
+           top:61rem;
+           left:5.5rem;
+       }
+       #app .s15 {
+           top:68.5rem;
+           left:0.5rem;
+       }
+       #app .s16 {
+           top:68.5rem;
+           left:5.5rem;
+       }
+       #app .s17 {
+           top:81.5rem;
+           left:0.5rem;
+       }
+       #app .s18 {
+           top:81.5rem;
+           left:5.5rem;
+       }
+       #app .s19 {
+           top:89rem;
+           left:0.5rem;
+       }
+       #app .s20 {
+           top:89rem;
+           left:5.5rem;
+       }
+       #app .s21 {
+           top:96.5rem;
+           left:0.5rem;
+       }
+       #app .s22 {
+           top:96.5rem;
+           left:5.5rem;
+       }
+       #app .s23 {
+           top:104.5rem;
+           left:0.5rem;
+       }
+       #app .s24 {
+           top:104.5rem;
+           left:5.5rem;
+       }
+       /* #app .s25 {
+           top:118rem;
+           left:0.5rem;
+       } */
+       /* #app .s26 {
+           top:118rem;
+           left:5.5rem;
+       }
+       #app .s27 {
+           top:125.5rem;
+           left:0.5rem;
+       }
+       #app .s28 {
+           top:125.5rem;
+           left:5.5rem;
+       }
+       #app .s29 {
+           top:133rem;
+           left:0.5rem;
+       }
+       #app .s30 {
+           top:133rem;
+           left:5.5rem;
+       }
+       #app .s31 {
+           top:141rem;
+           left:0.5rem;
+       }
+       #app .s32 {
+           top:141rem;
+           left:5.5rem;
+       } */
+       #app .more {
+           height:.8rem;
+           width:6rem;
+           top:149rem;
+           left:2rem;
+       }
+       #app .more_nsbb {
+        height:.8rem;
+        width:6rem;
+        top:112.5rem;
+        left:2rem;
+       }
+       #app .more_zbss {
+        height:.8rem;
+        width:6rem;
+        top:76.5rem;
+        left:2rem;  
+       }
+       #app .more_ghhz {
+        height:.8rem;
+        width:6rem;
+        top:40.5rem;
+        left:2rem;  
+       }
+       
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <img src="http://app-static.huigujia.cn/communityDocs/nodepic/nvj.jpg" alt="">
+        <div class="s1" @click="gotoshopdetail('2184')"></div>
+        <div class="s2" @click="gotoshopdetail('2180')"></div>
+        <div class="s3" @click="gotoshopdetail('2098')"></div>
+        <div class="s4" @click="gotoshopdetail('2095')"></div>
+        <div class="s5" @click="gotoshopdetail('2091')"></div>
+        <div class="s6" @click="gotoshopdetail('2060')"></div>
+        <div class="s7" @click="gotoshopdetail('2014')"></div>
+        <div class="s8" @click="gotoshopdetail('2019')"></div>
+        <div class="s9" @click="gotoshopdetail('1955')"></div>
+        <div class="s10" @click="gotoshopdetail('1959')"></div>
+        <div class="s11" @click="gotoshopdetail('2236')"></div>
+        <div class="s12" @click="gotoshopdetail('2247')"></div>
+        <div class="s13" @click="gotoshopdetail('2249')"></div>
+        <div class="s14" @click="gotoshopdetail('2252')"></div>
+        <div class="s15" @click="gotoshopdetail('2253')"></div>
+        <div class="s16" @click="gotoshopdetail('2257')"></div>
+        <!-- <div class="s17" @click="gotoshopdetail('2081')"></div>
+        <div class="s18" @click="gotoshopdetail('1941')"></div>
+        <div class="s19" @click="gotoshopdetail('1935')"></div>
+        <div class="s20" @click="gotoshopdetail('1926')"></div>
+        <div class="s21" @click="gotoshopdetail('1930')"></div>
+        <div class="s22" @click="gotoshopdetail('1923')"></div>
+        <div class="s23" @click="gotoshopdetail('1920')"></div>
+        <div class="s24" @click="gotoshopdetail('1927')"></div> -->
+        <div class="s17" @click="gotoshopdetail('2262')"></div>
+        <div class="s18" @click="gotoshopdetail('2263')"></div>
+        <div class="s19" @click="gotoshopdetail('116')"></div>
+        <div class="s20" @click="gotoshopdetail('2265')"></div>
+        <div class="s21" @click="gotoshopdetail('2266')"></div>
+        <div class="s22" @click="gotoshopdetail('2267')"></div>
+        <div class="s23" @click="gotoshopdetail('2268')"></div>
+        <div class="s24" @click="gotoshopdetail('2269')"></div>
+        <!-- <div class="more" @click="more('zbsp')"></div>
+        <div class="more_nsbb" @click="more('zbsp')"></div>
+        <div class="more_zbss" @click="more('zbsp')"></div>
+        <div class="more_ghhz" @click="more('zbsp')"></div> -->
+        
+        
+      
+      </div>
+  
+  </body>
+  <script>
+      function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+      var app = new Vue({
+             el: '#app',
+             data:function(){
+                return {
+               
+               };
+            },
+            methods:{
+                gotoshopdetail:function(goods_id) {
+                    gotosumit("gotoshopdetail",{"goods_id":goods_id})
+               },
+               more:function() {
+                    gotosumit("more",{})
+               }
+             },
+            mounted:function(){
+
+           }
+  });
+  
+  </script>
+</html>

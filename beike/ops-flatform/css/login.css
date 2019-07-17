@@ -1,0 +1,132 @@
+html{min-width:1920px;}
+.login{
+    width:100%;
+    min-width:1000px;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    background:url('../images/login_back.jpg') no-repeat center;
+    background-size:cover;
+}
+.login .title{
+	overflow:hidden;
+	margin:50px 60px;
+}
+.login .logo{
+	display:block;
+	width:90px;
+	height:90px;
+	float:left;
+	background:url('../images/logo.png') no-repeat center;
+	background-size:cover;
+}
+.login .tit{
+	width:500px;
+	height:60px;
+	line-height:60px;
+	margin-top:15px;
+	overflow:hidden;
+    font-size:40px;
+    margin-left:25px;
+    float:left;
+    color:#fff;
+    font-weight:bold;
+}
+
+.login_form{
+	width:325px;
+	background:#fff;
+	position:absolute;
+	right:60px;
+	top:25%;
+	padding:25px;
+	border-radius:5px;
+}
+.login_form h2{
+	height:41px;
+	line-height:41px;
+    text-align:center;
+	overflow:hidden;
+	border-bottom:1px solid #e5e5e5;
+    letter-spacing:20px;
+    margin-bottom:33px;
+}
+.login_form .row_item{
+    overflow:hidden;
+    margin-bottom:0px;
+}
+.login_form .row_item > label{
+	display:block;
+	width:60px;
+	height:41px;
+	line-height:41px;
+	float:left;
+	overflow:hidden;
+	font-size:16px;
+}
+.login_form .row_item .input_con{
+	width:249px;
+	float:left;
+/*	border:1px solid green;*/
+
+	margin-left:10px;
+
+}
+.login_form .input_val{
+	width:245px;
+	height:38px;
+	line-height:38px;
+	text-indent:10px;
+	border:1px solid #e5e5e5;
+	border-radius:5px;
+}
+.login_form .msg{
+	height:25px;
+	line-height:25px;
+	overflow:hidden;
+	color:red;
+	opacity:0;
+}
+.login_form .msg.on{
+	opacity:1;
+}
+.login_form .code_img{
+	display:block;
+	width:100px;
+	max-height:38px;
+	float:right;
+	cursor:pointer;
+	border:1px solid #e5e5e5;
+}
+.login_form .sub_btn{
+	display:block;
+	width:318px;
+	margin:25px auto;
+	height:41px;
+	line-height:41px;
+	text-align:center;
+	color:#fff;
+
+	border:0;
+	border-radius:5px;
+	background:#949724;
+	cursor:pointer;
+	font-size:16px;
+	overflow:hidden;
+	transition:background 0.3s ease-in-out;
+}
+.login_form .sub_btn:hover{
+	background:#9EA12E;
+}
+.code_img{
+	display:block;
+	height:38px;
+	line-height:38px;
+	text-align:center;
+	font-size:16px;
+	font-weight:bold;
+	color:#c7912b;
+
+	overflow:hidden;
+}

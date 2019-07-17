@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.finance.dao.TelephoneChargeLogDao">
+	<resultMap type="com.meitianhui.finance.entity.FDTelephoneChargeLog" id="telephoneChargeLogMap">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId"/>
+		<result column="mobile" property="mobile"/>
+		<result column="req_stream_id" property="reqStreamId"/>
+		<result column="order_no" property="orderNo"/>
+		<result column="transaction_no" property="transactionNo"/>
+		<result column="out_trade_no" property="outTradeNo"/>
+		<result column="amount" property="amount"/>
+		<result column="company_balance" property="companyBalance"/>
+		<result column="trade_time" property="tradeTime"/>
+		<result column="trade_status" property="tradeStatus"/>
+		<result column="create_time" property="createTime"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+	
+	<insert id="insert"  parameterType="com.meitianhui.finance.entity.FDTelephoneChargeLog">
+		INSERT INTO fd_telephone_charge_log (member_id,mobile,req_stream_id,order_no,transaction_no,out_trade_no,amount,company_balance,trade_time,
+			trade_status,create_time,remark)
+		VALUES(#{memberId},#{mobile},#{reqStreamId},#{orderNo},#{transactionNo},#{outTradeNo},#{amount},#{companyBalance},#{tradeTime},#{tradeStatus},
+				#{createTime},#{remark})
+	</insert>
+	
+	<select id="selectTelephoneCharge" resultMap="telephoneChargeLogMap" parameterType="Map">
+		select member_id,mobile,req_stream_id,order_no,transaction_no,out_trade_no,amount,company_balance,trade_time,
+			trade_status,create_time,remark
+		from fd_telephone_charge_log
+		<where>
+			<if test="reqStreamId != null and reqStreamId != '' ">
+				and  req_stream_id =#{reqStreamId}
+			</if>
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.meitianhui.finance.entity.FDTelephoneChargeLog">
+		update fd_telephone_charge_log
+			set member_id =#{memberId},
+				mobile =#{mobile},
+				req_stream_id =#{reqStreamId},
+				order_no =#{orderNo},
+				transaction_no =#{transactionNo},
+				out_trade_no =#{outTradeNo},
+				amount =#{amount},
+				company_balance =#{companyBalance},
+				trade_time =#{tradeTime},
+				trade_status =#{tradeStatus},
+				create_time =#{createTime},
+				remark =#{remark}
+		 where  req_stream_id =#{reqStreamId}
+	</update>
+
+</mapper>

@@ -1,0 +1,120 @@
+html,
+body {
+    font-weight: 300;
+    padding-bottom: 1.6rem;
+}
+#app {
+    width:10rem;
+    overflow:hidden;
+}
+.banner {
+    width: 10.0rem;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.swipe {
+    overflow: hidden;
+    position: relative;
+}
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+}
+.swipe-wrap > div {
+    float: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.swipe-wrap img {
+    height:10rem;
+    max-width: 100%;
+    margin:0;
+    display:block;
+    line-height: 0px;
+}
+nav {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0.133333rem;
+}
+#position li {
+    display: inline-block;
+    width: 0.16rem;
+    height: 0.16rem;
+    margin: 0 0.04rem;
+    -webkit-border-radius: 0.666667rem;
+    border-radius: 0.666667rem;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+#position li.on {
+    background-color: #ff0000;
+}
+.shop_detail {
+    width:10rem;
+}
+.shop_detail .shop_title {
+    height:.453333rem;
+    line-height: .453333rem;
+    font-size:.453333rem;
+    color:#333333;
+    margin-top:.6rem;
+    margin-left:.266667rem;
+}
+.shop_detail .fu_title {
+    height:.306667rem;
+    line-height:.306667rem;
+    font-size:.306667rem;
+    margin-top:.266667rem;
+    margin-left:.266667rem;
+    color:#999999;
+}
+.shop_detail .price {
+    height:.453333rem;
+    width:10rem;
+    margin-top:.4rem;
+}
+.shop_detail .yprice {
+    height:.453333rem;
+    float:left;
+    margin-left:0.2rem;
+    font-size:.453333rem;
+    line-height:.453333rem;
+    margin-left:.266667rem;
+    color:#333333;
+    font-weight: 500;
+}
+.shop_detail .memberprice {
+    height:.453333rem;
+    float:right;
+    margin-right:0.2rem;
+    font-size:.386667rem;
+    line-height:.453333rem;
+    color:#F45687;
+}
+.free {
+    height:.426667rem;
+    margin-left:0.2rem;
+    margin-top:.386667rem;
+    color:#999999;
+}
+
+
+
+.bottom {
+    height:1.306667rem;
+    width:10rem;
+    position:fixed;
+    bottom:0;
+    background-color: #F45689;
+    display: block;
+    line-height:1.306667rem;
+    font-size:.48rem;
+    text-align: center;
+    color:#FFFFFF;
+}

@@ -1,0 +1,48 @@
+.index_content{
+	padding:1.2rem;
+}
+.index_content .title{
+	height:2.5rem;
+	line-height:2.5rem;
+	overflow:hidden;
+	font-size:1.6rem;
+}
+.index_content .total_list{
+	overflow:hidden;
+	margin-top:1rem;
+}
+.index_content .total_list > li{
+	width:43%;
+
+	margin-bottom:1rem;
+	padding:0.7rem;
+	background:#fff;
+}
+.index_content .total_list > li:nth-child(odd) {
+    float:left;
+}
+.index_content .total_list > li:nth-child(even) {
+	float:right;
+	
+}
+.index_content .total_list > li .tit{
+	height:2.1rem;
+	line-height:2.1rem;
+	font-size:1.6rem;
+}
+
+
+.index_content .total_list > li  .count{
+	height:3rem;
+	line-height:3rem;
+	margin:0.5rem 0 1rem;
+	font-size:2rem;
+	font-weight:bold;
+	overflow:hidden;
+}
+.index_content .total_list > li .last{
+	height:2rem;
+	line-height:2rem;
+	overflow:hidden;
+	font-size:1.4rem;
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../commonHead.html %>
+    <title>开学季活动</title>
+    <style>
+       #app {
+           width:10rem;
+           position: relative;
+       }
+       #app img {
+           width:10rem;
+       }
+       #app div {
+           position:absolute;
+           width:4rem;
+           height:7rem;
+       }
+       .s1 {
+          top:10rem;
+          left:0.5rem; 
+       }
+       .s2 {
+          top:10rem;
+          left:5.5rem; 
+       }
+       .s3 {
+          top:17.5rem;
+          left:0.5rem; 
+       }
+       .s4 {
+          top:17.5rem;
+          left:5.5rem; 
+       }
+       .s5 {
+          top:25.5rem;
+          left:0.5rem; 
+       }
+       .s6 {
+          top:25.5rem;
+          left:5.5rem; 
+       }
+       .s7 {
+          top:33rem;
+          left:0.5rem; 
+       }
+       .s8 {
+          top:33rem;
+          left:5.5rem; 
+       }
+       .s9 {
+          top:41rem;
+          left:0.5rem; 
+       }
+       .s10 {
+          top:41rem;
+          left:5.5rem; 
+       }
+       #app .s11, #app .s12, #app .s13, #app .s14 {
+           width:9rem;
+           height:4rem;
+       }
+       #app .s11 {
+           top:53.8rem;
+           left:0.5rem;
+       }
+       #app .s12 {
+           top:58.5rem;
+           left:0.5rem;
+       }
+       #app .s13 {
+           top:63rem;
+           left:0.5rem;
+       }
+       #app .s14 {
+           top:67.5rem;
+           left:0.5rem;
+       }
+       #app .s15 {
+           top:78.5rem;
+           left:0.5rem;
+       }
+       #app .s16 {
+           top:78.5rem;
+           left:5.5rem;
+       }
+       #app .s17 {
+           top:86rem;
+           left:0.5rem;
+       }
+       #app .s18 {
+           top:86rem;
+           left:5.5rem;
+       }
+       #app .s19 {
+           top:94rem;
+           left:0.5rem;
+       }
+       #app .s20 {
+           top:94rem;
+           left:5.5rem;
+       }
+       #app .s21 {
+           top:101.5rem;
+           left:0.5rem;
+       }
+       #app .s22 {
+           top:101.5rem;
+           left:5.5rem;
+       }
+       #app .s23 {
+           top:109.5rem;
+           left:0.5rem;
+       }
+       #app .s24 {
+           top:109.5rem;
+           left:5.5rem;
+       }
+       
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <img src="http://app-static.huigujia.cn/communityDocs/nodepic/kaixue20190223140454.png" alt="">
+        <div class="s1" @click="gotoshopdetail('2233')"></div>
+        <div class="s2" @click="gotoshopdetail('2227')"></div>
+        <div class="s3" @click="gotoshopdetail('2228')"></div>
+        <div class="s4" @click="gotoshopdetail('2222')"></div>
+        <div class="s5" @click="gotoshopdetail('2064')"></div>
+        <div class="s6" @click="gotoshopdetail('774')"></div>
+        <div class="s7" @click="gotoshopdetail('2071')"></div>
+        <div class="s8" @click="gotoshopdetail('2072')"></div>
+        <div class="s9" @click="gotoshopdetail('2073')"></div>
+        <div class="s10" @click="gotoshopdetail('2229')"></div>
+        <div class="s11" @click="gotoshopdetail('1910')"></div>
+        <div class="s12" @click="gotoshopdetail('2230')"></div>
+        <div class="s13" @click="gotoshopdetail('2231')"></div>
+        <div class="s14" @click="gotoshopdetail('2232')"></div>
+        <div class="s15" @click="gotoshopdetail('1906')"></div>
+        <div class="s16" @click="gotoshopdetail('1907')"></div>
+        <div class="s17" @click="gotoshopdetail('1908')"></div>
+        <div class="s18" @click="gotoshopdetail('1909')"></div>
+        <div class="s19" @click="gotoshopdetail('1783')"></div>
+        <div class="s20" @click="gotoshopdetail('2223')"></div>
+        <div class="s21" @click="gotoshopdetail('2168')"></div>
+        <div class="s22" @click="gotoshopdetail('2162')"></div>
+        <div class="s23" @click="gotoshopdetail('2224')"></div>
+        <div class="s24" @click="gotoshopdetail('2225')"></div>
+        
+        
+      
+      </div>
+  
+  </body>
+  <script>
+      function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+      var app = new Vue({
+             el: '#app',
+             data:function(){
+                return {
+               
+               };
+            },
+            methods:{
+                gotoshopdetail:function(goods_id) {
+                    console.log(goods_id)
+                    gotosumit("gotoshopdetail",{"goods_id":goods_id})
+               } 
+               
+             },
+            mounted:function(){
+
+           }
+  });
+  
+  </script>
+</html>

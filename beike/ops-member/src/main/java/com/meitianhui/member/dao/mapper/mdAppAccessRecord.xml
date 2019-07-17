@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MdAppAccessRecordDao">
+
+	<insert id="insertAppAccessRecord" parameterType="com.meitianhui.member.entity.MdAppAccessRecord">
+		INSERT INTO
+		md_app_access_record (
+		 app_type
+		,app_type_detail
+		,app_version
+		,member_id
+		,access_method
+		,create_time
+		)
+		VALUES (
+		#{app_type}
+		,#{app_type_detail}
+		,#{app_version}
+		,#{member_id}
+		,#{access_method}
+		,NOW()
+		)
+	</insert>
+	
+	
+
+</mapper>

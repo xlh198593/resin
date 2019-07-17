@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MemberDistributionDao">
+	<resultMap type="com.meitianhui.member.entity.MDMemberDistribution" id="MemberDistributionMap">
+		<id column="member_id" property="memberId"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="top_id" property="topId"/>
+		<result column="grand_id" property="grandId"/>
+		<result column="manager_id" property="managerId"/>
+		<result column="general_id" property="generalId"/>
+		<result column="distr_level" property="distrLevel"/>
+		<result column="regist_level" property="registLevel"/>
+		<result column="recharge_money" property="rechargeMoney"/>
+		<result column="receive_money" property="receiveMoney"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="status" property="status"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.meitianhui.member.entity.MDMemberDistribution"> 
+		insert into
+			md_member_distribution
+				(member_id,
+				parent_id,
+				grand_id,
+				top_id,
+				manager_id,
+				general_id,
+				distr_level,
+				regist_level,
+				recharge_money,
+				receive_money,
+				create_time,
+				update_time,
+				status,remark) 
+			  values
+			  	(#{memberId},
+			  	#{parentId},
+			  	#{grandId},
+			  	#{topId},
+			  	#{managerId},
+			  	#{generalId},
+			  	#{distrLevel},
+			  	#{registLevel},
+			  	#{rechargeMoney},
+			  	#{receiveMoney},
+			   	#{createTime},
+			   	#{updateTime},
+			   	#{status},
+			   	#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.meitianhui.member.entity.MDMemberDistribution">
+		update md_member_distribution
+			set 
+				parent_id = #{parentId},
+				top_id = #{topId},
+				grand_id = #{grandId},
+				manager_id = #{managerId},
+				general_id = #{generalId},
+				distr_level = #{distrLevel},
+				regist_level =#{registLevel},
+				recharge_money = #{rechargeMoney},
+				receive_money = #{receiveMoney},
+				create_time = #{createTime},
+				update_time = #{updateTime},
+				status =#{status},
+				remark =#{remark}
+		where 
+				member_id =#{memberId}
+	</update>
+	
+	
+	<select id="getMemberDistributionInfo" resultMap="MemberDistributionMap"  parameterType="java.util.Map">
+		select  member_id,parent_id,grand_id,top_id,manager_id,general_id,distr_level,regist_level,recharge_money,receive_money,create_time,
+				update_time,status,remark
+		from md_member_distribution
+		<where>
+			<if test="member_id !=null and member_id !=''">
+				member_id = #{member_id}
+			</if>
+		</where>
+		order by create_time  desc
+	</select>
+	
+	<select id="getSimpleMemberdistr"  resultType="java.util.Map"  parameterType="java.util.Map">
+		select  member_id,parent_id,grand_id,top_id,manager_id,general_id,distr_level,regist_level,create_time
+		from md_member_distribution
+		<where>
+			<if test="regist_level !=null">
+				regist_level = #{regist_level}
+			</if>
+			<if test="member_id !=null and member_id !=''">
+				member_id = #{member_id}
+			</if>
+			<if test="parent_id !=null and parent_id !=''">
+				parent_id = #{parent_id}
+			</if>
+			<if test="grand_id !=null and grand_id !=''">
+				grand_id = #{grand_id}
+			</if>
+		</where>
+		order by create_time  desc
+	</select>
+
+	<select id="getSimpleMemberdistrByParentId"  resultMap="MemberDistributionMap" parameterType="java.util.Map">
+		select  member_id,parent_id,grand_id,top_id,manager_id,general_id,distr_level,regist_level
+		from md_member_distribution
+		<where>
+			<if test="parent_id !=null and parent_id !=''">
+				parent_id = #{parent_id}
+			</if>
+		</where>
+		order by create_time  desc
+	</select>
+	
+	<!-- 得到满足条件的memberId -->
+	<select id="getDistrMemberId"  resultType="java.lang.String" >
+		SELECT
+			member_id
+		FROM
+			mddb.md_member_distribution
+		WHERE
+			member_id IN (
+				SELECT
+					n1.parent_id
+				FROM
+					mddb.md_consumer r1
+				INNER JOIN mddb.md_member_distribution n1 ON r1.consumer_id = n1.member_id
+				WHERE
+					n1.parent_id IS NOT NULL
+				AND r1.type IN (0, 1)
+				GROUP BY
+					n1.parent_id
+				HAVING
+					count(1) &gt;= 30
+			)
+		AND regist_level = 2
+	</select>
+	
+	<!-- 查询达到条件的会员的下面粉丝（不包含子级和孙级） -->
+	<select id="getDistrNextMemberId" resultType="java.lang.String"  parameterType="java.util.Map">
+		select consumer_id from mddb.md_consumer where consumer_id in (
+		select member_id from mddb.md_member_distribution where FIND_IN_SET(member_id, mddb.queryChildrenInfo(#{member_id}))
+		AND member_id not in (select member_id from mddb.md_member_distribution where parent_id=#{member_id} UNION 
+		                      select member_id from mddb.md_member_distribution where grand_id=#{member_id} union 
+		                      select #{member_id} from dual) 
+		) and type in (0,1) 
+	</select>
+	
+	
+		<!-- 查询临时粉丝 -->
+	<select id="selectTempFans" resultType="java.util.Map"  parameterType="java.util.Map">
+		SELECT
+			t.mobile,
+			t.nick_name,
+			t.fans_type,
+			unix_timestamp (m.create_time) * 1000 as  create_time
+		FROM
+			(
+					SELECT
+						c.consumer_id,
+						c.mobile,
+						IFNULL(c.nick_name, '昵称') AS nick_name,
+						'临时' AS fans_type
+					FROM
+						mddb.md_consumer c
+					WHERE
+							c.consumer_id IN (
+									SELECT
+										member_id
+									FROM
+										mddb.md_member_distribution_info
+									WHERE
+										parent_id = #{member_id}
+							)
+					and  c.vip_start_time  is NULL
+			) t,
+			mddb.md_member_distribution_info m
+		WHERE
+			t.consumer_id = m.member_id
+		ORDER BY
+			m.create_time DESC
+	</select>
+	
+	<!-- 查询直邀粉丝 -->
+	<select id="selectMemberDirectFans"  resultType="java.util.Map"  parameterType="java.util.Map">
+		SELECT
+			t.mobile,
+			t.nick_name,
+			t.fans_type,
+			unix_timestamp (m.create_time) * 1000  as  create_time
+		FROM
+			(
+				SELECT
+					c.consumer_id,
+					c.mobile,
+					IFNULL(c.nick_name, '昵称') AS nick_name,
+					'直邀' AS fans_type
+				FROM
+					mddb.md_consumer c
+				WHERE
+					c.consumer_id IN (
+						SELECT
+							member_id
+						FROM
+							mddb.md_member_distribution
+						WHERE
+							parent_id = #{parent_id}
+					)
+			) t,
+			mddb.md_member_distribution m
+		WHERE
+			t.consumer_id = m.member_id
+		ORDER BY
+			m.create_time DESC
+	</select>
+	
+	<!-- 查询间邀粉丝 -->
+	<select id="selectMemberIndirectFans"  resultType="java.util.Map"  parameterType="java.util.Map">
+	   SELECT
+			t.mobile,
+			t.nick_name,
+			t.fans_type,
+			t.consumer_id,
+			unix_timestamp (m.create_time) * 1000  as  create_time
+		FROM
+			(
+				SELECT
+					c.consumer_id,
+					c.mobile,
+					IFNULL(c.nick_name, '昵称') AS nick_name,
+					'间邀' AS fans_type
+				FROM
+					mddb.md_consumer c
+				WHERE
+					c.consumer_id IN (
+						SELECT
+							member_id
+						FROM
+							mddb.md_member_distribution
+						WHERE
+							grand_id = #{grand_id}
+					)
+			) t,
+			mddb.md_member_distribution m
+		WHERE
+			t.consumer_id = m.member_id
+		ORDER BY
+			m.create_time DESC
+	</select>
+		
+		<!-- 查询全部粉丝 -->
+	<select id="selectMemberFans"  resultType="java.util.Map"  parameterType="java.util.Map">
+		SELECT  *  FROM
+			(
+			SELECT
+				t.mobile,
+				t.nick_name,
+				t.fans_type,
+				unix_timestamp(m.create_time) * 1000 as create_time
+			FROM
+				(
+					SELECT
+						c.consumer_id,
+						c.mobile,
+						IFNULL(c.nick_name, '昵称') AS nick_name,
+						'直邀' AS fans_type
+					FROM
+						mddb.md_consumer c
+					WHERE
+						c.consumer_id IN (
+							SELECT
+								member_id
+							FROM
+								mddb.md_member_distribution
+							WHERE
+								parent_id = #{parent_id}
+						)
+				) t,
+				mddb.md_member_distribution m
+			WHERE
+				t.consumer_id = m.member_id
+			UNION
+			SELECT
+						t.mobile,
+						t.nick_name,
+						t.fans_type,
+						unix_timestamp(m.create_time) * 1000  as create_time
+					FROM
+						(
+							SELECT
+								c.consumer_id,
+								c.mobile,
+								IFNULL(c.nick_name, '昵称') AS nick_name,
+								'间邀' AS fans_type
+							FROM
+								mddb.md_consumer c
+							WHERE
+								c.consumer_id IN (
+									SELECT
+										member_id
+									FROM
+										mddb.md_member_distribution 
+									WHERE
+										grand_id= #{grand_id}
+								)
+						) t,
+						mddb.md_member_distribution m
+					WHERE
+						t.consumer_id = m.member_id
+			UNION
+				SELECT
+							t.mobile,
+							t.nick_name,
+							t.fans_type,
+							unix_timestamp (m.create_time) * 1000  as  create_time
+						FROM
+							(
+									SELECT
+										c.consumer_id,
+										c.mobile,
+										IFNULL(c.nick_name, '昵称') AS nick_name,
+										'临时' AS fans_type
+									FROM
+										mddb.md_consumer c
+									WHERE
+											c.consumer_id IN (
+													SELECT
+														member_id
+													FROM
+														mddb.md_member_distribution_info
+													WHERE
+														parent_id = #{member_id}
+											)
+									and  c.vip_start_time  is NULL
+							) t,
+							mddb.md_member_distribution_info m
+						WHERE
+							t.consumer_id = m.member_id
+			)  t1
+			ORDER BY  create_time  desc
+	</select>
+	
+	<select id="findMemberDistrCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT   COUNT(1)   from   mddb.md_member_distribution   
+		where  parent_id=#{parent_id}
+	</select>
+	
+	<select id="selectConsumerMobile" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT
+			c.mobile
+		FROM
+			mddb.md_member_distribution m,
+			mddb.md_consumer c
+		WHERE
+			m.parent_id = c.consumer_id
+		AND m.member_id =  #{member_id}
+	</select>
+	
+	
+	<select id="getMemberManagerId" resultType="java.lang.String">
+		SELECT   member_id   from  md_member_distribution   where   distr_level =3  and  regist_level  =3
+	</select>
+	
+	<select id="getdistrMemberInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			member_id,
+			parent_id,
+			create_time
+		FROM
+			md_member_distribution
+		WHERE
+			general_id = #{member_id}
+		OR manager_id = #{member_id}
+		OR top_id = #{member_id}
+		ORDER BY
+			create_time DESC
+	</select>
+</mapper>

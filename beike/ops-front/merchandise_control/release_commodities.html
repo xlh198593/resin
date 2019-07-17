@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>商品发布</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" href="../layui/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" type="text/css" href="../css/merchandise_control.css">
+
+</head>
+
+<body>
+	<span class="layui-breadcrumb">
+	  <a href="./merchandise_control.html">商品管理</a>
+	  <a href="./merchandise_control.html">选择目录</a>
+	  <a><cite>商品发布</cite></a>
+	</span>
+	<div class="merchandise_control">
+		<form class="layui-form layui-form-pane" action="" style="padding-bottom:100px;">
+			<div class="row">
+				<div class="title">
+					<label>商品标题:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<input type="text" name="" class="input_val good_title" maxlength="50" placeholder="请输入商品标题, 不超过50个字" style="width:563px;">
+				</div>
+			</div>
+			<div class="row">
+				<div class="title">
+					<label>副标题:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<input type="text" name="" class="input_val small_title" maxlength="15" placeholder="请输入商品副标题, 不超过15个字" style="width:563px;">
+				</div>
+			</div>
+			<div class="row">
+				<div class="title">
+					<label>商品编码:</label>
+				</div>
+				<div class="text_content">
+					<input type="text" name="" class="input_val goods_code" maxlength="50" placeholder="请输入商品编码" style="width:250px;">
+				</div>
+			</div>
+			<div class="row">
+				<div class="title">
+					<label>商品主图:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<div class="layui-upload">
+						<div class="layui-input-block uploadimg_con_list" style="width:1020px;margin-left:0;" count="0">
+							<div class="uploadimg_con uploadimg_add_con">
+								<div class="layui-upload-list uploadimg uploadimg_add_btn" id="test6" style="width:90px;height:90px;margin-top:12px;">
+								    <img class="layui-upload-img uploadimg_src" id="demo6" width="100%" height="99.5%" src="../images/upload_default.png">
+								</div>
+							</div>
+						</div>
+						<p class="warn_txt">限定尺寸：800*600px，支持png/jpg格式，至少上传3张图片</p>
+					</div>   
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="title" style="width:101px;">
+					<label>列表图片样式:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<div class="layui-form-item">
+					    <div class="layui-input-block select_img_btn" style="margin-left:0;">
+					      <input type="radio" name="imgradio" value="是"  checked="checked" class="select_img_radio" data-id="0">
+					      <input type="radio" name="imgradio" value="否"  class="select_img_radio" data-id="1">
+					    </div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline select_img_type">
+					        <img src="../images/select_img_type1.jpg" width="100%">
+					        <p class="txt">（默认显示商品封面图）</p>
+					    </div>
+					    <div class="layui-input-inline select_img_type" style="display:none;">
+					        <img src="../images/select_img_type2.png" width="100%">
+					        <p class="txt">（默认显示前三张商品主图）</p>
+					    </div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="title">
+					<label>套餐内容:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+				    <p class="tit_msg">提示：一级类目如：锅底；二级类目如：鸳鸯锅、清汤锅、红油锅。</p>
+				    <ul class="goods_grade_list" count="1">
+						<li>
+							<div class="grade_1">
+								<input type="text" name="" class="grade_val_1 grade_val" placeholder="输入一级类型名称">
+								<span class="close_1_btn">X</span>
+							</div>
+						 
+							<ul class="grade_2" count="1">
+								<li>
+									<input type="text" name="" class="grade_val_2 grade_val">
+									<span class="close_2_btn">X</span>
+								</li>
+								<div class="add_grade_2_btn">增加</div>
+							</ul>
+						</li>
+				    </ul>
+				    <div class="make_table">生成套餐内容</div>
+				    <div class="add_grade_1_btn">增加类目</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="title">
+					<label>商品标题:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<table class="layui-table make_tab" style="width:820px;">
+						<colgroup>
+						    <col width="210">
+						    <col width="210">
+						    <col>
+						    <col>
+						</colgroup>
+						<thead>
+						    <tr>
+								<th>一级类目</th>
+								<th>二级类目</th>
+								<th>数量(份)</th>
+								<th>单价(元)</th>
+						    </tr> 
+						</thead>
+
+						<tbody>
+							<tr>
+								<td colspan="4">暂时没有数据</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="title">
+					<label>总库存:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<input type="text" name="" class="input_val stock_qty"  placeholder="请输入整数" style="width:90px;">
+					<span class="unit">份</span>
+				</div>
+			</div>
+	     	<div class="row active_row">
+				<div class="title">
+					<label>参与活动:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<div class="layui-form-item">
+					    <div class="layui-input-block active_status_con" style="margin-left:0;">
+					      <input type="radio" name="active" value="是" title="是" checked="" class="acitve_radio">
+					      <input type="radio" name="active" value="否" title="否" class="acitve_radio">
+					    </div>
+					</div>
+					<ul class="active_con">
+						<li>
+						    <span class="active_btn on" activeItemStatus="half">超划算</span>
+							<p class="rule_msg">商品的定价将采取打折形式出售，如门店价100元商品，选择8折扣后，价格为：¥80+20贝壳。</p>
+						</li>
+						<li>
+							<span class="active_btn" activeItemStatus="shell">天天抢</span>
+							<p class="rule_msg">商品的定价采取“纯贝壳”的形式售卖，如门店价100元的商品，参与活动后价格自动转为：100贝壳。</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" style="overflow:inherit;">
+				<div class="title">
+					<label>商品价格:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<div style="float:left;">
+						<span class="unit" style="color:#666;">原价（门店价）：</span>
+						<input type="text" name="price" class="input_val price"  placeholder="请输入整数" style="width:90px;" autocomplete="off">
+						<span class="unit">元</span>
+					</div>
+					<div style="float:left;margin-left:41px;" class="discount">
+				      <label class="layui-form-label">折扣：</label>
+				      <div class="layui-input-inline beat">
+				        <select name="quiz">
+							<option value="1">请选择折扣</option>
+							<option value="0.2">2折</option>
+							<option value="0.3">3折</option>
+							<option value="0.4">4折</option>
+							<option value="0.5">5折</option>
+							<option value="0.6">6折</option>
+							<option value="0.7">7折</option>
+							<option value="0.8">8折</option>
+							<option value="0.9">9折</option>
+				        </select>
+				      </div>
+				    </div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="row">
+				<div class="title"></div>
+				<div class="text_content">
+					<span class="unit" style="color:#666;">超级会员价：</span>
+					<input type="text" name="pay_count" class="input_val pay_count"  placeholder="请输入整数" style="width:90px;" disabled="disabled" autocomplete="off">
+					<span class="unit pay_count_unit">元</span>
+					<span class="and_icon">+</span>
+					<input type="text" name="shell_count" class="input_val shell_count"  placeholder="请输入整数" style="width:90px;" disabled="disabled">
+					<span class="unit shell_unit">个贝壳</span>
+				</div>
+			</div>
+			<div class="row" style="padding-bottom:100px;">
+				<div class="title">
+					<label>购买须知:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+					<div class="know_that" style="margin-bottom:20px;">
+						<div class="tit">商品有效期：</div>
+						<div class="layui-inline">
+					      <label class="layui-form-label">请选择范围</label>
+					      <div class="layui-input-inline">
+					        <input type="text" class="layui-input" id="test15" placeholder="开始 到 结束" style="width:360px;" autocomplete="off">
+					      </div>
+					    </div>
+						<div style="clear: both;"></div>
+					</div>
+					<div class="know_that">
+						<div class="tit">使用时间：</div>
+						<div class="know_that_content">
+							<div class="layui-form-item">
+							    <div class="layui-inline">
+							        <div class="layui-input-inline ticket_use_date">
+								        <select name="quiz">
+								        	<option value="0">请选择</option>
+								            <option value="1"> 周一至周五</option>
+								            <option value="2">节假日通用</option>
+								        </select>
+							        </div>
+							    </div>
+
+						        <div class="layui-inline">
+							        <label class="layui-form-label">时间范围</label>
+							        <div class="layui-input-inline">
+							            <input type="text" class="layui-input" id="test16" placeholder="-" autocomplete="off">
+							        </div>
+							    </div>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<div class="know_that">
+						<div class="tit">使用规则：</div>
+						<div class="know_that_content">
+							<div class="layui-form-item">
+							    <div class="layui-inline ticket_use_count">
+							        <div class="layui-input-inline">
+								        <select name="ticket_use_count">
+								        	<option value="0">请选择</option>
+								            <option value="1"> 最多可以用一张</option>
+								            <option value="2">最多可用两张</option>
+								            <option value="3"> 最多可用三种</option>
+								            <option value="-1">不限使用张数</option>
+								        </select>
+							        </div>
+							    </div>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<div class="know_that">
+						<div class="tit">发票信息：</div>
+						<div class="know_that_content">
+							<div class="layui-form-item">
+							    <div class="layui-inline  use_bill">
+							        <div class="layui-input-inline">
+								        <select name="use_bill">
+								        	<option value="-1">请选择</option>
+								        	<option value="0">不提供发票</option>
+								            <option value="1">可提供发票</option>
+								        </select>
+							        </div>
+							    </div>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<div class="know_that">
+						<div class="tit">其它事项：</div>
+						<div class="know_that_content">
+							<ul class="other_list"  count="1">
+								<li>
+									<input type="text" name="other" placeholder="例如：适用范围：除酒水饮料、茶位蘸料、特价菜外全场通用" autocomplete="off">
+									<span class="close_btn">X</span>
+								</li>
+					     	</ul>
+					     	<span class="add_other_btn">+</span>
+					     	<div style="clear: both;"></div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+
+
+
+		    <div class="row">
+				<div class="title">
+					<label>商家服务:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content shop_serve_select">
+				    <div class="layui-input-block drawback_select_list" style="margin-top:7px;margin-left:0;">
+				        <input type="checkbox" name="drawback" lay-skin="primary" title="随时退" data-index="1" checked="" disabled="disabled">  <span>（购买后未使用，可随时申请退款）</span>
+				    </div>
+			        <div class="layui-input-block drawback_select_list" style="margin-top:7px;margin-left:0;">
+				        <input type="checkbox" name="drawback" lay-skin="primary" data-index="2" title="过期退" checked="" disabled="disabled"> <span>（购买后未使用且已过有效期，将自动退款）</span>
+				    </div>
+				    <div class="layui-input-block drawback_select_list" style="margin-top:7px;margin-left:0;">
+				        <input type="checkbox" name="drawback" lay-skin="primary" data-index="3" title="免预约">  <span>（无需预约，高峰时段可能需要等位）</span>
+				    </div>
+				</div>
+			</div>
+
+
+<!-- 			<div class="row">
+				<div class="title">
+					<label>推荐商品:</label>
+					<span>*</span>
+				</div>
+				<div class="text_content">
+				    <div class="layui-input-block select_order_btn" style="float:left;margin-left:0;">
+				        <input type="radio" name="is_recommend" value="order" title="是" checked="">
+				        <input type="radio" name="is_recommend" value="order" title="否">
+				    </div>
+				    <div class="order_input_con">
+				    	<span>排序：</span>
+				    	<input type="text" name="" class="input_val order_val" placeholder="数字小越靠前"  onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" value="60" autocomplete="off">
+				    </div>
+				</div>
+			</div> -->
+
+<!-- 			<div class="row">
+				<div class="title">
+					<label>备注:</label>
+				</div>
+				<div class="text_content">
+					<input type="text" name="" class="input_val remark"  placeholder="请输入备注" style="width:500px;" autocomplete="off">
+				</div>
+			</div> -->
+
+			<div class="row">
+				<div class="title"></div>
+				<div class="text_content">
+				    <div class="layui-input-block select_grounding_btn" style="float:left;margin-left:0;">
+				      <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+				    </div>
+				    <span class="shangjia_msg">审核通过后直接上架（无需手动上架）</span>
+				</div>
+			</div>
+			<div class="sub_good_btn">提交审核并放入仓库</div>
+		</form>
+	</div>
+</body>
+
+<script src="../layui/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/common/url.js"></script>
+<script type="text/javascript" src="../js/common/common.js"></script>
+ 
+<script type="text/javascript" src="../js/merchandise_control/release_commodities.js"></script>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>会员中心</title>
+        <link rel="stylesheet" href="/css/payback/user_memeber.css?v20180928">
+        
+</head>
+
+<body>
+    <div id="app">
+                
+       
+                    <% if(login_status == '0') {%>
+                        <% if(type ==1) {%>
+                            <div class="user_first1">
+                                  
+                            </div>
+                        <%} else {%>
+                            <div class="user1">
+                                    <div class="headimage1"></div>
+                                    <div class="gologin" @click="gotologin()">立即登录</div>
+                            </div>
+                        <% }%>
+                        
+                        <div class="select select1">
+                                <div class="up">
+                                    <div class="gitcontent">
+                                        <div class="pic giftbag"></div>
+                                        <div class="textdescript">超值礼包</div>
+                                    </div>
+                                    <div class="gitcontent">
+                                        <div class="pic beike"></div>
+                                        <div class="textdescript">贝壳抵现</div>
+                                    </div>
+                                    <div class="gitcontent">
+                                        <div class="pic invation"></div>
+                                        <div class="textdescript">邀请返佣</div>
+                                    </div>
+                                </div>
+                                <div class="down">
+                                    <div class="gitcontent">
+                                        <div class="pic member"></div>
+                                        <div class="textdescript">会员专享价格</div>
+                                    </div>
+                                    <div class="gitcontent">
+                                        <div class="pic shopping"></div>
+                                        <div class="textdescript">线下购物抵现</div>
+                                    </div>
+                                    <div class="gitcontent">
+                                        <div class="pic vip"></div>
+                                        <div class="textdescript">专享商品</div>
+                                    </div>
+                                </div>
+                            </div>
+                    <%} else {%>
+                        <% if(type == 1) {%>
+                            <div class="user_first">
+                                
+                            </div>
+                          <%} else {%>
+                                <div class="user">
+                                        <div class="user_message">
+                                                <img class="headimage"/>
+                                                <div class="usermessage">
+                                                    <%-username%>
+                                                </div>
+                                                <% if( end_time != null) {%>
+                                                <div class="end_time">
+                                                    <div class="vipimage"></div>
+                                                    <div class="end_time_tit"><%-end_time%>到期</div>
+                                                       
+                                                </div>
+                                                <%} else {%>
+                                                    <!-- <div class="end_time">
+                                                        <div class="vipimage"></div>
+                                                        <div class="end_time_tit"><%-end_time%>到期</div>
+                                                           
+                                                    </div> -->
+                                                <%}%>
+                                            </div>
+                                            </div>
+                            <% }%>
+                        
+                            <div class="select">
+                                    <div class="up">
+                                        <div class="gitcontent">
+                                            <div class="pic giftbag"></div>
+                                            <div class="textdescript">超值礼包</div>
+                                        </div>
+                                        <div class="gitcontent">
+                                            <div class="pic beike"></div>
+                                            <div class="textdescript">贝壳抵现</div>
+                                        </div>
+                                        <div class="gitcontent">
+                                            <div class="pic invation"></div>
+                                            <div class="textdescript">邀请返佣</div>
+                                        </div>
+                                    </div>
+                                    <div class="down">
+                                        <div class="gitcontent">
+                                            <div class="pic member"></div>
+                                            <div class="textdescript">会员专享价格</div>
+                                        </div>
+                                        <div class="gitcontent">
+                                            <div class="pic shopping"></div>
+                                            <div class="textdescript">线下购物抵现</div>
+                                        </div>
+                                        <div class="gitcontent">
+                                            <div class="pic vip"></div>
+                                            <div class="textdescript">专享商品</div>
+                                        </div>
+                                    </div>
+                        
+                                </div>
+                    <%}%>
+       
+        <div class="recharge_select">
+            <div class="month" v-on:click="changeSelectStatus('month')">
+                <div class="recharge_content" v-bind:class="{select_status:month,notselect_status:!month}">
+                    <div class="corner_mark_notselect"></div>
+                    <div class="recharge_title">月度vip</div>
+                    <div v-bind:class="{price_notselect:!month,price_select:month}">
+                        <span v-bind:class="{price_symbol:month,price_symbol_notselect:!month}">￥</span>68</div>
+                    <div class="descript">送68礼券213贝壳</div>
+                </div>
+            </div>
+            <div class="quarter" v-on:click="changeSelectStatus('quarter')">
+                <div class="recharge_content" v-bind:class="{select_status:quarter,notselect_status:!quarter}">
+                    <div class="corner_mark"></div>
+                    <div class="recharge_title_notselect">季度vip</div>
+                    <div v-bind:class="{price_notselect:!quarter,price_select:quarter}">
+                        <span v-bind:class="{price_symbol:quarter,price_symbol_notselect:!quarter}">￥</span>168</div>
+                    <div class="descript_notselect">送168礼券686贝壳</div>
+                </div>
+            </div>
+            <div class="year" v-on:click="changeSelectStatus('year')">
+                <div class="recharge_content" v-bind:class="{select_status:year,notselect_status:!year}">
+                    <div class="corner_mark_notselect"></div>
+                    <div class="recharge_title_notselect">半年vip</div>
+                    <div v-bind:class="{price_notselect:!year,price_select:year}">
+                        <span v-bind:class="{price_symbol:year,price_symbol_notselect:!year}">￥</span>368</div>
+                    <div class="descript_notselect">送368礼券1386贝壳</div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div class="backgroundblack" v-show="alert_paymethods">
+            <div v-show="alert_paymethods" class="alert">
+                <div class="close" v-on:click="changeclosestatus('paymenthods')"></div>
+                
+                <div class="payprice">需要支付{{paymoney.toFixed(2)}}元</div>
+
+                <div class="select_paymethods">
+                    <div class="wx" v-on:click="gotorecharge('w')"></div>
+                    <div class="zfb" v-on:click="gotorecharge('z')"></div>
+                </div>
+                <div v-show="zgbshow" class="tishi">暂不支持支付宝支付,敬请期待</div>
+            </div>
+        </div> -->
+        <!-- <div class="backgroundblack" v-show="alert_agreement">
+                <div class="alert">
+                    <div class="close" v-on:click="changeclosestatus('tips')"></div>
+                    <div class="agreetit">您还未勾选会员协议</div>
+                    <div class="agreetit1">请阅读并勾选再进行下一步操作</div>
+               </div>
+        </div> -->
+        <% if (login_status == '1') {%> 
+           
+            <%} else {%>
+                <div class="backgroundblack" v-if="alert_login != '0'">
+                    <div class="alert1">
+                        <div class="close" v-on:click="changeclosestatus('')"></div>
+                        <div class="loginpic"></div>
+                        <div class="agreetit">由于您还未登录账号,请登录后</div>
+                        <div class="agreetit1">再进行此项操作</div>
+                        <div class="know" v-on:click="gotologin()">立即登录</div>
+                    </div>
+                </div>
+                <%}%>
+
+                    <!-- <div class="agreement">
+                        <div class="agreement_content">
+                            <span class="agreement_select" v-on:click="changeSelectStatus('agreement')" v-bind:class="{agrselect:agreement,agrnoselect:!agreement}"></span>
+                            <span class="agreement_descript" style="color:#333333">我已同意阅读开通/续费会员的</span>
+                            <span style="color:#F45687" @click="gotoprotol()">&lt;&lt;相关协议&gt;&gt;</span>
+                        </div>
+                    </div> -->
+
+                    <% if(type ==1) {%>
+                        <div class="gotorecharge" @click="gotoorderdetaill()">立即开通,尊享6大特权 ></div>
+                    <%}else{%>
+                        <div class="gotorecharge" @click="gotoorderdetail()">立即开通,尊享6大特权 ></div>
+                    <%}%>
+                    
+                    <!-- <div class="on_trial">
+                        <div class="on_trial_in" @click="selectPays('8')">27元试用一个月,送86贝壳</div>
+                       </div> -->
+                    <div class="divison"></div>
+                    <div class="recommend">
+                        <div class="recommend_vip">vip推荐</div>
+                        <% for(var i in list) { %>
+                            <div class="recommend_list" @click="gotodetail('<%=list[i].goods_id%>')">
+                                <img src="<%=list[i].picUrlArr[0] %>"  class="recommend_pic" />
+                                <div class="recommend_message">
+                                    <div class="recommend_title"><%=list[i].goods_title %></div>
+                                    <div class="recommend_futitle"><%=list[i].desc1 %></div>
+                                    <!-- <div class="member_price">￥<%=list[i].goods_hongbao %>
+                                        <span class="member_vip"></span>
+                                    </div> -->
+                                    <div class="member_price">
+                                        <span class="member_vip"></span>
+                                        ￥<%=list[i].goods_hongbao.toFixed(2) %>
+                                    </div>
+                                    <!-- <div class="rightarrow"></div> -->
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+
+    </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                month: false,
+                quarter: true,
+                year: false,
+                agreement: true,
+                paymoney:'168',
+                member_id:"<%-member_id%>",
+                // alert_agreement: false,
+                // zgbshow:false,
+                // alert_paymethods: false,
+                alert_login:"<%-login_status%>",
+                list: [],
+                appBaseName:"<%-appBaseName%>"
+            }
+        },
+        computed:{
+            paymoney:function() {
+                return this.month ? 68:(this.quarter ? 168 :(this.year ? 368:8));
+            }
+        },
+        methods: {
+            // selectPays: function (t) {
+            //    if(t == '8') {
+            //        this.month = false;
+            //        this.quarter = false;
+            //        this.year = false;
+            //    }
+            //    if(this.alert_login == '0') {
+            //         this.alert_login = '1';
+            //         return;
+            //     }
+            //     // if (!this.agreement) {
+            //     //     this.alert_agreement = true;
+            //     //     return;
+            //     // }
+            //     this.alert_paymethods = true;
+            // },
+            changeSelectStatus: function (methods) {
+                if (methods == "month") {
+                    this.month = true,
+                    this.quarter = false,
+                    this.year = false
+                } else if (methods == 'quarter') {
+                    this.month = false,
+                    this.quarter = true,
+                     this.year = false
+                } else if (methods == 'year') {
+                    this.month = false,
+                    this.quarter = false,
+                    this.year = true
+                } else {
+                    this.agreement = !this.agreement;
+
+                }
+
+            },
+            changeclosestatus: function (closemethos) {
+                // if (closemethos == "tips") {
+                //     this.alert_agreement = false;
+                // } else 
+                if (closemethos == 'paymenthods') {
+                    // this.alert_paymethods = false;
+                    // this.zgbshow = false;
+                    // if(this.paymoney == '8') {
+                    //     this.quarter = true;
+                    // }
+                    
+                } else {
+                    this.alert_login = '0';
+                }
+            },
+            // gotorecharge: function (t) {
+            //     if(!this.alert_login) return this.alert_login = true;
+            //     // if (!this.agreement) return this.alert_agreement = true;
+            //     //支付方式 0：微信 1:支付宝
+            //     var paymenthods = t == 'w' ? 0 : 1;
+            //     // if(t == 'w') {
+            //     //     // this.zgbshow = false;
+            //     // } else {
+            //     //     this.zgbshow = true;
+            //     //     return;
+            //     // }
+            //     //充值 1:68一个月 168：季度 368：半年 27：体验27元
+               
+            //     var memberlevel = this.month ? 68:(this.quarter ? 168: (this.year ? 368 : 8));
+            //     var obj = {};
+            //     obj.memberlevel = memberlevel;
+            //     obj.paymenthods = paymenthods;
+            //     gotosumit("payforRightNow",obj);
+            // },
+            gotodetail:function(id) {
+                gotosumit("gotodetail",{"goods_id":id});
+            },
+            gotoprotol:function() {
+                gotosumit("gotoprotol",{})
+                //  window.location.href = this.appBaseName+"/openapi/h5/c/userdeal"
+            },
+            gotologin: function () {
+                gotosumit("login",{});
+            },
+            gotoorderdetail:function() {
+                if(this.alert_login == 0) return this.alert_login = 1;
+                // if (!this.agreement) return this.alert_agreement = true;
+                var memberlevel = this.month ? 68:(this.quarter ? 168: (this.year ? 368 : 8));
+                var obj = {};
+                obj.memberlevel=memberlevel;
+                gotosumit("gotoorderdetail",obj);
+                // window.location.href = "<%-appBaseName%>/openapi/h5/c/memberOrder?user_token=<%-user_token%>&type=<%-type%>&memberlevel="+memberlevel+"&member_id="+this.member_id;
+                // window.location.href = "http://localhost:3001/openapi/h5/c/memberOrder?user_token=jjjj&memberlevel="+memberlevel+"&member_id="+this.member_id+"&type=<%-type%>";
+            },
+            gotoorderdetaill:function() {
+                if(this.alert_login == 0) return this.alert_login = 1;
+                // if (!this.agreement) return this.alert_agreement = true;
+                var memberlevel = this.month ? 68:(this.quarter ? 168: (this.year ? 368 : 8));
+                window.location.href = "<%-appBaseName%>/openapi/h5/c/memberOrder?user_token=<%-user_token%>&type=<%-type%>&memberlevel="+memberlevel+"&member_id="+this.member_id;
+            }
+        }
+    })
+
+
+</script>
+
+</html>

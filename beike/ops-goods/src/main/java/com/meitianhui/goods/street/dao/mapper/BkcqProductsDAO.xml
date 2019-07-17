@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.goods.street.dao.BkcqProductsDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.goods.street.entity.BkcqProducts">
+        <id column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="goods_code" jdbcType="VARCHAR" property="goodsCode"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="desc1" jdbcType="VARCHAR" property="desc1"/>
+        <result column="top_catid" jdbcType="INTEGER" property="topCatid"/>
+        <result column="two_catid" jdbcType="INTEGER" property="twoCatid"/>
+        <result column="three_catid" jdbcType="INTEGER" property="threeCatid"/>
+        <result column="brand_id" jdbcType="INTEGER" property="brandId"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="label_promotion" jdbcType="VARCHAR" property="labelPromotion"/>
+        <result column="goods_source" jdbcType="VARCHAR" property="goodsSource"/>
+        <result column="display_area" jdbcType="VARCHAR" property="displayArea"/>
+        <result column="contact_person" jdbcType="VARCHAR" property="contactPerson"/>
+        <result column="contact_tel" jdbcType="VARCHAR" property="contactTel"/>
+        <result column="pic_info" jdbcType="VARCHAR" property="picInfo"/>
+        <result column="pic_detail_info" jdbcType="VARCHAR" property="picDetailInfo"/>
+        <result column="specification" jdbcType="VARCHAR" property="specification"/>
+        <result column="pack" jdbcType="VARCHAR" property="pack"/>
+        <result column="market_price" jdbcType="DECIMAL" property="marketPrice"/>
+        <result column="cost_price" jdbcType="DECIMAL" property="costPrice"/>
+        <result column="sale_price" jdbcType="DECIMAL" property="salePrice"/>
+        <result column="beike_credit" jdbcType="DECIMAL" property="beikeCredit"/>
+        <result column="vip_price" jdbcType="DECIMAL" property="vipPrice"/>
+        <result column="shipping_fee" jdbcType="DECIMAL" property="shippingFee"/>
+        <result column="settled_price" jdbcType="DECIMAL" property="settledPrice"/>
+        <result column="producer" jdbcType="VARCHAR" property="producer"/>
+        <result column="supplier_id" jdbcType="VARCHAR" property="supplierId"/>
+        <result column="supplier" jdbcType="VARCHAR" property="supplier"/>
+        <result column="supplier_cat_id" jdbcType="INTEGER" property="supplierCatId"/>
+        <result column="supplier_type" jdbcType="VARCHAR" property="supplierType"/>
+        <result column="promotion_type" jdbcType="VARCHAR" property="promotionType"/>
+        <result column="promotion_id" jdbcType="INTEGER" property="promotionId"/>
+        <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer"/>
+        <result column="min_buy_qty" jdbcType="INTEGER" property="minBuyQty"/>
+        <result column="max_buy_qty" jdbcType="INTEGER" property="maxBuyQty"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="is_virtual" jdbcType="TINYINT" property="isVirtual"/>
+        <result column="sale_qty" jdbcType="INTEGER" property="saleQty"/>
+        <result column="stock_qty" jdbcType="INTEGER" property="stockQty"/>
+        <result column="goods_unit" jdbcType="VARCHAR" property="goodsUnit"/>
+        <result column="warehouse" jdbcType="VARCHAR" property="warehouse"/>
+        <result column="warehouse_id" jdbcType="VARCHAR" property="warehouseId"/>
+        <result column="delivery_area" jdbcType="VARCHAR" property="deliveryArea"/>
+        <result column="payment_way" jdbcType="VARCHAR" property="paymentWay"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="sorted" jdbcType="INTEGER" property="sorted"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+        <result column="fake_sales_volume" jdbcType="INTEGER" property="fakeSalesVolume"/>
+        <result column="valid_thru" jdbcType="TIMESTAMP" property="validThru"/>
+        <result column="online_date" jdbcType="TIMESTAMP" property="onlineDate"/>
+        <result column="offline_date" jdbcType="TIMESTAMP" property="offlineDate"/>
+        <result column="coupon_price" jdbcType="INTEGER" property="couponPrice"/>
+        <result column="service_level" jdbcType="VARCHAR" property="serviceLevel"/>
+        <result column="bn" jdbcType="VARCHAR" property="bn"/>
+        <result column="invoice_id" jdbcType="VARCHAR" property="invoiceId"/>
+        <result column="perchase_notice" jdbcType="VARCHAR" property="perchaseNotice"/>
+        <result column="activity_start_time" jdbcType="TIMESTAMP" property="activityStartTime"/>
+        <result column="ativity_end_time" jdbcType="TIMESTAMP" property="ativityEndTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    goods_id, goods_code, title, desc1, top_catid, two_catid, three_catid, brand_id, 
+    `label`, label_promotion, goods_source, display_area, contact_person, contact_tel, 
+    pic_info, pic_detail_info, specification, pack, market_price, cost_price, sale_price, 
+    beike_credit, vip_price, shipping_fee, settled_price, producer, supplier_id, supplier, 
+    supplier_cat_id, supplier_type, promotion_type, promotion_id, manufacturer, min_buy_qty, 
+    max_buy_qty, is_deleted, is_virtual, sale_qty, stock_qty, goods_unit, warehouse,
+    warehouse_id, delivery_area, payment_way, `status`, created_date, modified_date,
+    sorted, sales_volume, fake_sales_volume, valid_thru, online_date, offline_date, coupon_price,
+    service_level, bn, invoice_id, perchase_notice, activity_start_time, ativity_end_time,
+    remark
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_products
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByGoodsCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_products
+        where goods_code = #{goodsCode,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--附近商品_离我最近_商品列表-->
+    <select id="findNearStoresProducts" parameterType="List" resultType="Map">
+        <![CDATA[
+    SELECT
+	    goods_id,sale_price,pic_info,title,supplier_id,vip_price,beike_credit,store
+    FROM
+	(
+		SELECT
+			H.goods_id,H.sale_price,H.pic_info,H.title,H.supplier_id,H.vip_price,H.beike_credit,H.store, @rownum :=@rownum + 1,
+    IF (
+    @GROUP = H.supplier_id ,@rank :=@rank + 1 ,@rank := 1
+    ) AS rank,
+    @GROUP := H.supplier_id
+    FROM
+    (
+  SELECT
+	a.*,b.*,s.store
+FROM
+	(
+		SELECT
+			item_id,
+			buy_count
+		FROM
+			bkcq_goods_count
+	) AS a
+LEFT JOIN bkcq_products AS b ON (a.item_id = b.goods_id) LEFT JOIN bkcq_products_stock AS s ON (b.goods_id = s.goods_id)
+WHERE
+	b. STATUS = 'on_shelf' AND b.activity_start_time <= #{currentDate} and b.ativity_end_time > #{currentDate}
+    AND
+    supplier_id IN
+    ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <![CDATA[
+    ORDER BY
+    a.buy_count DESC
+    ) H
+    ,(select @rownum :=0 , @Group := null ,@rank:=0) a
+    ) result
+    WHERE
+    rank <= 3
+		   ]]>
+    </select>
+
+    <!--查询某个城市商品按销量排序-->
+    <select id="findProducsByCityOrderBySales" resultType="Map">
+        <![CDATA[
+    SELECT  bkcq_products.goods_id,sale_price,pic_info,title,supplier_id,vip_price,beike_credit,s.store FROM bkcq_products LEFT JOIN bkcq_products_stock AS s ON (bkcq_products.goods_id = s.goods_id) WHERE bkcq_products.goods_id IN(
+    SELECT * from(
+    SELECT
+    item_id AS goods_id
+    FROM
+    gddb.bkcq_goods_count
+    WHERE
+    area_id IN
+      ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <![CDATA[
+    ORDER BY buy_count DESC ) as a ) AND status = 'on_shelf' AND activity_start_time <= #{currentDate} and ativity_end_time > #{currentDate} LIMIT #{limit},#{offset}
+ ]]>
+    </select>
+
+
+    <!--查询某个城市商品按销量排序总条数-->
+    <select id="getProducsByCityOrderBySalesCount" resultType="Long">
+        SELECT COUNT(*) a
+        <![CDATA[
+    FROM bkcq_products WHERE goods_id IN(
+    SELECT * from(
+    SELECT
+    item_id AS goods_id
+    FROM
+    gddb.bkcq_goods_count
+    WHERE
+    area_id IN
+      ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <![CDATA[
+       ) as a ) AND status = 'on_shelf' and activity_start_time <= #{currentDate} and ativity_end_time > #{currentDate}
+ ]]>
+    </select>
+
+</mapper>

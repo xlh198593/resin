@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>商户管理-商户店铺</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" href="../../layui/layui/css/layui.css"  media="all">
+</head>
+<body>
+	<div class="contai">
+		<div class="page_title">
+	        <span class="layui-breadcrumb">
+			  <a href="./shopList.html">商户管理</a>
+			  <a><cite>店铺列表</cite></a>
+			</span>
+		</div>
+
+		<form class="layui-form search_info_con" action="">
+	        <div class="layui-form-item">
+	        	<div class="layui-inline">
+			        <label class="layui-form-label">注册时间:</label>
+			        <div class="layui-input-inline">
+			            <input type="text" class="layui-input" id="date" placeholder="开始日期 - 结束日期" autocomplete="off">
+			        </div>
+			    </div>
+
+			    <div class="layui-inline">
+				    <label class="layui-form-label">注册账号:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">
+				    </div>
+			    </div>
+
+                <div class="layui-inline">
+				      <label class="layui-form-label">店铺名称:</label>
+				      <div class="layui-input-inline">
+				        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+				      </div>
+				</div>
+
+
+			    <div class="layui-inline">
+			        <label class="layui-form-label">状态:</label>
+			        <div class="layui-input-inline">
+			            <select name="status">
+				            <option value="0">请选择状态</option>
+							<option value="1">待审核</option>
+							<option value="2">审核通过</option>
+							<option value="3">审核拒绝</option>
+			            </select>
+			      </div>
+			    </div>
+			</div>
+
+			<div class="layui-form-item" style="margin-top:33px;">
+	         	<div class="layui-inline">
+				      <label class="layui-form-label" style="width:121px;">开店人/法人姓名:</label>
+				      <div class="layui-input-inline">
+				        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+				      </div>
+				</div>
+
+				<div class="layui-inline">
+					<input type="button" value="查询" class="layui-btn">
+				</div>
+			</div>
+	    </form>
+
+	     
+	    <table class="layui-table verify_table" id="verify_table" style="margin-top:40px;">
+			<colgroup>
+				<col width="100">
+				<col width="90">
+				<col width="150">
+				<col width="90">
+				<col width="100">
+				<col width="90">
+				<col width="250">
+				<col width="90">
+				<col width="100">
+				<col width="100">
+				<col width="90">
+				<col width="90">
+				<col width="90">
+			</colgroup>
+			<thead>
+			<tr>
+				<th>头像</th>
+				<th>店铺类型</th>
+				<th>店铺名称</th>
+				<th>关联社区合伙人</th>
+				<th>所属商户</th>
+				<th>主营类目</th>
+				<th>经营地址</th>
+	            <th>开店人/法人姓名</th>
+				<th>注册账号</th>
+				<th>店铺创建时间</th>
+				<th>状态</th>
+				<th>备注</th>
+				<th>操作</th>
+			</tr> 
+			</thead>
+			<tbody></tbody>
+		</table>
+		<div id="page"></div>
+	</div>
+	<script src="../../layui/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+    	layui.config({
+	      base: '../../js/'
+	    }).use('merchantManagement/shopList');  
+    	 
+    </script>
+</body>
+</html>

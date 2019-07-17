@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=477927812">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a id="openApp">点击打开贴吧客户端</a>
+    <p id="mod_pop" style="display:none;">请在其他浏览器中打开</p>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            function isWeixin() {
+                var ua = navigator.userAgent.toLowerCase(); //获取判断用的对象
+                if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                    return true; //微信打开
+                } else {
+                    return false; //不是微信打开
+                }
+            }
+
+            document.getElementById('openApp').onclick = function (e) {
+                if (isWeixin()) {
+                    var modPop = document.getElementById('mod_pop');
+                    modPop.style.display = "block";
+                } else {
+                    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //ios判断
+                        window.location.href = "com.baidu.tieba://"; //通过app打开协议来打开app
+                        window.setTimeout(function () {
+                            window.location.href = "https://itunes.apple.com/cn/app/id477927812"; //没有弹框打开app则打开app下载地址
+                        }, 20)
+                    } else if (/(Android)/i.test(navigator.userAgent)) { //Android判断
+                        var state = null;
+                        try {
+                            state = window.open("http://www.baidu.com");
+                        } catch (e) {}
+                        if (state) {
+                            window.close();
+                        } else {
+                            window.location.href = "https://downpack.baidu.com/baidutieba_AndroidPhone_v9.0.8.0(9.0.8.0)_1019960r.apk";
+                        }
+                    }
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>

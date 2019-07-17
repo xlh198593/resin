@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<% include ../../commonHead.html %>
+		<title>明细</title>
+		<link rel="stylesheet" href="/css/mescroll.css">
+		<!-- <link rel="stylesheet" href="/css/option/mescroll-option.css"> -->
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				-webkit-touch-callout:none;
+				-webkit-user-select:none;
+				-webkit-tap-highlight-color:transparent;
+			}
+			body{
+				background-color: white;
+				width:10rem;
+				margin:0 auto;
+				}
+			ul{list-style-type: none}
+			img{width: 100%;vertical-align: bottom;}
+			/*列表*/
+			<%if(type == 'h5'){%>
+				.mescroll{
+				position: fixed;
+				top: 2.77rem;
+				bottom: 1rem;
+				height: auto;
+				width:10rem;
+			}
+			<%}else{%>
+				.mescroll{
+				position: fixed;
+				top: 1.8rem;
+				bottom: 1rem;
+				height: auto;
+				width:10rem;
+			}
+			<%}%>
+			
+			/*回到顶部按钮*/
+			.mescroll-totop {
+				bottom: 70px;
+			}
+			
+			/*下拉刷新回调的提示*/
+			.download-tip{
+				z-index: 9900;
+				position: fixed;
+				top: 20px;
+				left: 0;
+				width: 100%;
+				height: 24px;
+				line-height: 24px;
+				font-size: 12px;
+				text-align: center;
+				background-color: rgba(80,175,85,.7);
+				color: white;
+				-webkit-transition: top 300ms;
+				transition: top 300ms;
+			}
+			.mescroll-downwarp .downwarp-tip, .mescroll-upwarp .upwarp-tip, .mescroll-upwarp .upwarp-nodata {
+				font-size:.36rem;
+				margin-top:0.2rem;
+			}
+			
+			/*展示上拉加载的数据列表*/
+			.news-list .new-content,.news-list .new-content1,.news-list .new-content2,.news-list .new-content3{
+				height:1.2rem;
+				line-height:1.2rem;
+				font-size:.32rem;
+				text-align: center;
+				float:left;
+				width:25%;
+				/* font-size: 14px;
+				margin-top: 6px;
+				margin-left: 10px; */
+				color: #333333;
+				border-bottom: 1px solid #EEEEEE;
+			}
+			.news-list .new-content1 {
+				line-height:0.48rem;
+				margin-top:0.2rem;
+				height:1rem;
+			}
+			.news-list .new-content2 {
+				color:#E81B7F;
+				font-size:.48rem;
+			}
+			.news-list .new-content3 {
+				color:#333333;
+				font-size:.48rem;
+			}
+			.page_title {
+			height:1.173333rem;
+			line-height:1.173333rem;
+            text-align: center;
+			font-size:.48rem;
+			width:10rem;
+			color:#333333;
+			border-bottom: 1px solid #EEEEEE;
+		}
+		.page_title span {
+			height:.56rem;
+			width:.306667rem;
+			margin-top:.306667rem;
+			margin-left:.266667rem;
+			float:left;
+			background: url("/image/activity/invoic/goback.png");
+			background-size: 100% 100%;
+		}
+		.title {
+			height:.96rem;
+			width:10rem;
+		}
+		.title div {
+			float:left;
+			width:25%;
+			line-height:.96rem;
+			text-align: center;
+			font-size:.373333rem;
+			color:#333333;
+		}
+		.number {
+			height:.666667rem;
+			line-height:.666667rem;
+			width:10rem;
+			background: rgba(232,27,127,0.1);
+			font-size:.346667rem;
+			color:#E81B7F;
+		}
+		</style>
+		<script src="/js/third-part/mescroll.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/third-part/mescroll-option.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+			<%if(type == 'h5'){%>
+				<div class="page_title"><span onclick="go()"></span>明细</div>
+			<%}else{%>
+	        <%}%>
+			
+			<div class="title">
+					<div>类型</div>
+					<div>邀请人</div>
+					<div>时间</div>
+					<div>金额</div>
+			</div>
+			<div class="number">&nbsp;&nbsp;累计次邀奖励收入:&nbsp;<%=rateCount%>元</div>
+		
+		<!--滑动区域-->
+		<div id="mescroll" class="mescroll">
+			<!--展示上拉加载的数据列表-->
+			<ul id="newsList" class="news-list"></ul>
+		</div>
+	</body>
+	<script type="text/javascript" charset="utf-8">
+	function go() {
+		window.history.back(-1)
+		}
+		function mobilefilter(str) {
+			return str.substr(0,3)+"****"+str.substr(7);
+		}
+		$(function(){
+			function go() {
+				window.history.go(-1);
+			}
+			//创建MeScroll对象
+			var mescroll = initMeScroll("mescroll", {
+				down:{
+					use:false,//是否在初始化完毕之后自动执行下拉回调callback; 默认true
+					callback: downCallback, //下拉刷新的回调
+				},
+				up: {
+					auto:true,//初始化完毕,是否自动触发上拉加载的回调
+					isBoth: true, //上拉加载时,如果滑动到列表顶部是否可以同时触发下拉刷新;默认false,两者不可同时触发; 这里为了演示改为true,不必等列表加载完毕才可下拉;
+					callback: upCallback, //上拉加载的回调
+				}
+            });
+            	/*下拉刷新的回调 */
+			function downCallback(){
+				//加载轮播数据..
+				//...
+				//加载列表数据
+				getListDataFromNet(0, 1, function(data){
+					//联网成功的回调,隐藏下拉刷新的状态
+					mescroll.endSuccess();
+                    //设置列表数据
+					setListData(data, false);
+					//显示提示
+					$("#downloadTip").css("top","44px");
+					setTimeout(function () {
+						$("#downloadTip").css("top","20px");
+					},2000);
+				}, function(){
+					//联网失败的回调,隐藏下拉刷新的状态
+	                mescroll.endErr();
+				});
+			}
+			
+			function upCallback(page){
+				getListDataFromNet(page.num, page.size, function(data){
+					mescroll.endSuccess(data.length);
+					setListData(data, true);
+				}, function(){
+	                mescroll.endErr();
+				});
+			}
+			
+			/*设置列表数据*/
+			function setListData(data, isAppend) {
+				var listDom=document.getElementById("newsList");
+				for (var i = 0; i < data.length; i++) {
+					var newObj=data[i];
+					var str="";
+					if(newObj.amount < 0) {
+						if(newObj.inviteMobile == "") {
+							str='<p class="new-content">'+"转入红包"+'</p>'+'<p class="new-content">'+"-"+'</p>'+'<p class="new-content1">'+newObj.tracked_date+'</p>'+'</p>'+'<p class="new-content3">'+newObj.amount+'</p>';
+						} else {
+							str='<p class="new-content">'+"转入红包"+'</p>'+'<p class="new-content">'+mobilefilter(newObj.mobile)+'</p>'+'<p class="new-content1">'+newObj.tracked_date+'</p>'+'</p>'+'<p class="new-content3">'+newObj.amount+'</p>';
+						}
+						
+					} else {
+						if(newObj.inviteMobile == "") {
+							str='<p class="new-content1">'+"次邀奖励"+'<br/>'+"-"+'</p>'+'<p class="new-content">'+"-"+'</p>'+'<p class="new-content1">'+newObj.tracked_date+'</p>'+'</p>'+'<p class="new-content2">+'+newObj.amount+'</p>';
+						} else {
+							str='<p class="new-content1">'+"次邀奖励"+'<br/>'+mobilefilter(newObj.mobile)+'</p>'+'<p class="new-content">'+mobilefilter(newObj.inviteMobile)+'</p>'+'<p class="new-content1">'+newObj.tracked_date+'</p>'+'</p>'+'<p class="new-content2">+'+newObj.amount+'</p>';
+						}
+                       
+					}
+					var liDom=document.createElement("li");
+					liDom.innerHTML=str;
+					
+					if (isAppend) {
+						listDom.appendChild(liDom);//加在列表的后面,上拉加载
+					} else{
+						// listDom.insertBefore(liDom, listDom.firstChild);//加在列表的前面,下拉刷新
+					}
+				}
+			}
+			
+			/*联网加载列表数据*/
+			// var downIndex=0;
+			function getListDataFromNet(pageNum,pageSize,successCallback,errorCallback) {
+				var newArr=[];
+			$.ajax({
+                type: 'POST',
+                url: '/openapi/h5/c/manager/list',
+                data: {
+                    app_token:"jjjjj",
+					params:JSON.stringify({member_id:"<%=member_id%>",version_name:"2.6.5",version_code:"24"}),
+					page:JSON.stringify({page_no:pageNum,page_size:pageSize}),
+					service:"consumer.memberManagerRabatePageFind",
+					sign:"jjjjj"
+                },
+                success: function (data) {
+					if(data.rsp_code == "succ") {
+                        if (typeof data == 'string') data = JSON.parse(data);
+					if(pageNum == 0) {
+						newArr = newArr.concat(data.data.list)
+					} else {
+						newArr = newArr.concat(data.data.list)
+					}
+					successCallback&&successCallback(newArr);
+					}
+					
+					
+					
+                }
+            });
+			}
+		});
+	</script>
+
+</html>

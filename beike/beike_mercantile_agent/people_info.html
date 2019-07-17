@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>个人信息</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+    <link rel="stylesheet" href="css/mpicker.css">
+    <link rel="stylesheet" type="text/css" href="css/people.css">
+        <style type="text/css">
+    /*自定义样式*/
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    html{
+        font-size:10px;
+    }
+    body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+    }
+    
+    .slide-wapper {
+        padding:20px;
+        overflow-y: scroll;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a onclick="javascript:history.go(-1);" class="back_btn"></a>
+            个人信息
+        </div>
+
+        <ul class="people_use_list" style="margin-top:4.1rem;">
+            <li>
+                <span class="title" style="width:11.5rem;">代理商/合伙人姓名</span>
+                <input type="text" name="" class="user_name_input" placeholder="请填写真实姓名">
+            </li>
+            <li>
+                <span class="title">地区</span>
+                <a  class="txt" style="max-width:67%;"> 
+                    <input type="text" class="select-value form-control" value="广东省-深圳市" style="margin-top:0.7rem;background:#fff;outline:none;border-color:transparent;box-shadow:none;text-align:right;padding:0;">
+                </a>
+            </li>
+            <li>
+                <span class="title">头像</span>
+                <a href="#" class="txt">点击修改</a>
+            </li>
+
+
+            <li>
+                <span class="title">手机号</span>
+                <a href="#" class="txt">点击修改</a>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/addressjson.js"></script>
+    <script src="js/jsonExchange.js"></script>
+    <script src="js/mPicker.js"></script>
+    <script type="text/javascript" src="js/people_info.js"></script>
+</body>
+</html>

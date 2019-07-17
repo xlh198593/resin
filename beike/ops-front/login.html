@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" href="./layui/layui/css/layui.css"  media="all">
+</head>
+<body>
+    <div class="login_con">
+    	<div class="top">
+    		<a href="#" class="logo"></a>
+    		<h1>贝壳传奇商户通</h1>
+    		<div class="register_btn_con">
+    			<a class="register_btn">商家入驻</a>
+    			<img src="images/ruzhu.png" class="ruzu_img">
+    		</div>
+    	</div>
+    	<div class="login_main">
+    		<form class="loign_form">
+    			<h2>验证码登录</h2>
+    			<div class="input_item">
+    				<div class="input_con">
+    					<i class="layui-icon layui-icon-username" style="font-size: 30px; color: #333;"></i> 
+
+                        <input type="text" name="phonenumber"  class="input_val phone_number" placeholder="请输入手机号" maxlength="11"  autocomplete="off" value="">
+    				</div>
+    				<p class="msg phone_msg"></p>
+    			</div>
+    			<div class="input_item">
+    				<div class="input_con">
+    					<i class="layui-icon layui-icon-password" style="font-size: 30px; color: #333;"></i> 
+
+                        <input type="text" name="password"  class="input_val identifying_code" style="width:161px;" placeholder="请输入验证码" maxlength="6"  autocomplete="off" value="">
+                        <input type="button" class="identifying_code_btn" value="获取验证码">
+    				</div>
+    				<p class="msg identifyingCode_msg"></p>
+    			</div>
+    			<input type="button" class="layui-btn sub_btn" value="登录">
+    		</form>
+    	</div>
+    </div>
+
+    <script src="./layui/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/common/url.js"></script>
+    <script type="text/javascript" src="./js/common/common.js"></script>
+    <script src="./js/login.js"></script>
+</body>
+</html>

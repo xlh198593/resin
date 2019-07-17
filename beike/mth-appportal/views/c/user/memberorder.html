@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <%if(is_vip == "Y"){%>
+    <title>续费会员</title>
+    <%}else{%>
+    <title>开通会员</title>
+    <%}%>
+        
+        <style>
+            html,
+            body {
+                /* width: 10rem; */
+                height: 100%;
+                overflow-y: auto;
+            }
+
+            #app {
+                /* width: 10rem; */
+                overflow: auto;
+                /* margin: 0 auto; */
+                height:17rem;
+            }
+
+            .title {
+                height:1.173333rem;
+                width: 10rem;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color:white;
+                padding-top: .45rem;
+                border-bottom: 1px solid #EEEEEE;
+            }
+            ::-webkit-scrollbar { display: none}
+
+            .gotoback {
+                display: inline-block;
+                height:1rem;
+                width: 1rem;
+                background: url("/image/newmember/goback.png");
+                background-size:30% 70%;
+                background-repeat: no-repeat;
+                float: left;
+                background-position: .306667rem .1rem;
+            }
+
+            .titldes {
+                height:1.173333rem;
+                width: 8rem;
+                line-height: 1rem;
+                font-size: 0.3rem;
+                margin-left: 1rem;
+                font-size: .453333rem;
+                text-align: center;
+            }
+
+            .user {
+                width: 10rem;
+                height: .96rem;
+                padding-bottom: .16rem;
+                padding-top:.16rem;
+                /* margin-top:1.666667rem; */
+                /* margin-top: 1.173333rem; */
+                margin-bottom:.413333rem;
+                border-top:1px solid #EEEEEE;
+            }
+            .user1 {
+                width: 10rem;
+                height: .96rem;
+                padding-bottom: .16rem;
+                padding-top:.16rem;
+                border-top:1px solid #EEEEEE;
+                /* margin-top: 1.173333rem; */
+            }
+            .user1 .headimage {
+                height: .96rem;
+                width: .96rem;
+                border-radius: 0.6rem;
+                background-size: 100% 100%;
+                float: left;
+                margin-left:.413333rem;
+                overflow: hidden;
+                border:2px solid rgba(225, 178, 93, 1);
+                /* background: url("/image/newmember/quan.png");
+                background-size:100% 100%; */
+
+            }
+
+            .user1 .usermessage {
+                height:.96rem;
+                line-height: .96rem;
+                font-size: .373333rem;
+                font-family: PingFangSC-Regular;
+                color: #525252;
+                width: 4.5rem;
+                margin-left:.266667rem;
+                /* margin-top:.16rem; */
+                float: left;
+            }
+
+            .user1 .username {
+                height: .453333rem;
+                font-size: .506667rem;
+                font-family: PingFangSC-Regular;
+                width: 100%;
+                margin-left: 0.3rem;
+                color: #ffffff;
+                letter-spacing: 0.03rem;
+                color: #ffffff;
+                font-weight: 400;
+            }
+
+
+            .user .headimage {
+                height: .96rem;
+                width: .96rem;
+                border-radius: 0.6rem;
+                background-size: 100% 100%;
+                float: left;
+                margin-left:.413333rem;
+                overflow: hidden;
+                border:2px solid rgba(225, 178, 93, 1);
+                /* background: url("/image/newmember/quan.png");
+                background-size:100% 100%; */
+
+            }
+            .headimage img {
+                height: .95rem;
+                width: .95rem;
+            }
+
+            .user .usermessage {
+                height:.96rem;
+                line-height: .96rem;
+                font-size: .373333rem;
+                font-family: PingFangSC-Regular;
+                color: #525252;
+                width: 4.5rem;
+                margin-left:.266667rem;
+                /* margin-top:.16rem; */
+                float: left;
+            }
+
+            .user .username {
+                height: .453333rem;
+                font-size: .506667rem;
+                font-family: PingFangSC-Regular;
+                width: 100%;
+                margin-left: 0.3rem;
+                color: #ffffff;
+                letter-spacing: 0.03rem;
+                color: #ffffff;
+                font-weight: 400;
+            }
+
+            .end_time {
+                height: .666667rem;
+                line-height: .666667rem;
+                width: 3.466667rem;
+                font-size: .306667rem;
+                color: #FFFFFFFF;
+                float: right;
+                margin-top: .272rem;
+                border-bottom-left-radius: 0.5rem;
+                border-top-left-radius: 0.5rem;
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            .orderdetail {
+                /* height: 4.3rem; */
+                width: 10rem;
+                margin-top:.4rem;
+                border-top:1px solid #EEEEEE;
+            }
+
+            .orderdetail div {
+                height:1.053333rem;
+                line-height:1.053333rem;
+                width: 10rem;
+                border-bottom:1px solid #EEEEEE;
+            }
+
+            .orderdetail .lettertitle {
+                display: inline-block;
+                height:1.04rem;
+                width: 2.253333rem;
+                font-size: .386667rem;
+                line-height:1.04rem;
+                text-align: center;
+                font-weight: 600;
+                float:left;
+                color:#525252;
+            }
+            .orderdetail .data,.orderdetail .data2 {
+                display: inline-block;
+                height:1.04rem;
+                font-size: .386667rem;
+                line-height:1.04rem;
+                text-align: center;
+                float:right;
+                margin-right:.426667rem;
+                color:#525252;
+            }
+            .money .lettertitle,.orderdetail .money .data {
+                color:#525252;
+                font-size:.453333rem;
+                font-weight:700;
+                margin-left:0.1rem;
+
+            }
+
+            
+            .orderdetail .data1 {
+                display: inline-block;
+                height:.56rem;
+                width:1.453333rem;
+               line-height:1.04rem; 
+               font-size: .3rem;
+                line-height:.56rem;
+                text-align: center;
+                float:right;
+                /* margin-right:.426667rem; */
+                margin-top:.253333rem;
+                color:#FFFFFF;
+                background: url("/image/newmember/price.png");
+                background-size: 100% 100%;
+                margin-right:0.15rem;
+            }
+
+            .paymethods {
+                height:.64rem;
+                font-size: .373333rem;
+                margin-left: .293333rem;
+                line-height: .64rem;
+                width:9rem;
+                color:#333333;
+                margin-top:.64rem;
+                margin-bottom:.4rem;
+            }
+
+            .selectpay {
+                height: 1.44rem;
+                width: 10rem;
+            }
+
+            .selectpay div {
+                height: 1.44rem;
+                width: 3.8rem;
+            }
+
+            .wx {
+                float: left;
+                margin-left: .413333rem;
+                background: url("/image/newmember/wxselect.png");
+                background-size: 100% 100%;
+            }
+
+            .zfb {
+                float: right;
+                margin-right: .413333rem;
+                background: url("/image/newmember/zfbnoselect.png");
+                background-size: 100% 100%;
+            }
+
+            .gotorecharge {
+                width: 8.72rem;
+                height:1.253333rem;
+                line-height: 1.253333rem;
+                margin: 0 auto;
+                margin-top: .866667rem;
+                border-radius: .533333rem;
+                color: #2C2B2A;
+                text-align: center;
+                font-size: .5rem;
+                background-color: #F2D9A1;
+                /* box-shadow: -2px 2.5px 15px 0px rgba(255, 34, 103, 0.99); */
+                /* 这个地方是为了取消27元的问题 */
+                margin-bottom: .546667rem;
+            }
+
+            .agreement {
+                height: .333333rem;
+                width: 10rem;
+                margin-top:.986667rem;
+            }
+
+            .agreement .agreement_content {
+                height: .333333rem;
+                margin: 0 auto;
+                width: 7.5rem;
+                border:1px solid white;
+            }
+
+            .agreement .agreement_select {
+                height: .333333rem;
+                width: .333333rem;
+                display: inline-block;
+            }
+
+            .agrselect {}
+
+            .agrnoselect {
+                background: url("/image/newmember/weixuanzhong.png");
+                background-size: 100% 100%;
+            }
+
+            .agreement .agreement_descript {
+                height: .333333rem;
+                font-size: .333333rem;
+                color: #F45687;
+                display: inline-block;
+            }
+
+            .member_title {
+                height:.413333rem;
+                line-height:.413333rem;
+                text-align: center;
+                font-size:.4rem;
+                font-weight:600; 
+                color:#E6BF90;
+                width: 10rem;
+                margin-top:.6rem;
+                            }
+
+            .select {
+                height: 6rem;
+                /* width: 9.466667rem; */
+                margin: 0 auto;
+                /* border: 1px solid red; */
+                /* z-index: 1000; */
+                /* margin-top: -1.8rem; */
+                background-color: #ffffff;
+                /* border-radius: .555556rem; */
+                overflow: hidden;
+                /* margin-bottom: .933333rem; */
+                /* box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.1); */
+            }
+
+            .select .up,
+            .select .down {
+                height: 3rem;
+                width: 100%;
+            }
+
+            .select .gitcontent {
+                width: 3.3rem;
+                height: 3rem;
+                float: left;
+            }
+
+            .select .pic {
+                height: 1.2rem;
+                width: 1.2rem;
+                margin-top: .666667rem;
+                margin-left: 0.977778335rem;
+
+            }
+
+            .select .giftbag {
+                background: url('/image/newmember/chaozhilibao.png');
+                background-size: 100% 100%;
+            }
+
+            .select .beike {
+                background: url('/image/newmember/beikedixian.png');
+                background-size: 100% 100%;
+            }
+
+            .select .invation {
+                background: url('/image/newmember/yaoqingfanyong.png');
+                background-size: 100% 100%;
+            }
+
+            .select .member {
+                background: url('/image/newmember/huiyuanzhuanxiangjiage.png');
+                background-size: 100% 100%;
+            }
+
+            .select .shopping {
+                background: url('/image/newmember/xianxiagouwudixian.png');
+                background-size: 100% 100%;
+            }
+
+            .select .vip {
+                background: url('/image/newmember/zhuanxiangshangpin.png');
+                background-size: 100% 100%;
+            }
+
+            .select .textdescript {
+                margin-top: .253333rem;
+                width: 100%;
+                height: .333333rem;
+                text-align: center;
+                font-size: .333333rem;
+                color: #333333;
+            }
+
+            .payselect {
+                background: url("/image/newmember/wxnoselect.png");
+                background-size: 100% 100%;
+            }
+            .payselect1 {
+                background: url("/image/newmember/zfbselect.png");
+                background-size: 100% 100%;
+            }
+
+            .agrselect {
+                background: url("/image/newmember/xuanzhong.png");
+                background-size: 100% 100%;
+            }
+
+            .agrnoselect {
+                background: url("/image/newmember/weixuanzhong.png");
+                background-size: 100% 100%;
+            }
+
+            .backgroundblack {
+                height: 105%;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            .alert {
+                height: 5.2rem;
+
+                
+                width: 9.466667rem;
+                position: fixed;
+                left: 50%;
+                background: rgba(255, 255, 255, 1);
+                box-shadow: 0px 3.5px 21.5px 0px rgba(0, 0, 0, 1);
+                margin-left: -4.7333335rem;
+                top: 6.5rem;
+                border-radius: .4rem;
+            }
+
+            .close {
+                height: 1rem;
+                width: 1rem;
+                position: absolute;
+                top: .506667rem;
+                right: .506667rem;
+                background: url("/image/newmember/close.png") no-repeat;
+                background-position: 70% 10%;
+                background-size: 70% 70%;
+            }
+
+            .agreetit,
+            .agreetit1 {
+                height: .466667rem;
+                font-size: .466667rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .agreetit {
+                margin-top: 1.72rem;
+            }
+
+            .agreetit1 {
+                margin-top: .413333rem;
+            }
+            .febgexian {
+                height:1px;
+                width:10rem;
+               border-top:1px solid #EEEEEE;
+            }
+
+            .huiyuanquanyi {
+    /* height:2.52rem; */
+    height:4.6rem;
+    width: 10rem;
+    margin-bottom:2rem;
+    /* background-color: #111111; */
+    /* overflow-x: auto; */
+}
+
+.huiyuanquanyi .sigle {
+    /* width: 16.3rem;
+    height: 1.533333rem; */
+}
+
+.sigle .common {
+    width: 2.5rem;
+    height: 1.933333rem;
+    float: left;
+
+}
+.sigle .common1 {
+    width: 2.2rem;
+    height: 1.533333rem;
+    float: left;
+
+}
+
+.huiyuanquanyi::-webkit-scrollbar {
+    display: none;
+}
+
+/* .sigle::-webkit-scrollbar {
+    display: none;
+} */
+
+.sigle .icon {
+    height: 1.04rem;
+    width: 1.04rem;
+    /* margin-left: .553333rem; */
+    margin:0 auto;
+}
+
+.sigle .explain {
+    height: .306667rem;
+    width: 2.5rem;
+    margin-top: .186667rem;
+    font-size: .306667rem;
+    text-align: center;
+    color: #FFFFFF;
+}
+.sigle .explain1 {
+    height: .306667rem;
+    width: 2.2rem;
+    margin-top: .186667rem;
+    font-size: .306667rem;
+    text-align: center;
+    color: #FFFFFF;
+}
+.sigle .explain2 {
+    height: .306667rem;
+    width: 2.5rem;
+    margin-top: .186667rem;
+    font-size: .306667rem;
+    text-align: center;
+    color: #333333;
+}
+.sigle .explainfu {
+    height:.266667rem;
+    width:2.5rem;
+    text-align: center;
+    font-size:.266667rem;
+    color:#999999;
+    margin-top:.133333rem;
+}
+.placeanorder,.sendbeike,.honorable,.monthq {
+    margin-top:.653333rem;
+}
+
+.supericon {
+    background: url("/image/newmember/chaojihuiyuanr.png");
+    background-size: 100% 100%;
+}
+
+.placeanordericon {
+    background: url("/image/newmember/zengsongliquan@2x.png");
+    background-size: 100% 100%;
+}
+
+.remendermembericon {
+    background: url("/image/newmember/tuijianhuiyuanfanxian@2x.png");
+    background-size: 100% 100%;
+}
+.sendbeike1 {
+    background: url("/image/newmember/zengsongbeike@2x.png");
+    background-size: 100% 100%; 
+}
+
+.honorableicon {
+    background: url("/image/newmember/zunguibiaoshi@2x.png");
+    background-size: 100% 100%;
+}
+
+.meiriliquanicon {
+    background: url("/image/newmember/meiyueyouhuiquan@2x.png");
+    background-size: 100% 100%;
+}
+.shengriliquanicon {
+    background: url("/image/newmember/shengrlibao@2x.png");
+    background-size: 100% 100%;
+}
+.mianyouicon {
+    
+    background: url("/image/newmember/mianyouquan@2x.png");
+    background-size: 100% 100%;
+}
+
+.membertitle {
+    height: .96rem;
+    line-height: 0.96rem;
+    text-align: center;
+    font-size: .48rem;
+    font-weight: 500;
+    color: rgba(254, 241, 198, 1);
+    margin-bottom: .333333rem;
+}
+.showmore {
+    height: 0.82rem;
+    width: 10rem;
+}
+
+.gomore1 {
+    height: 0.28rem;
+    width: 2.4rem;
+    margin: 0 auto;
+    margin-top: .5rem;
+    font-size: 0.28rem;
+    color: #FEF1C6;
+    text-align: center;
+}
+
+.gomore {
+    height: 0.35rem;
+    width: 2.4rem;
+    margin: 0 auto;
+    margin-top: 0.3rem;
+    font-size: 0.28rem;
+    color: #FEF1C6;
+    text-align: center;
+}
+.gomoreright {
+    height: .28rem;
+    width: .173333rem;
+    display: inline-block;
+    background: url("/image/newmember/gotomore.png");
+    background-size: 100% 100%;
+    float: left;
+    margin-left: 0.1rem;
+}
+.gomoretips {
+    height: 0.28rem;
+    margin: 0 auto;
+    font-size: 0.28rem;
+    color: #FEF1C6;
+    text-align: center;
+    float: left;
+}
+.orderdetail .kx {
+    height:.346667rem;
+    background:rgba(243,243,243,1);
+}
+.selectpaymethods {
+    /* height:4.933333rem; */
+    width:7.2rem;
+    position: fixed;
+    left:5rem;
+    margin-left:-3.66rem;
+    top:7.44rem;
+    background:rgba(255,255,255,1);
+    border-radius:10px;
+
+}
+.selectpaymethods div  {
+    height:1.613333rem;
+    float:left;
+}
+.selectpaymethods .ylb {
+    border-bottom:1px solid #F2F2F2;
+}
+.lsb div,.ylb div,.slb div {
+    height:1.613333rem;
+    width:2.4rem;
+    font-size:.56rem;
+    line-height:1.613333rem;
+    text-align: center;
+}
+.lsb .selelctnew,.ylb .selelctnew,.slb .selelctnew  {
+    height:.4rem;
+    width:.4rem;
+    margin-top:.626667rem;
+    margin-left:1rem;
+    border-radius: 50%;
+}
+.newselect {
+   background: url("/image/payback/newnselect.png");
+   background-size: 100% 100%;
+}
+
+.newnselect {
+   background: url("/image/payback/newselect.png");
+   background-size: 100% 100%;
+}
+.choise {
+    color:#F2D9A1;
+}
+.bgc {
+    height:100%;
+    width:100%;
+    background:rgba(0,0,0,1);
+    opacity:0.34;
+    position:absolute;
+    top:0;
+} 
+.agree {
+    height:.4rem;
+    width:6.5rem;
+    margin:0 auto;
+    margin-bottom:1.106667rem;
+}
+.agree .agree_status {
+    height:.4rem;
+    width:.4rem;
+    border-radius: 0.2rem;
+   float:left;
+
+}
+.agree_status_yes {
+    background: url("/image/newmember/xuanzhong@2x.png");
+    background-size: 100% 100%;
+}
+.agree_status_no {
+    background: url("/image/newmember/weixuanzhong@2x.png");
+    background-size: 100% 100%;
+}
+.agree  .wenben {
+    line-height:.4rem;
+    float:left;
+    font-size:0.3rem;
+    margin-left:.133333rem;
+}
+.SVIP_member {
+    height:.466667rem;
+    width:5.333333rem;
+    margin:0 auto;
+    margin-bottom:.666667rem;
+    background: url("/image/newmember/biaoti.png");
+    background-size: 100% 100%;
+}
+
+
+           </style>
+</head>
+
+<body>
+    <div id="app">
+            <!-- <div class='title'>
+                <a class="gotoback" href="javascript:history.go(-1)"></a>
+                <div class="titldes">购买会员</div>
+            </div> -->
+            <div class="user">
+                    <div class="user_message">
+                        <div class="headimage">
+                                <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" />
+                        </div>
+                        
+                        <div class="usermessage">
+                            <%-mobile%>
+                        </div>
+                    </div>
+                </div>
+            <div class="orderdetail">
+                <div class="sendbeike">
+                        <span class='lettertitle'>获赠贝壳:</span>
+                            <!-- <span  v-if="memberlevel == '68'" class="data">213个</span> -->
+                            <!-- <span  v-if="memberlevel == '168'" class="data">686个</span> -->
+                            <span  v-if="memberlevel == '399'" class="data">1314个</span>
+                    </div>
+            
+            <div class="sendliquan">
+                <span class='lettertitle'>获赠礼券:</span>
+                    <!-- <span v-if="memberlevel == '68'" class="data2">一张</span>
+                    <span v-if="memberlevel == '68'" class="data1">￥68</span> -->
+                        <span v-if="memberlevel == '399'" class="data2">1张</span>
+                        <span v-if="memberlevel == '399'" class="data1">￥399</span>
+                        <!-- <span v-if="memberlevel == '398'" class="data1">￥398</span>
+                        <span v-else class="data1">￥168</span> -->
+                            
+            </div>
+            <div class="kx"></div>
+            <div class="membertime">
+                    <span  class='lettertitle'>购买时长:</span>
+                    <!-- <span v-if="memberlevel == '68'"  class="data">一个月</span> -->
+                    <span v-if="memberlevel == '399'" class="data">十二个月</span>
+                    <!-- <span v-else class="data">十二个月</span> -->
+                </div>
+            <div class="money">
+                <span class='lettertitle'>应付金额:</span>
+                    <!-- <span v-if="memberlevel == '68'" class="data">￥68.00</span> -->
+                        <span  v-if="memberlevel == '399'" class="data">￥399.00</span>
+                            <!-- <span v-else class="data">￥398.00</span> -->
+            </div>
+        </div>
+        <div class="paymethods">请选择支付方式</div>
+        <div class="selectpay">
+            <div class="wx" :class="{'payselect':wx}" @click="paymethods('w')"></div>
+            <div class="zfb" :class="{'payselect1':zfb}" @click="paymethods('z')"></div>
+        </div>
+        <div class="gotorecharge" v-on:click="gotoorderdetail()">立即支付</div>
+        <%if(type == "1") {%>
+        <div class="bgc" v-if="selectpaymethods" @click="changeselectpaymethods('1')"></div>
+        <div class="selectpaymethods" v-if="selectpaymethods">
+            <!-- <div class="lsb" v-bind:class="{choise:selectlb}" @click="changeselectpaymethods('1')">
+                <div>￥68</div>
+                <div>一个月</div>
+                <div><div class="selelctnew" v-bind:class="{newselect:selectlb,newnselect:!selectlb}"></div></div>
+            </div> -->
+            <!-- <div class="ylb" v-bind:class="{choise:selectylb}" @click="changeselectpaymethods('2')">
+                    <div>￥168</div>
+                    <div>六个月</div>
+                    <div><div class="selelctnew" v-bind:class="{newselect:selectylb,newnselect:!selectylb}"></div></div>
+            </div>
+            <div class="slb" v-bind:class="{choise:selectslb}" @click="changeselectpaymethods('3')">
+                    <div>￥398</div>
+                    <div>十二月</div>
+                    <div><div class="selelctnew" v-bind:class="{newselect:selectslb,newnselect:!selectslb}"></div></div>
+            </div> -->
+        </div>
+        
+        <%}%>
+        <!-- <div class="agree">
+            <div class="agree_status" @click="changeSelectStatus()"  v-bind:class='{agree_status_yes:agreement,agree_status_no:!agreement}'></div>
+            <div class="wenben">我已阅读开通/续费会员的 <span @click="gotoprotol()" style="color:#AB6B07"><<相关协议>></span></div>
+        </div> -->
+        <div class="SVIP_member"></div>
+        <div class="huiyuanquanyi">
+                <div class="sigle">
+                    <div class="super common">
+                        <div class="icon supericon"></div>
+                        <div class="explain2">超级会员日</div>
+                        <div class="explainfu">专属购物节</div>
+                    </div>
+                    <div class="remendermember common">
+                        <div class="icon remendermembericon"></div>
+                        <div class="explain2">推荐会员返现</div>
+                        <div class="explainfu">更高返现好礼</div>
+                    </div>
+                    <div class="zanding common">
+                        <div class="icon shengriliquanicon"></div>
+                        <div class="explain2">生日礼包</div>
+                        <div class="explainfu">不一样的礼物</div>
+                    </div>
+                    <div class="zanding common">
+                        <div class="icon mianyouicon"></div>
+                        <div class="explain2">免邮券</div>
+                        <div class="explainfu">免邮更优惠</div>
+                    </div>
+                    <div class="placeanorder common">
+                        <div class="icon placeanordericon"></div>
+                        <div class="explain2">赠送礼券</div>
+                        <div class="explainfu">价值399元</div>
+                    </div>
+                    <div class="sendbeike common">
+                        <div class="icon placeanordericon"></div>
+                        <div class="explain2">赠送贝壳</div>
+                        <div class="explainfu">价值1314元</div>
+                    </div>
+
+                    <div class="honorable common">
+                        <div class="icon honorableicon"></div>
+                        <div class="explain2">尊贵标识</div>
+                        <div class="explainfu">贵族名片</div>
+
+                    </div>
+                    <div class="zanding monthq common">
+                        <div class="icon meiriliquanicon"></div>
+                        <div class="explain2">每月优惠券</div>
+                        <div class="explainfu">超值优惠券</div>
+
+                    </div>
+
+
+                </div>
+            </div>
+    </div>
+       
+       
+   
+
+</body>
+<script>
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                wx: true,
+                zfb: false,
+                memberlevel:"<%-memberlevel%>",
+                agreement: true,
+                selectpaymethods:false,
+                alert_agreement: false,
+                selectlb:true,
+                selectylb:false,
+                selectslb:false,
+            }
+        },
+        methods: {
+            paymethods: function (type) {
+                if (type == 'w') {
+                    this.wx = true;
+                    this.zfb = false;
+                } else {
+                    this.zfb = true;
+                    this.wx = false;
+                }
+            },
+            gotoqy: function (type) {
+                gotosumit('goromemberqy', { type: type });
+            },
+            changeselectpaymethods:function(type) {
+                if(type == '1') {
+                    this.selectylb = true;
+                    this.selectlb = false;
+                    this.selectslb = false;
+                    this.selectpaymethods = false;
+                    this.memberlevel ="68";
+                } else if(type == "2") {
+                    this.selectylb = true;
+                    this.selectlb = false;
+                    this.selectslb = false;
+                    this.selectpaymethods = false;
+                    this.memberlevel ="168";
+                } else if(type == "3") {
+                    this.selectslb = true;
+                    this.selectlb = false;
+                    this.selectylb = false;
+                    this.selectpaymethods = false;
+                    this.memberlevel ="398";
+                } else {
+                    this.selectpaymethods = true;
+                    if(this.memberlevel == "168") {
+                        this.selectylb = true;
+                        this.selectslb = false;
+                    } else if(this.memberlevel == "398") {
+                        this.selectslb = true;
+                        this.selectylb = false;
+                    }
+                }
+            },
+            gotoorderdetail: function () {
+                if (this.agreement == false) {
+                    return this.alert_agreement = true;
+                }
+                var paymenthods = this.wx == true ? 0 : 1;
+                var memberlevel = this.memberlevel;
+                var obj = {};
+                obj.memberlevel = memberlevel;
+                obj.paymenthods = paymenthods;
+                gotosumit("payforRightNow", obj);
+            },
+            gotoprotol: function () {
+                 window.location.href = "<%-appBaseName%>/openapi/h5/c/userdeal"
+            },
+            changeSelectStatus: function (t) {
+                    this.agreement = !this.agreement;
+            },
+
+        }
+    })
+</script>
+
+</html>

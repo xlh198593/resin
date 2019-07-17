@@ -1,0 +1,126 @@
+.people_info_con{
+	height:14rem;
+	background:#54C375;
+	overflow:hidden;
+}
+.people_info_con .img{
+    width:6rem;
+    height:6rem;
+    overflow:hidden;
+    margin:0 auto;
+}
+.people_info_con .username_con{
+    margin-top:1.2rem;
+    text-align:center;
+}
+.people_info_con .username_con span{
+	display:inline-block;
+    color:#FFF;
+
+}
+
+
+.people_info_con .username_con .user1{
+    width:4.5rem;
+	height:2rem;
+
+	line-height:2rem;
+	font-size:1.2rem;
+	border-radius:3px;
+	overflow:hidden;
+	position:relative;
+	top:-0.1rem;
+	border:1px solid #e5e5e5;
+}
+
+.people_info_con .username_con .user2{
+    
+    width:6rem;
+	height:2.5rem;
+	line-height:2.5rem;
+    font-size:1.7rem;
+    overflow:hidden;
+    margin-left:0.5rem;
+}
+.people_info_con .phone_number{
+	height:20px;
+	line-height:20px;
+	font-size:1.5rem;
+	color:#fff;
+	text-align:center;
+	overflow:hidden;
+	margin-top:0.5rem;
+}
+.people_use_list > li{
+	height:4.5rem;
+	margin-top:0.5rem;
+	background:#FFF;
+	padding:0 1.2rem;
+}
+.people_use_list > li .title{
+	display:block;
+	width:7rem;
+	height:4.5rem;
+	line-height:4.5rem;
+	float:left;
+	font-size:1.6rem;
+	overflow:hidden;
+}
+.people_use_list > li .txt{
+	display:block;
+	max-width:60%;
+	height:4.5rem;
+	line-height:4.5rem;
+	float:right;
+	font-size:1.6rem;
+	padding-right:1.5rem;
+	background:url('../images/right_btn.png') no-repeat right center;
+	background-size:1rem;
+	overflow:hidden;
+	color:#333;
+}
+.people_use_list > li .txt span{
+	color:#F12E5C;
+}
+
+
+.account_overview_con .tit{
+	height:1.5rem;
+	line-height:1.5rem;
+	margin-top:2.5rem;
+	font-size:1.6rem;
+	padding:0 2.3rem;
+	color:#FFF;
+	overflow:hidden;
+}
+.account_overview_con .surplus{
+	height:2.5rem;
+	line-height:2.5rem;
+ 	font-size:3.4rem;
+	overflow:hidden;
+	padding:0 2.3rem;
+	margin-top:1.5rem;
+	color:#fff;
+}
+.account_overview_con .total_pay{
+	height:1.5rem;
+	line-height:1.5rem;
+ 	overflow:hidden;
+	font-size:1.6rem;
+	padding:0 2.3rem;
+	color:#fff;
+	margin-top:2.5rem;
+}
+
+.user_name_input{
+	display:block;
+	width:45%;
+	height:4.5rem;
+	line-height:4.5rem;
+	float:right;
+	font-size:1.6rem;
+	text-align:right;
+	border:1px solid transparent;
+}
+
+

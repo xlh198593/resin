@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdSysCallbackLogDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdSysCallbackLog">
+        <id column="callback_id" jdbcType="BIGINT" property="callbackId"/>
+        <result column="call_type" jdbcType="VARCHAR" property="callType"/>
+        <result column="call_url" jdbcType="VARCHAR" property="callUrl"/>
+        <result column="call_params" jdbcType="TIME" property="callParams"/>
+        <result column="call_status" jdbcType="VARCHAR" property="callStatus"/>
+        <result column="handle_status" jdbcType="VARCHAR" property="handleStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    callback_id, call_type, call_url, call_params, call_status, handle_status, create_time
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_sys_callback_log
+        where callback_id = #{callbackId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_sys_callback_log
+        <where>
+            <if test="callbackId != null">
+                and callback_id = #{callbackId,jdbcType=BIGINT}
+            </if>
+            <if test="callType != null">
+                and call_type = #{callType,jdbcType=VARCHAR}
+            </if>
+            <if test="callUrl != null">
+                and call_url = #{callUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="callStatus != null">
+                and call_status = #{callStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+                and create_time &gt; #{createTimeStart,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTimeEnd != null">
+                and create_time &lt; #{createTimeEnd,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.finance.street.entity.FdSysCallbackLog"
+            useGeneratedKeys="true" keyProperty="callbackId">
+        insert into fd_sys_callback_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="callType != null">
+                call_type,
+            </if>
+            <if test="callUrl != null">
+                call_url,
+            </if>
+            <if test="callParams != null">
+                call_params,
+            </if>
+            <if test="callStatus != null">
+                call_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="callType != null">
+                #{callType,jdbcType=VARCHAR},
+            </if>
+            <if test="callUrl != null">
+                #{callUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="callParams != null">
+                #{callParams,jdbcType=TIME},
+            </if>
+            <if test="callStatus != null">
+                #{callStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.finance.street.entity.FdSysCallbackLog">
+        update fd_sys_callback_log
+        <set>
+            <if test="callType != null">
+                call_type = #{callType,jdbcType=VARCHAR},
+            </if>
+            <if test="callUrl != null">
+                call_url = #{callUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="callParams != null">
+                call_params = #{callParams,jdbcType=TIME},
+            </if>
+            <if test="callStatus != null">
+                call_status = #{callStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where callback_id = #{callbackId,jdbcType=BIGINT}
+        <if test="callStatus != null">
+            and call_status &lt;&gt; 'succ'
+        </if>
+    </update>
+
+</mapper>

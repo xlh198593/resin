@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MemberMessageDao">
+
+	<insert id="insertMemberMessage" parameterType="com.meitianhui.member.entity.MdMemberMessage">
+		INSERT INTO
+		md_member_message (
+			message_id
+			,message_type
+			,member_id
+			,message_category
+			,message_title
+			,message_subtitle
+			,message_text
+			,message_pic
+			,message_param
+			,is_read
+			,is_show
+			,created_date
+			,modified_date
+			,remark
+			)
+			VALUES (
+			#{message_id}
+			,#{message_type}
+			,#{member_id}
+			,#{message_category}
+			,#{message_title}
+			,#{message_subtitle}
+			,#{message_text}
+			,#{message_pic}
+			,#{message_param}
+			,#{is_read}
+			,#{is_show}
+			,#{created_date}
+			,#{modified_date}
+			,#{remark}
+			)
+	</insert>
+	
+	<select id="findMemberMessage" parameterType="Map" resultType="MdMemberMessage">
+		<![CDATA[
+			SELECT
+			     c.message_id
+				,c.message_type
+				,c.member_id
+				,c.message_category
+				,c.message_title
+				,c.message_subtitle
+				,c.message_text
+				,c.message_pic
+				,c.message_param
+				,c.is_read
+				,c.is_show
+				,c.created_date
+				,c.modified_date
+				,c.remark 
+			FROM
+				md_member_message c 
+		]]>
+		<where>
+			1=1
+			<if test="message_type != null and message_type != ''">
+				AND c.message_type=#{message_type}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND c.member_id=#{member_id}
+			</if>
+			<if test="is_show != null and is_show != ''">
+				AND c.is_show=#{is_show}
+			</if>
+		</where>
+		ORDER BY created_date DESC
+	</select>
+	
+	<update id="updateMemberMessage" parameterType="Map">
+		UPDATE md_member_message SET
+		<trim suffixOverrides=",">
+			<if test="is_read != null and is_read != ''">
+				is_read = #{is_read},
+			</if>
+			<if test="is_show != null and is_show != ''">
+				is_show = #{is_show},
+			</if>
+		</trim>
+		<where>
+			1=1
+			<if test="message_id != null and message_id != ''">
+				AND message_id = #{message_id}
+			</if>
+			<if test="message_id_in != null">
+				AND message_id in
+				<foreach item="item" index="index" collection="message_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</update>
+	
+	<select id="findMessageTypeCount" parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+			     COUNT(1) count
+			    ,message_type
+			FROM
+				md_member_message c 
+		]]>
+		<where>
+			1=1
+			<if test="message_type != null and message_type != ''">
+				AND c.message_type=#{message_type}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND c.member_id=#{member_id}
+			</if>
+			<if test="is_read != null and is_read != ''">
+				AND c.is_read=#{is_read}
+			</if>
+		</where>
+			GROUP BY message_type
+	</select>
+</mapper>

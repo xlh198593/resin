@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>掌柜钱包</title>
+        <style>
+            #app {
+                width:10rem;
+                margin:0 auto;
+            }
+            .page_title {
+                height:1.173333rem;
+                line-height:1.173333rem;
+                text-align: center;
+                width:10rem;
+                font-size:.48rem;
+                color:#333333;
+                border-bottom:1px solid #EEEEEE;
+                background:rgba(255,255,255,1);
+            }
+            .page_title .gotomingxi {
+                display: inline-block;
+                height:1.173333rem;
+                line-height:1.173333rem;
+                float:right;
+                padding:0 0.2rem;
+                font-size:.346667rem;
+                text-align: center;
+            }
+            .page_title .back {
+                display: inline-block;
+                height:.56rem;
+                width:.306667rem;
+                margin-top:.306667rem;
+                margin-left:.266667rem;
+                float:left;
+                background: url("/image/activity/invoic/goback.png");
+                background-size: 100% 100%;
+            }
+            .money_title {
+                height:.386667rem;
+                font-size:.4rem;
+                color:#999999;
+                margin-left:.4rem;
+                margin-top:.68rem;
+                background-color:rgba(0,0,0,0);
+                
+            }
+            .money_number {
+                height:.8rem;
+                color:#333333;
+                font-size:.8rem;
+                margin-top:.666667rem;
+                margin-left:.4rem;
+                font-weight: 700;
+                background-color:rgba(0,0,0,0);
+            }
+            .money_number span {
+                font-size:0.6rem;
+            }
+            .down {
+                width:10rem;
+                height:13.88rem;
+                background:rgba(238,238,238,1);
+                margin-top:.666667rem;
+                overflow: hidden;
+            }
+            .btn {
+                height:1.066667rem;
+                width:8rem;
+                margin:0 auto;
+                margin-top:1.346667rem;
+                background: url("/image/manager/inviatebtn.png");
+                background-size: 100% 100%;
+            }
+            .seemust {
+                height:3.5rem;
+                width:9.333333rem;
+                margin:0 auto;
+                margin-top:1.826667rem;
+                background: url("/image/manager/seeemust.png");
+                background-size: 100% 100%;
+            }
+           
+            
+
+
+          
+
+        </style>
+</head>
+
+<body>
+    <div id="app">
+        <% if(type == 'h5') {%>
+            <div class="page_title"><span class="back" @click="go()"></span>掌柜钱包<span class="gotomingxi" @click="gotodetailaccount()">明细</span> </div>
+        <%}else{%>
+        <%}%>
+        
+        <div class="money_title">次邀金额（元）</div>
+        <div class="money_number"><span>¥</span><%=rateCount.toFixed(2)%></div>
+        <div class="down">
+            <div class="btn" @click="gotoinviate()"></div>
+            <div class="seemust"></div>
+           
+
+        </div>
+        
+        
+        
+    </div>
+       
+       
+   
+
+</body>
+<script>
+     new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                money:"",
+                iscomein:false,
+                moneyReg:/^\d{1,}$/,
+                affrimcomein:false,
+            }
+        },
+        computed:{
+           
+        },
+        methods: {
+           gotosumit:function(method, obj) {
+               if (window.jsObj) {  // Android
+                // 传递分享数据
+               if (window.jsObj[method]) {
+                  window.jsObj[method](JSON.stringify(obj));
+               }
+               } else {    // IOS
+                 setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+                 });
+              }
+           },
+            gotodetailaccount:function() {
+                window.location.href="<%=appBaseName%>/openapi/h5/c/detailaccount?member_id=<%=member_id%>&type=h5"
+            },
+            gotoinviate:function() {
+                <%if(type == 'h5') {%>
+                    window.location.href="<%=appBaseName%>/openapi/h5/c/timetoinvitefans?member_id=<%=member_id%>&type=h5"
+                <%}else{%>
+                    this.gotosumit("gotoinviate",{})
+                <%}%>
+               
+            },
+            go:function() {
+                window.history.back(-1)
+            },
+            gotocomein:function() {
+                 this.affrimcomein = true;
+            },
+            cancel:function() {
+                 this.affrimcomein = false;
+            },
+            affrim_comein:function() {
+              
+            }
+
+         
+        },
+        watch: {
+           money:function(newvalue,oldvalue) {
+               if(this.moneyReg.test(newvalue)) {
+                   this.iscomein = true;
+               } else {
+                   this.iscomein = false;
+               }
+           }
+        }
+    })
+
+   
+</script>
+
+</html>

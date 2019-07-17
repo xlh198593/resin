@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <link rel="stylesheet" href="/css/payback/calender/sign2.css">
+        <title>日历签到</title>
+
+        <style>
+            #app {
+                width: 10rem;
+                margin: 0 auto;
+            }
+
+            .title {
+                height: 1.826663rem;
+                width: 10rem;
+                background: url("/image/calender/title11.png");
+                background-size: 100% 100%;
+                overflow: hidden;
+            }
+
+            .sign_in_have,
+            .sign_id_get {
+                height: .413333rem;
+                width: 10rem;
+                line-height: .413333rem;
+                font-size: .4rem;
+                text-align: center;
+                color: #FFFFFF;
+            }
+
+            .sign_in_have {
+                margin-top: 0.28rem;
+            }
+
+            .sign_id_get {
+                margin-top: .226667rem;
+            }
+
+            .calender_content {
+                /* height: 8.68rem; */
+                width: 8.573333rem;
+                border-radius: .133333rem;
+                margin: 0 auto;
+                margin-top: .373333rem;
+                border-radius: .266667rem;
+                border: 1px solid rgba(215, 215, 215, 1);
+                box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.19);
+                overflow: hidden;
+            }
+
+            .calender_content_title {
+                height: 1.346667rem;
+                width: 8.573333rem;
+                background: url("/image/calender/rulikuang@2x_b.png");
+                background-size: 100% 100%;
+                display: flex;
+            }
+
+            .calender_content_title .text_center {
+                height: 1.346667rem;
+                width: 6.373333rem;
+            }
+
+            .calender_content_title .text_left {
+                height: 1.346667rem;
+                width: 1.153333rem;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .img_left {
+                margin-top: .36rem;
+            }
+            .img_right {
+                margin-top: .36rem;
+            }
+
+            .calender_content_title .text_right {
+                display: block;
+                height: 1.346667rem;
+                width: 1.153333rem;
+                text-align: center;
+            }
+
+            .content {
+                font-size: .24rem;
+                color: #FFFFFF;
+                margin-top: .053333rem;
+            }
+
+            .content-color {
+                color: #BFBFBF;
+            }
+
+            .calender_content_title img {
+                height: .48rem;
+                width: .48rem;
+            }
+
+            .calender_content_title .text_right {
+                display: block;
+                height: 1.346667rem;
+                width: 1.153333rem;
+                cursor: pointer;
+                
+            }
+
+            .sign_in_end,
+            .sign_in_number {
+                height: 1.346667rem;
+                line-height: 1.346667rem;
+                font-size: .48rem;
+                text-align: center;
+                color: #FFFFFF;
+            }
+
+            .sign_in_end {
+                font-size: .48rem;
+                padding-top: .213333rem;
+            }
+
+            /* .sign_in_number {
+                font-size: .346667rem;
+                margin-top: .173333rem;
+            } */
+
+            .week {
+
+                width: 8.573333rem;
+                overflow: hidden;
+            }
+
+            .sign_main {
+                /*width: 400px;*/
+                /**background-color: #FBFEFE;**/
+                width: 8.573333rem;
+                border-top: 1px solid #e3e3e3;
+                font-family: "Microsoft YaHei", SimHei;
+                display: block;
+            }
+
+            .sign_equal {
+                display: table;
+                border-collapse: separate;
+                width: 8.573333rem;
+            }
+
+            .sign_row {
+                display: table-row;
+            }
+
+            .sign_row div {
+                display: table-cell;
+                width: 1.2247618571rem;
+
+                /*border-bottom: 1px solid #e3e3e3;*/
+                height: 1.2346666rem;
+                text-align: center;
+                line-height: 1.2346666rem;
+            }
+
+            .sign_row .calendar_record,
+            .sign_row .on,
+            .sign_row .calendar_record1 {
+                border-top: 2px solid #e3e3e3;
+                border-left: 2px solid #e3e3e3;
+                position: relative;
+                /* background-color: rgba(232,27,127,0.1); */
+            }
+
+            .sign_row .bold {
+                font-weight: bold;
+                color: #999999;
+            }
+
+            .sign_row div:last-child {
+                border-right: 2px solid #e3e3e3;
+            }
+
+            .sign_equal .sign_row:last-child div {
+                border-bottom: 2px solid #e3e3e3;
+            }
+
+            .sign_row .calendar_record {
+                background-color: rgba(232, 27, 127, 0.1);
+            }
+
+            .sign_equal .weiqiandao {
+                background: url(/image/calender/weiqiandao@2x.png) no-repeat center;
+                background-color: rgba(232, 27, 127, 0.1);
+            }
+
+            .sign_equal .weiqiandao_y {
+                background: url(/image/calender/qiandao_y.png) no-repeat center;
+                background-color: rgba(232, 27, 127, 0.1);
+            }
+
+            .sign_equal .yiqiandao_yy {
+                background: url(/image/calender/cccc.png) no-repeat center;
+                background-color: rgba(232, 27, 127, 0.1);
+            }
+
+            .sign_equal .on {
+                background: url(/image/calender/yiqiandao@2x.png) no-repeat center;
+                background-color: rgba(232, 27, 127, 0.1);
+            }
+
+            .sign_contener,
+            .sign_contener:visited {
+                line-height: 30px;
+                background: #00a0e9;
+                border: none;
+                color: white;
+                border-radius: 30px;
+                padding: 0 10px;
+                font-size: 16px;
+            }
+
+            .sign_contener:hover {
+                background-color: red;
+            }
+
+            .tishi {
+                height: .333333rem;
+                width: 10rem;
+                color: #E81B7F;
+                line-height: .333333rem;
+                text-align: center;
+                margin-top: .426667rem;
+            }
+
+            .jx {
+                width: 10rem;
+                height: .2rem;
+                background-color: #F8F8F8;
+                margin-top: .4rem;
+                margin-bottom: .4rem;
+            }
+
+            .tishi_title {
+                height: .453333rem;
+                width: 10rem;
+                line-height: .453333rem;
+                text-align: center;
+                font-size: .453333rem;
+                color: #333333;
+                font-weight: 600;
+            }
+
+            .fu_titile {
+                height: .866667rem;
+                width: 8.773333rem;
+                margin: 0 auto;
+                color: #999999;
+                font-size: .346667rem;
+                line-height: .533333rem;
+                margin-top: .4rem;
+            }
+            .fu_titile2{
+                margin-bottom: .533333rem;
+            }
+
+            .sign_equal .year {
+                height: .24rem;
+                width: 100%;
+                font-size: .24rem;
+                line-height: 0.24rem;
+                position: absolute;
+                bottom: 0.1rem;
+                color: #999999;
+            }
+            .overstriking{
+                font-weight:bold;
+                color: #000000;
+            }
+            .retroactive-box{
+                height: 10.533333rem;
+            }
+            .retroactive-title{
+                height: .453333rem;
+                margin-top: .533333rem;
+                text-align: center;
+                font-size: .48rem;
+                font-family:PingFangSC-Medium;
+                font-weight:500;
+                color:rgba(51,51,51,1);
+            }
+            .yq-box{
+                width: 8.666667rem;
+                height: 2.946667rem;
+                margin: .533333rem auto 0 auto;
+                background: url("/image/calender/yqhycwhydk@2x.png") no-repeat;
+                background-size:cover;
+                border-radius:.133333rem;
+                -moz-box-shadow:  rgb(218, 216, 216) .04rem .066667rem .333333rem .013333rem  ; /* 老的 Firefox */
+                box-shadow:rgb(218, 216, 216) .04rem .066667rem .333333rem .013333rem  ;
+            }
+            .zs-box{
+                width:8.666667rem;
+                height: 2.933333rem;
+                margin-top: .4rem;
+                margin: .4rem auto 0 auto;
+                background: url("/image/calender/z2@2.png") no-repeat;
+                background-size:cover;
+                border-radius:.133333rem;
+                -moz-box-shadow:  rgb(218, 216, 216) .04rem .066667rem .333333rem .013333rem  ; /* 老的 Firefox */
+                box-shadow:rgb(218, 216, 216) .04rem .066667rem .333333rem .013333rem  ;
+            }
+            .bq-day{
+                height: .386667rem;
+                width:8.666667rem;
+                margin: .786667rem auto 0 auto;
+                font-size:.4rem;
+                font-family:PingFangSC-Medium;
+                font-weight:500;
+                color:rgba(51,51,51,1);
+            }
+            .day{
+                color: #E81F7B;
+            }
+            .bq-button{
+                height: 1.173333rem;
+                width: 8.666667rem;
+                margin: .533333rem auto 0 auto;
+                text-align: center;
+                line-height: 1.173333rem;
+                font-size: .373333rem;
+                border-radius:.133333rem;
+            }
+            .bq-yes{
+                background: url("/image/calender/jx4@2x.png") no-repeat;
+                background-size:cover;
+                color: rgba(255,255,255,1);
+                -moz-box-shadow:  #FF9EBA .04rem .066667rem .333333rem .013333rem  ; /* 老的 Firefox */
+                box-shadow:#FF9EBA .04rem .066667rem .333333rem .013333rem ;
+            }
+            .bq-no{
+                background: url("/image/calender/jx5@2x.png") no-repeat;
+                background-size:cover;
+                color: rgba(51,51,51,1);
+                -moz-box-shadow:  #BBBBBB .04rem .066667rem .333333rem .013333rem  ; /* 老的 Firefox */
+                box-shadow:#BBBBBB .04rem .066667rem .333333rem .013333rem ;
+            }
+            .yq-one ,.zs-one{
+                height: .386667rem;
+                padding-top: .56rem;
+                padding-left: .426667rem;
+                font-size: .4rem;
+                font-family:PingFangSC-Medium;
+                font-weight:500;
+                color:rgba(51,51,51,1);
+            }
+            .yq-text,.zs-text{
+                font-size: .32rem;
+                padding-left: 1.013333rem;
+                padding-top: .306667rem;
+                font-family:PingFangSC-Medium;
+                font-weight:500;
+                color:rgba(102,102,102,1);
+            }
+            .yq-buttonbox{
+                margin-top: .346667rem;
+                height: .56rem;
+                line-height: .56rem;
+                color: #666666;
+                font-size: .32rem;
+                padding-left: 1.026667rem;
+                display: flex;
+            }
+            .yq-buttonbox2{
+                margin-top: .346667rem;
+                height: .56rem;
+                line-height: .56rem;
+                color: #666666;
+                font-size: .32rem;
+                padding-left: 1.026667rem;
+                display: flex;
+            }
+            .button-yq{
+                height: .56rem;
+                width: 1.866667rem;
+                text-align: center;
+                color: #E81F7B;
+                background: url("/image/calender/yjjx4@2x.png");
+                background-size:cover;
+                border-radius: .08rem;
+                margin-left: 2.253333rem;
+                -moz-box-shadow:  #BBBBBB .026667rem .026667rem .133333rem .013333rem  ; /* 老的 Firefox */
+                box-shadow:#BBBBBB .02rem .02rem .133333rem .013333rem;
+            }
+            .button-yq-n{
+                color: #666666;
+            }
+            .shade{
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                overflow: hidden;
+                outline: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+            }
+            .reminder{
+                display: none;
+                position: fixed;
+                width: 6.666667rem;
+                height: 4.666667rem;
+                left: 50%;
+                top: 25%;
+                margin-left: -3.333333rem;
+                border-radius: .133333rem;
+                background: #FFFFFF;
+                z-index: 199;
+            }
+            .reminder2{
+                display: none;
+                position: fixed;
+                width: 6.666667rem;
+                height: 4.666667rem;
+                left: 50%;
+                top: 25%;
+                margin-left: -3.333333rem;
+                border-radius: .133333rem;
+                background: #FFFFFF;
+                z-index: 199;
+            }
+            .rem-title{
+                height: 1.186667rem;
+                width: 6.133333rem;
+                margin: 0 auto;
+                line-height: 1.186667rem;
+                text-align: center;
+                color: #F45687;
+                font-size: .426667rem;
+                font-weight:400;
+                border-bottom: 2px solid;
+            }
+            .rem-text{
+                width: 5.093333rem;
+                margin: .6rem auto 0 auto;
+                font-size: .426667rem;
+                color:rgba(51,51,51,1);
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                text-align: center;
+            }
+            .rem-texts{
+                width: 5.093333rem;
+                margin: .6rem auto 0 auto;
+                font-size: .426667rem;
+                color:rgba(51,51,51,1);
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                text-align: center;
+            }
+            .rem-button{
+                position: absolute;
+                bottom: 0;
+                height: 1.066667rem;
+                width: 6.666667rem;
+                line-height: 1.066667rem;
+                text-align: center;
+                font-size: .426667rem;
+                color:rgba(51,51,51,1);
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                border-top: 1px solid rgba(216,216,216,1);
+            }
+            .rem-button2{
+                position: absolute;
+                bottom: 0;
+                height: 1.066667rem;
+                width: 6.666667rem;
+                display: flex;
+                line-height: 1.066667rem;
+                text-align: center;
+                font-size: .426667rem;
+                color:rgba(51,51,51,1);
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                border-top: 1px solid rgba(216,216,216,1);
+            }
+            .rem-button2 div{
+                width: 50%;
+            }
+            .close-bt{
+                border-right: 1px solid rgba(216,216,216,1);
+            }
+            .bq-img{
+                width: .4rem !important;
+                height: .426667rem !important;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                border-right: 0px !important;
+                background: url("/image/calender/dbx1@2x.png") no-repeat;
+                background-size:cover;
+            }
+            .singIn{
+                z-index: 100;
+                height: 13.76rem;
+                width: 10rem;
+                position: fixed;
+                top: 50%;
+                margin-top: -5.88rem;
+                display: none;
+            }
+            .singIn-img,.singIn-img img{
+                height: 8.666667rem;
+                width: 10rem;
+            }
+            .singIn_send{
+                height: 1.64rem;
+                width: 5.693333rem;
+                line-height: 1.64rem;
+                margin: 0 auto;
+                text-align: center;
+                font-size: .666667rem;
+            }
+            .singIn_btn{
+                height: 1.266667rem;
+                width: 6.84rem;
+                margin: 0 auto;
+                line-height: 1.266667rem;
+                text-align: center;
+                background: #E81B7F;
+                border-radius: .2rem;
+                color: #ffffff;
+                font-size: .48rem;
+            }
+            .singIn_closebtn{
+                height: .52rem;
+                width: .506667rem;
+                margin: .733333rem auto  0  auto;
+                background: url("/image/newmember/singIn_close.png");
+                background-size: 100% 100%;
+            }
+            .button-pay{
+                margin-left: 1.653333rem;
+            }
+        </style>
+        <!-- <script src="js/jquery-1.10.2.min.js"></script> -->
+</head>
+
+<body>
+    <div class="shade"></div>
+    <div class="reminder">
+        <div class="rem-title">提示</div>
+        <div class="rem-text"></div>
+        <div class="rem-button">知道了</div>
+    </div>
+    <div class="reminder2">
+        <div class="rem-title">提示</div>
+        <div class="rem-texts">您是否确认花费16个贝壳，获得一天补签机会？</div>
+        <div class="rem-button2">
+            <div class="close-bt">取消</div>
+            <div class="close-qr toPayshell">确认</div>
+        </div>
+    </div>
+    <div class="singIn">
+        <div class="singIn-img">
+            <img src="/image/newmember/signin11.png"/>
+        </div>
+        <div class="singIn_send" style="color:#FFFFFF"> 获得399礼券一张</div>
+        <div class="singIn_btn">立即激活</div>
+        <div class="singIn_closebtn"></div>
+    </div>
+    <div id="app">
+        <div class="title">
+            <div class="sign_in_have">再签到
+                <%=need_signIn%>次</div>
+            <div class="sign_id_get">可获得399礼券一张</div>
+        </div>
+        <div class="calender_content">
+            <div class="calender_content_title">
+                <a class="text_left">
+                    <div class="img_left">
+                        <img src="/image/calender/zuo-y.png" />
+                    </div>
+                    <div class="content">
+                        上一轮
+                    </div>
+                </a>
+                <div class="text_center">
+                    <!-- <div class="sign_in_end">
+                        <%=is_signIn== 'N'?"今日还未签到":"今日已签"%>
+                    </div> -->
+                    <div class="sign_in_number">
+                        本轮已签到
+                        <%=signData.length%>次
+                    </div>
+                </div>
+                <a class="text_right">
+                    <div class="img_right">
+                        <img src="/image/calender/you-n.png" />
+                    </div>
+                    <div class="content content-color">
+                        下一轮
+                    </div>
+                </a>
+            </div>
+            <div class="week" id="calendar">
+            </div>
+        </div>
+        <div class="tishi">*温馨提示：签到日历有底色的区域属于签到周期</div>
+        <div class="jx"></div>
+        <div class="retroactive-box">
+            <div class="retroactive-title">补签任务</div>
+            <div class="bq-button bq-yes">立即补签（漏签<span class="lq_day">0</span>天）</div>
+            <div class="bq-day">剩余可补签天数：<span class="day bqd">0</span>天</div>
+
+            <div class="zs-box">
+                <div class="zs-one">1、使用贝壳抵扣</div>
+                <div class="zs-text">每个签到周期内，可花费16个贝壳获得1天补签机会。</div>
+                <div class="yq-buttonbox2">
+                    <div class="text-yqnum">[每轮签到仅可购买<span class="day">1</span> 次]</div>
+                    <div class="button-yq button-pay" onclick="topay()">获得1天补签</div>
+                </div>
+            </div>
+
+            <div class="yq-box">
+                <div class="yq-one">2、介绍好友成为会员</div>
+                <div class="yq-text">每介绍1名好友成为会员，即可获得5天补签机会。</div>
+                <div class="yq-buttonbox">
+                    <div class="text-yqnum">[本月已邀请：<span class="day yqnum">0</span> 名]</div>
+                    <div class="button-yq" onclick="gotorealize('yqhydlq')">立即邀请</div>
+                </div>
+            </div>
+        </div>
+        <div class="jx"></div>
+        <div class="tishi_title">《签到解锁礼券(补签)规则》</div>
+        <div class="fu_titile">1、从成为超级会员的这一天起，以一个月为周期进行签到一个周期内累计签到25天即可解锁一张399元礼券。</div>
+        <div class="fu_titile">2、可补签天数只可补签<span class="overstriking">当前签到周期</span>的漏签天数，不可补签上个周期的漏签以及提前补签。</div>
+        <div class="fu_titile fu_titile2">3、若“累计可补签天数”当前周期内没有使用完，则进入下个签到周期时会<span class="overstriking">清零</span>。</div>
+    </div>
+</body>
+<script src="/js/third-part/calendar2.js"></script>
+
+<script type="text/javascript">
+var pay_button = false;
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+
+    $(function () {
+        //ajax获取日历json数据
+        
+        var starttime = "<%=starttime%>";
+        var endtime = "<%=endtime%>";
+        var singmun = "<%=signData.length%>"; //签到的天数
+        var bqday_num = "<%=repairCount%>";//可补签天数
+        var bk_num_pay = "<%=shell_count%>"; //贝壳购买的补签次数
+        var yq_num = 0;             //邀请人数
+        var bqsignList = [];  //属于补签的天数
+        var signList = [];      //本轮总签到天数
+        var list = []
+        var the_today = 0;
+        var myDate = new Date();
+        var mdate = myDate.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+myDate.getDate();//今天的时间
+        <% for (var i = 0; i < signData.length; i++) {%>
+            var data = new Date("<%=signData[i]%>".replace(/-/g, "/"));
+            if(new Date(mdate).getTime() == data.getTime()){
+                the_today ++;
+            }
+            signList.push({ "signDay": data.getDate() });
+            list.push({ "signDay": data.getDate() })
+        <%}%>
+            
+        
+        if (signList.length == 0) {
+            signList.push({ "signDay": new Date().getDate() })
+        }
+        var bqdaynum = "<%=signDataRepair.length%>"
+        //补签天数
+        <% for (var i = 0; i < signData.length; i++) {%>
+            var data = new Date("<%=signDataRepair[i]%>".replace(/-/g, "/"));
+            bqsignList.push(data.getDate());
+        <%}%>
+
+        yq_num = (Number(bqday_num) + Number(bqdaynum)-Number(bk_num_pay))/5 >= 1 ? Number((Number(bqday_num) + Number(bqdaynum)-Number(bk_num_pay))/5).toFixed(0) : 0;
+        //本轮未签到的天数
+        var day_mun = daysBetween(starttime.replace(/-/g, "/"),mdate); //获取本轮开始时间到今天 间隔 (不包括今天)
+        day_mun = day_mun - singmun + the_today; //本轮开始时间到今天 剩余未签到的天数
+
+        $(".lq_day").html(day_mun < 0 ? 0 : day_mun);
+        $(".bqd").html(bqday_num);
+        $(".yqnum").html(yq_num);
+        $("#calendar").html("");
+        rili(starttime,endtime,signList,list,false,bqsignList);
+        
+        var leftcl = false;
+        var rightcl = true;
+        //上月下月 切换
+        $(document).on('click',".text_left", function () {
+            if(leftcl){
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/openapi/h5/c/calender/lastmonth',
+                data: {
+                    member_id: getUrlParam("member_id"),
+                },
+                success: function (data) {
+                    if(data.rsp_code == "succ"){
+                        leftcl = true;
+                        rightcl = false;
+                        $(".img_right img").attr("src","/image/calender/you-y.png");
+                        $(".text_right .content").removeClass("content-color");
+                        $(".text_left .content").addClass("content-color");
+                        $(".img_left img").attr("src","/image/calender/zuo-n.png");
+                        $("#calendar").html("");
+                        var signList2 = [];
+                        var list2 = [];
+                        var bqsignList2 = [];
+                        var res = data.data;
+                        for (var i = 0; i < res.signData.length; i++) {
+                            if(res.starttime <= res.signData[i] && res.endtime > res.signData[i]){
+                                var datas = new Date(res.signData[i].replace(/-/g, "/"));
+                                signList2.push({ "signDay": datas.getDate() });
+                                list2.push({ "signDay": datas.getDate() })
+                            }
+                        }
+                        if(res.signDataRepair){
+                            for (var i = 0; i < res.signDataRepair.length; i++) {
+                                var datas = new Date(res.signData[i].replace(/-/g, "/"));
+                                bqsignList2.push(datas.getDate());
+                            }
+                        }
+                        $(".sign_in_number").html("本轮已签到"+signList2.length+"次");
+                        if (signList2.length == 0) {
+                            signList2.push({ "signDay": new Date().getDate() })
+                        }
+                        
+                        rili(res.starttime,res.endtime,signList2,list2,true,bqsignList2);
+                    }else if(data.rsp_code == "fail"){
+                        $(".shade").show();
+                        $(".reminder").show();
+                        $(".rem-text").html(data.error_msg)
+                    }
+                }
+            });
+        });
+        $(document).on('click',".text_right", function () {
+            if(rightcl){
+                return;
+            }
+            leftcl = false;
+            rightcl = true;
+            $(".sign_in_number").html("本轮已签到"+singmun+"次");
+            $(".img_right img").attr("src","/image/calender/you-n.png");
+            $(".text_right .content").addClass("content-color");
+            $(".text_left .content").removeClass("content-color");
+            $(".img_left img").attr("src","/image/calender/zuo-y.png");
+            $("#calendar").html("");
+            rili(starttime,endtime,signList,list,false,bqsignList);
+        });
+        
+        var bq_button = false;
+        $(document).on('click','.bq-yes',function(){
+            if(bq_button){
+                return;
+            }
+            bq_button = true;
+            $.ajax({
+                type: 'POST',
+                url: '/openapi/h5/c/retroactive',
+                data: {
+                    member_id: getUrlParam("member_id"),
+                },
+                success: function (data) {
+                    bq_button = false;
+                    if(data.rsp_code == "succ"){
+                        var ggtp = true;
+                        if(data.data.signDataRepair && data.data.signDataRepair.length > 0){
+                            bqsignList = [];
+                            signList = [];
+                            for (var i = 0; i < data.data.signDataRepair.length; i++) {
+                                var data_t = new Date(data.data.signDataRepair[i].replace(/-/g, "/"));
+                                bqsignList.push(data_t.getDate());
+                            }
+                            for (var i = 0; i < data.data.sSignList.length; i++) {
+                                var data_t = new Date(data.data.sSignList[i].replace(/-/g, "/"));
+                                signList.push({ "signDay": data_t.getDate() });
+                            }
+                            $("#calendar").html("");
+                            singmun = data.data.sSignList.length;
+                            $(".sign_in_number").html("本轮已签到"+singmun+"次");
+                            rili(starttime,endtime,signList,list,false,bqsignList);
+                            if(singmun >= 25 && data.data.newSignList.length > 0){
+                                ggtp = false;
+                                $(".singIn").show();
+                                $(".shade").show();
+                            }
+                            day_mun = day_mun - data.data.signDataRepair.length; //本轮开始时间到今天 剩余未签到的天数
+                            $(".lq_day").html(day_mun < 0 ? 0 : day_mun);
+                            bqday_num = bqday_num - data.data.newSignList.length;
+                            $(".bqd").html(bqday_num);
+                            leftcl = false;
+                            rightcl = true;
+                            $(".img_right img").attr("src","/image/calender/you-n.png");
+                            $(".text_right .content").addClass("content-color");
+                            $(".text_left .content").removeClass("content-color");
+                            $(".img_left img").attr("src","/image/calender/zuo-y.png");
+                        }
+                        if(ggtp){
+                            $(".shade").show();
+                            $(".reminder").show();
+                            $(".rem-text").html(data.data.signStr == "正常签到" ? "补签成功" : data.data.signStr);
+                        }
+                    }else if(data.rsp_code == "fail"){
+                        $(".shade").show();
+                        $(".reminder").show();
+                        $(".rem-text").html(data.error_msg)
+                    }
+                }
+            })
+        })
+        
+        if(bk_num_pay != 0){
+            $(".button-pay").addClass("button-yq-n");
+            $(".button-pay").html("本轮已获得");
+            pay_button = true;
+        }
+        $(document).on('click','.toPayshell',function() {
+            if(pay_button){
+                return;
+            }
+            pay_button = true;
+            $.ajax({
+                type: 'POST',
+                url: '/openapi/h5/c/calender/paynum',
+                data: {
+                    member_id: getUrlParam("member_id"),
+                    user_token: getUrlParam("user_token")
+                },
+                success: function (data) {
+                    pay_button = false;
+                    $(".reminder2").hide();
+                    if(data.rsp_code == "succ"){
+                        var res = data.data;
+                        if(res.shell_switch_to_count == '1'){
+                            $(".reminder").show();
+                            $(".rem-text").html("您在本周期已购买过补签机会")
+                        }else if(res.shell_switch_to_count == '0'){
+                            bqday_num ++;
+                            $(".bqd").html(bqday_num);
+                            $(".reminder").show();
+                            $(".rem-text").html("购买成功")
+                            $(".button-pay").addClass("button-yq-n");
+                            $(".button-pay").html("本轮已获得");
+                            pay_button = true;
+                        }
+                    }else{
+                        $(".reminder").show();
+                        $(".rem-text").html(data.error_msg)
+                    }
+                    
+                }
+            })
+            
+        })
+        
+        $(document).on('click','.singIn_btn',function(){
+            $(".shade").hide();
+            $(".singIn").hide();
+        })
+        $(document).on('click','.close-bt',function(){
+            $(".shade").hide();
+            $(".reminder2").hide();
+        })
+        $(document).on('click','.singIn_closebtn',function(){
+            $(".shade").hide();
+            $(".singIn").hide();
+        })
+        $(document).on('click','.rem-button',function(){
+            $(".shade").hide();
+            $(".reminder").hide();
+        })
+        $(".shade").on('touchmove',function(e){
+            e.preventDefault();  //阻止默认行为
+        })
+        $(".reminder").on('touchmove',function(e){
+            e.preventDefault();  //阻止默认行为
+        })
+        
+    });
+    function topay(){
+        if(pay_button){
+            return;
+        }
+        $(".reminder2").show();
+        $(".shade").show();
+    }
+    function gotorealize(type){
+        gotosumit("torealize1",{type:type})
+    }
+    
+    function daysBetween(sDate1,sDate2){
+        var time1 = Date.parse(new Date(sDate1));
+        var time2 = Date.parse(new Date(sDate2));
+        var nDays = Math.abs(parseInt((time2 - time1)/1000/3600/24));
+        return  nDays;
+    };
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    function getDaysInmonth(iMonth, iYear) {
+        var dPrevDate = new Date(iYear, iMonth, 0);
+        return dPrevDate.getDate();
+    }
+    function changeZw(month) {
+        var sta_zw_month = "";
+        month > 12 ? month = month % 12 : month;
+        switch (month) {
+            case 1:
+                sta_zw_month = "一月";
+                break;
+            case 2:
+                sta_zw_month = "二月";
+                break;
+            case 3:
+                sta_zw_month = "三月";
+                break;
+            case 4:
+                sta_zw_month = "四月";
+                break;
+            case 5:
+                sta_zw_month = "五月";
+                break;
+            case 6:
+                sta_zw_month = "六月";
+                break;
+            case 7:
+                sta_zw_month = "七月";
+                break;
+            case 8:
+                sta_zw_month = "八月";
+                break;
+            case 9:
+                sta_zw_month = "九月";
+                break;
+            case 10:
+                sta_zw_month = "十月";
+                break;
+            case 11:
+                sta_zw_month = "十一月";
+                break;
+            case 12:
+                sta_zw_month = "十二月";
+                break;
+            default:
+
+        }
+        return sta_zw_month;
+    };
+    function queryMonth(sta_day,arr,sta_month11) {
+        for (var i = 0; i < arr.length; i++) {
+            if (sta_day > 1) {
+                if (arr[i].innerHTML == 1 || arr[i].innerHTML.slice(26) == 1) {
+                    if(arr[i].innerHTML.length > 3){
+                        arr[i].innerHTML = "<div class='bq-img'></div>1<div class='year'>" + changeZw(sta_month11 + 1) + "</div>";
+                    }else{
+                        arr[i].innerHTML = "1<div class='year'>" + changeZw(sta_month11 + 1) + "</div>";
+                    }
+                    
+                    if (sta_month11 >= 12) sta_month11 = 1;
+                    sta_month11++;
+                }
+            } else {
+                if (arr[i].innerHTML == 1 || arr[i].innerHTML.slice(26) == 1) {
+                    if (sta_month11 > 12) sta_month11 = 1;
+                    if(arr[i].innerHTML.length > 3){
+                        arr[i].innerHTML = "<div class='bq-img'></div>1<div class='year'>" + changeZw(sta_month11) + "</div>";
+                    }else{
+                        arr[i].innerHTML = "1<div class='year'>" + changeZw(sta_month11) + "</div>";
+                    }
+                    sta_month11++;
+                }
+            }
+        }
+    }
+    function rili(starttime,endtime,signList,list,sy,bqsignList){
+        calUtil.init(starttime, endtime, signList,sy,bqsignList);
+        var end_time = new Date(endtime);
+        var sta_time = new Date(starttime);
+
+        var end_year = end_time.getFullYear();
+        var end_month = end_time.getMonth() + 1;
+        var end_day = end_time.getDate();
+
+        var end_getDays = getDaysInmonth(end_year, end_month);
+
+        var data = starttime.replace(/-/g, "/");
+        var sta_date = new Date(data);
+        var sta_month = sta_date.getMonth() + 1;
+        var sta_month11 = sta_date.getMonth() + 1;
+        var sta_day = sta_date.getDate();
+        var sta_year = sta_date.getFullYear()
+        var sta_zw_month = changeZw(sta_month);
+        var end_zw_month = changeZw(end_month);
+        var length_mont_bs = $(".sign_row").children("div");
+        var day = end_day;
+         
+        var xcday = Math.floor(Math.abs(end_time - sta_time) / (24 * 3600 * 1000)) + 1;
+
+        queryMonth(sta_day,length_mont_bs,sta_month11);
+
+        if(xcday == 10){
+            var length1 = $(".sign_row1").children('div.calendar_record1').length;
+            var length2 = $(".sign_row2").children('div.calendar_record1').length;
+            var length3 = $(".sign_row3").children('div.calendar_record1').length;
+            var length4 = $(".sign_row4").children('div.calendar_record1').length;
+            var length5 = $(".sign_row5").children('div.calendar_record1').length;
+            var length6 = $(".sign_row6").children('div.calendar_record1').length;
+
+            for (var i = 0; i < length1; i++) {
+                if (sta_day == 1) {
+                    $(".sign_row1").children('div.calendar_record1')[length1 - i - 1].innerHTML = getDaysInmonth(sta_month - 1, sta_year);
+                    sta_day = getDaysInmonth(sta_month - 1, sta_year);
+                } else {
+                    sta_day--;
+                    $(".sign_row1").children('div.calendar_record1')[length1 - i - 1].innerHTML = sta_day;
+                }
+            }
+
+            for (var j = length2; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row2").children('div.calendar_record1')[length2 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row2").children('div.calendar_record1')[length2 - j].innerHTML = day;
+                }
+            }
+            for (var j = length3; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row3").children('div.calendar_record1')[length3 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row3").children('div.calendar_record1')[length3 - j].innerHTML = day;
+                }
+            }
+            for (var j = length4; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row4").children('div.calendar_record1')[length4 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row4").children('div.calendar_record1')[length4 - j].innerHTML = day;
+                }
+            }
+            for (var j = length5; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row5").children('div.calendar_record1')[length5 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row5").children('div.calendar_record1')[length5 - j].innerHTML = day;
+                }
+            }
+            for (var j = length6; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row6").children('div.calendar_record1')[length6 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row6").children('div.calendar_record1')[length6 - j].innerHTML = day;
+                }
+            }
+
+        }else{
+            var length1 = $(".sign_row1").children('div.calendar_record1').length;
+            var length2 = $(".sign_row6").children('div.calendar_record1').length;
+            var length3 = $(".sign_row5").children('div.calendar_record1').length;
+
+            for (var i = 0; i < length1; i++) {
+                if (sta_day == 1) {
+                    $(".sign_row1").children('div.calendar_record1')[length1 - i - 1].innerHTML = getDaysInmonth(sta_month - 1, sta_year);
+                    sta_day = getDaysInmonth(sta_month - 1, sta_year);
+                } else {
+                    sta_day--;
+                    $(".sign_row1").children('div.calendar_record1')[length1 - i - 1].innerHTML = sta_day;
+                }
+            }
+            for (var j = length3; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row5").children('div.calendar_record1')[length3 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row5").children('div.calendar_record1')[length3 - j].innerHTML = day;
+                }
+            }
+            for (var j = length2; j > 0; j--) {
+                day++;
+                if (day > end_getDays) {
+                    day = 1;
+                    $(".sign_row6").children('div.calendar_record1')[length2 - j].innerHTML = day + "<div class='year'>" + changeZw(end_month + 1) + "</div>";
+                } else {
+                    $(".sign_row6").children('div.calendar_record1')[length2 - j].innerHTML = day;
+                }
+            }
+        }
+        
+        if (list.length == 0) {
+            if(sy){
+                $(".yiqiandao_yy").removeClass("yiqiandao_yy").addClass("calendar_record weiqiandao");
+            }else{
+                $(".yiqiandao_yy").removeClass("yiqiandao_yy").addClass("calendar_record weiqiandao_y");
+            }
+            
+        }
+    }
+</script>
+
+
+
+
+
+
+</html>

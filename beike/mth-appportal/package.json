@@ -1,0 +1,33 @@
+{
+  "name": "mth-appportal",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev-start": "node ./bin/www",
+    "start": "forever start ./bin/www",
+    "stop": "forever stop ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect-redis": "^3.4.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "debug": "^4.0.1",
+    "ejs": "^2.6.1",
+    "eventproxy": "*",
+    "express": "^4.16.3",
+    "express-session": "*",
+    "ipware": "*",
+    "log4js": "*",
+    "md5": "*",
+    "moment": "*",
+    "mongoose": "*",
+    "morgan": "^1.9.1",
+    "redis": "^2.8.0",
+    "request": "*",
+    "serve-favicon": "^2.5.0",
+    "utility": "*",
+    "uuid": "^3.1.0",
+    "xml2js": "*"
+  }
+}

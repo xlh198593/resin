@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MdAppVersionDao">
+
+	<insert id="insertMdAppVersion" parameterType="com.meitianhui.member.entity.MdAppVersion">
+		INSERT INTO
+		md_app_version (
+		 version_name
+		,app_type
+		,version_no
+		,version_value
+		,update_type
+		,update_status
+		,create_time
+		,update_content
+		,download_path
+		)
+		VALUES (
+		#{version_name}
+		,#{app_type}
+		,#{version_no}
+		,#{version_value}
+		,#{update_type}
+		,#{update_status}
+		,NOW()
+		,#{update_content}
+		,#{download_path}
+		)
+	</insert>
+
+	<select id="selectLasterMdAppVersion" parameterType="Map" resultType="com.meitianhui.member.entity.MdAppVersion">
+			SELECT
+			    id
+				,version_name
+				,app_type
+				,version_no
+				,version_value
+				,update_type
+				,update_status
+				,create_time
+				,update_content
+		        ,download_path
+			FROM 
+				md_app_version 
+		    WHERE  1=1 
+		    <if test="app_type != null and app_type != ''">
+		       AND app_type=#{app_type}
+		    </if>
+		    ORDER BY version_value DESC limit 1
+	</select>
+	
+	
+	<select id="selectMdAppVersionBy" parameterType="Map" resultType="com.meitianhui.member.entity.MdAppVersion">
+			SELECT
+			    id
+				,version_name
+				,app_type
+				,version_no
+				,version_value
+				,update_type
+				,update_status
+				,create_time
+				,update_content
+		        ,download_path
+			FROM 
+				md_app_version 
+		    WHERE app_type=#{app_type}  AND version_no=#{version_no}
+	</select>
+
+	<update id="updateUpdateStatusById" parameterType="Map">
+		UPDATE md_app_version SET update_status =#{update_status} WHERE id=#{id}
+	</update>
+	
+	
+	
+	<select id="selectMdAppVersionPageList" parameterType="Map" resultType="Map">
+			SELECT
+			    id
+				,version_name
+				,app_type
+				,version_no
+				,version_value
+				,update_type
+				,update_status
+				,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') AS create_time_str
+				,create_time
+				,update_content
+		        ,download_path
+			FROM 
+				md_app_version 
+		    WHERE  1=1 
+		    <if test="app_type != null and app_type != ''">
+		       AND app_type=#{app_type}
+		    </if>
+		    <if test="version_no != null and version_no != ''">
+		       AND version_no=#{version_no}
+		    </if>
+		    ORDER BY create_time DESC
+	</select>
+	
+	
+	
+	
+
+</mapper>

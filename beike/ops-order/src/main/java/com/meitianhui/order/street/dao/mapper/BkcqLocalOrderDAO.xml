@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.order.street.dao.BkcqLocalOrderDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.order.street.entity.BkcqLocalOrder">
+        <id column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="order_date" jdbcType="TIMESTAMP" property="orderDate"/>
+        <result column="loaded_code" jdbcType="VARCHAR" property="loadedCode"/>
+        <result column="stores_id" jdbcType="VARCHAR" property="storesId"/>
+        <result column="stores_name" jdbcType="VARCHAR" property="storesName"/>
+        <result column="consumer_id" jdbcType="VARCHAR" property="consumerId"/>
+        <result column="desc1" jdbcType="LONGVARCHAR" property="desc1"/>
+        <result column="item_num" jdbcType="INTEGER" property="itemNum"/>
+        <result column="payment_way_key" jdbcType="VARCHAR" property="paymentWayKey"/>
+        <result column="sale_fee" jdbcType="DECIMAL" property="saleFee"/>
+        <result column="vip_fee" jdbcType="DECIMAL" property="vipFee"/>
+        <result column="settled_price" jdbcType="DECIMAL" property="settledPrice"/>
+        <result column="beike_credit" jdbcType="DECIMAL" property="beikeCredit"/>
+        <result column="delivery_address" jdbcType="VARCHAR" property="deliveryAddress"/>
+        <result column="contact_person" jdbcType="VARCHAR" property="contactPerson"/>
+        <result column="contact_tel" jdbcType="VARCHAR" property="contactTel"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="refund_process_record" jdbcType="VARCHAR" property="refundProcessRecord"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="refund_reason" jdbcType="VARCHAR" property="refundReason"/>
+        <result column="expired_date" jdbcType="TIMESTAMP" property="expiredDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    order_id, order_no, order_date, loaded_code, stores_id, stores_name, consumer_id, desc1, item_num, payment_way_key, sale_fee, vip_fee, settled_price, beike_credit, delivery_address,
+    contact_person, contact_tel, `status`, refund_process_record, created_date, remark, refund_reason, expired_date, modified_date
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrderNo" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder
+        where order_no = #{orderNo,jdbcType=VARCHAR} for update
+    </select>
+
+    <select id="selectByParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder
+        <where>
+            <if test="customerId != null">
+                and consumer_id = #{customerId,jdbcType=VARCHAR}
+            </if>
+            <if test="statuses != null">
+                <foreach item="status" collection="statuses" separator="," open=" and status in (" close=")" index="">
+                    #{status, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+        order by created_date desc
+    </select>
+
+    <select id="selectExpireOrder" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_localorder
+        <where>
+            <if test="expiredDate != null">
+                and expired_date &lt; #{expiredDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="statuses != null">
+                <foreach item="status" collection="statuses" separator="," open=" and status in (" close=")" index="">
+                    #{status, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+        order by created_date
+    </select>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.order.street.entity.BkcqLocalOrder"
+            useGeneratedKeys="true" keyProperty="orderId">
+        insert into bkcq_localorder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="orderDate != null">
+                order_date,
+            </if>
+            <if test="loadedCode != null">
+                loaded_code,
+            </if>
+            <if test="storesId != null">
+                stores_id,
+            </if>
+            <if test="storesName != null">
+                stores_name,
+            </if>
+            <if test="consumerId != null">
+                consumer_id,
+            </if>
+            <if test="desc1 != null">
+                desc1,
+            </if>
+            <if test="itemNum != null">
+                item_num,
+            </if>
+            <if test="paymentWayKey != null">
+                payment_way_key,
+            </if>
+            <if test="saleFee != null">
+                sale_fee,
+            </if>
+            <if test="vipFee != null">
+                vip_fee,
+            </if>
+            <if test="settledPrice != null">
+                settled_price,
+            </if>
+            <if test="beikeCredit != null">
+                beike_credit,
+            </if>
+            <if test="deliveryAddress != null">
+                delivery_address,
+            </if>
+            <if test="contactPerson != null">
+                contact_person,
+            </if>
+            <if test="contactTel != null">
+                contact_tel,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="refundProcessRecord != null">
+                `refund_process_record`,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="refundReason != null">
+                refund_reason,
+            </if>
+            <if test="expiredDate != null">
+                expired_date,
+            </if>
+            <if test="modifiedDate != null">
+                modified_date,
+            </if>
+            <if test="memberMobile != null">
+                member_mobile,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDate != null">
+                #{orderDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loadedCode != null">
+                #{loadedCode,jdbcType=VARCHAR},
+            </if>
+            <if test="storesId != null">
+                #{storesId,jdbcType=VARCHAR},
+            </if>
+            <if test="storesName != null">
+                #{storesName,jdbcType=VARCHAR},
+            </if>
+            <if test="consumerId != null">
+                #{consumerId,jdbcType=VARCHAR},
+            </if>
+            <if test="desc1 != null">
+                #{desc1,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="itemNum != null">
+                #{itemNum,jdbcType=INTEGER},
+            </if>
+            <if test="paymentWayKey != null">
+                #{paymentWayKey,jdbcType=VARCHAR},
+            </if>
+            <if test="saleFee != null">
+                #{saleFee,jdbcType=DECIMAL},
+            </if>
+            <if test="vipFee != null">
+                #{vipFee,jdbcType=DECIMAL},
+            </if>
+            <if test="settledPrice != null">
+                #{settledPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="beikeCredit != null">
+                #{beikeCredit,jdbcType=DECIMAL},
+            </if>
+            <if test="deliveryAddress != null">
+                #{deliveryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null">
+                #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTel != null">
+                #{contactTel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="refundProcessRecord != null">
+                #{refundProcessRecord,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundReason != null">
+                #{refundReason,jdbcType=VARCHAR},
+            </if>
+            <if test="expiredDate != null">
+                #{expiredDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memberMobile != null">
+                #{memberMobile,jdbcType=TIMESTAMP},
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.order.street.entity.BkcqLocalOrder">
+        update bkcq_localorder
+        <set>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDate != null">
+                order_date = #{orderDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loadedCode != null">
+                loaded_code = #{loadedCode,jdbcType=VARCHAR},
+            </if>
+            <if test="storesId != null">
+                stores_id = #{storesId,jdbcType=VARCHAR},
+            </if>
+            <if test="storesName != null">
+                stores_name = #{storesName,jdbcType=VARCHAR},
+            </if>
+            <if test="consumerId != null">
+                consumer_id = #{consumerId,jdbcType=VARCHAR},
+            </if>
+            <if test="desc1 != null">
+                desc1 = #{desc1,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="itemNum != null">
+                item_num = #{itemNum,jdbcType=INTEGER},
+            </if>
+            <if test="paymentWayKey != null">
+                payment_way_key = #{paymentWayKey,jdbcType=VARCHAR},
+            </if>
+            <if test="saleFee != null">
+                sale_fee = #{saleFee,jdbcType=DECIMAL},
+            </if>
+            <if test="vipFee != null">
+                vip_fee = #{vipFee,jdbcType=DECIMAL},
+            </if>
+            <if test="settledPrice != null">
+                settled_price = #{settledPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="beikeCredit != null">
+                beike_credit = #{beikeCredit,jdbcType=DECIMAL},
+            </if>
+            <if test="deliveryAddress != null">
+                delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null">
+                contact_person = #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTel != null">
+                contact_tel = #{contactTel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="refundProcessRecord != null">
+                `refund_process_record` = #{refundProcessRecord,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundReason != null">
+                refund_reason = #{refundReason,jdbcType=VARCHAR},
+            </if>
+            <if test="expiredDate != null">
+                expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where order_id = #{orderId,jdbcType=BIGINT}
+        <if test="oldStatus != null">
+            and `status` = #{oldStatus,jdbcType=VARCHAR}
+        </if>
+    </update>
+
+</mapper>

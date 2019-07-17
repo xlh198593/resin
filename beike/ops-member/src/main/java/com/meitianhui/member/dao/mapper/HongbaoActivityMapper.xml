@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.HongbaoActivityDao">
+
+	<insert id="insertHongbaoActivity" parameterType="com.meitianhui.member.entity.MdHongbaoActivity">
+		INSERT INTO
+		md_hongbao_activity (
+			activity_id
+			,member_id
+			,parent_id
+			,is_activation
+			,is_use
+			,modified_date
+			,created_date
+			,remark
+			)
+			VALUES (
+			#{activity_id}
+			,#{member_id}
+			,#{parent_id}
+			,#{is_activation}
+			,#{is_use}
+			,#{modified_date}
+			,#{created_date}
+			,#{remark}
+			)
+	</insert>
+
+	<select id="findHongbaoActivityInfo" parameterType="Map"
+		resultType="Map">
+		SELECT
+			 (SELECT COUNT(*) from mddb.md_hongbao_activity m1 WHERE m1.parent_id = #{parent_id}) memberCount
+			,(SELECT COUNT(*) from mddb.md_hongbao_activity m2 WHERE m2.parent_id = #{parent_id} and is_use = 'N') hongbaoCount
+			,IFNULL(SUM(m3.amount),0) amountSum
+		FROM mddb.md_hongbao_activity m3
+		<where>
+			m3.parent_id = #{parent_id} AND m3.is_use = 'Y'
+		</where>
+	</select>
+	
+	<select id="findHongbaoActivity" parameterType="Map" resultType="com.meitianhui.member.entity.MdHongbaoActivity">
+		<![CDATA[
+		SELECT
+			activity_id,
+			member_id,
+			parent_id,
+			is_activation,
+			is_use,
+			amount,
+			modified_date,
+			created_date,
+			remark
+		FROM
+			md_hongbao_activity 
+		]]>	
+		<where>
+			1=1
+			<if test="member_id !=null and member_id !=''">
+				AND member_id = #{member_id}
+			</if>
+			<if test="parent_id !=null and parent_id !=''">
+				AND parent_id = #{parent_id}
+			</if>
+			<if test="is_activation !=null and is_activation !=''">
+				AND is_activation = #{is_activation}
+			</if>
+			<if test="is_use !=null and is_use !=''">
+				AND is_use = #{is_use}
+			</if>
+		</where>	
+		ORDER BY created_date DESC
+	</select>
+	
+	<update id="hongbaoActivityEdit" parameterType="Map">
+		UPDATE md_hongbao_activity SET
+		<trim suffixOverrides=",">
+			modified_date = SYSDATE(),
+			<if test="is_activation != null and is_activation != ''">
+				is_activation = #{is_activation},
+			</if>
+			<if test="is_use != null and is_use != ''">
+				is_use = #{is_use},
+			</if>
+			<if test="amount != null">
+				amount = #{amount},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark},
+			</if>
+		</trim>
+		<where>
+			1=1
+			<if test="activity_id != null and activity_id != ''">
+				AND activity_id=#{activity_id}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="parent_id != null and parent_id != ''">
+				AND parent_id=#{parent_id}
+			</if>
+			<if test="activity_id_in != null">
+				AND activity_id in
+				<foreach item="item" index="index" collection="activity_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</update>
+	
+</mapper>

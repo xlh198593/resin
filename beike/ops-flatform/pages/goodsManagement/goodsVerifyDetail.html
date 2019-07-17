@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>商品管理/商品列表/查看</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" href="../../layui/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" type="text/css" href="../../css/goodManagement.css">
+</head>
+<body>
+	<div class="contai">
+		<div class="page_title">
+	        <span class="layui-breadcrumb">
+			  <a href="./goodsList.html">商品管理</a>
+			  <a href="./goodsVerifyList.html"><span class="good_list_nav">商品审核</span></a>
+			  <a><cite>查看</cite></a>
+			</span>
+		</div>
+        <div id="goodDetail_con">
+		  
+	    </div>
+
+	</div>
+	<script src="../../layui/layui/layui.js" charset="utf-8"></script>
+ 
+    <script type="text/javascript">
+    	layui.config({
+	      base: '../../js/'
+	    }).use('goodsManagement/goodsVerifyDetail');  
+    </script>
+</body>
+</html>

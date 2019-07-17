@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../commonHead.html %>
+    <title>贝壳年货节</title>
+    <style>
+       #app {
+           width:10rem;
+           height:auto;
+           background: url("/image/activity/nianhuo/bgc1.png");
+           background-size: 100% 100%;
+           margin:0 auto;
+       }
+       .gift_bag,.mast,.tonic {
+           width:10rem;
+           margin:0 auto;
+           margin-top:.466667rem;
+       }
+       .mast,.tonic {
+           margin-top:1.466667rem;
+       }
+       .gift_bag_img,.mast_img,.tonic_img{
+           width:10rem;
+           height:1.12rem; 
+       }
+       .gift_bag_img {
+           background: url("/image/activity/nianhuo/yxlb.png");
+           background-size:100% 100%;
+       }
+       .mast_img {
+           background: url("/image/activity/nianhuo/jgfd.png");
+           background-size:100% 100%;
+       }
+       .tonic_img {
+           background: url("/image/activity/nianhuo/zbsp.png");
+           background-size:100% 100%;
+       }
+       .gift_bag_detail,.mast_detail,.tonic_detail {
+           height:.306667rem;
+           width:10rem;
+           text-align: center;
+           font-size:.32rem;
+           color:#858585;
+           margin-top:.24rem;
+       }
+       .gift_bag_content {
+           width:9.5rem;
+           margin:0 auto;
+           margin-top:.813333rem;
+           position: relative;
+           z-index:2;
+       }
+       .sign_shop,.sign_shop1 {
+           width:4.626667rem;
+           height:7.533333rem;
+           float:left;
+           background: url("/image/activity/nianhuo/kuang1.png");
+           background-size: 100% 100%;
+           position: relative;
+       }
+       .sign_shop1 {
+           float:right;
+       }
+       .clear {
+
+           clear: both;
+       }
+       .mast_content,.tonic_content {
+           width:10rem;
+           position: relative;
+           z-index:2;
+          
+       }
+       .mast_content_shop1,.tonic_content_shop1 {
+           width:9.613333rem;
+           height:4.533333rem;
+           margin:0 auto;
+           margin-top:.44rem;
+           background: url("/image/activity/nianhuo/kuang2.png");
+           background-size: 100% 100%;
+       }
+       .mast_content_shop2,.tonic_content_shop2 {
+           width:9.613333rem;
+           height:4.533333rem;
+           margin:0 auto;
+           margin-top:.44rem;
+           background: url("/image/activity/nianhuo/kuang3.png");
+           background-size: 100% 100%;
+       }
+       .shop_img {
+           width:4.426667rem;
+           height:4.44rem;
+           margin:0 auto;
+           margin-top:0.1rem;
+           display: block;
+           overflow: hidden;
+           background: url("/image/activity/nianhuo/detail.png");
+           background-size: 100% 100%;
+       }
+       .gift_bag_shop_title {
+           height:.386667rem;
+           width:3.973333rem;
+           margin:0 auto;
+           margin-top:.28rem;
+           font-size:.4rem;
+           color:#323232;
+           overflow: hidden;
+           text-overflow:ellipsis;
+           white-space: nowrap;
+       }
+       .gift_bag_desc {
+           height:.306667rem;
+           width:3.7rem;
+           margin:0 auto;
+           overflow: hidden;
+           text-overflow:ellipsis;
+           white-space: nowrap;
+           font-size:.293333rem;
+           color:#A8A7A5;
+           margin-top:.146667rem;
+       }
+       .gift_bag_price_detail {
+           height:.533333rem;
+           width:3.626667rem;
+           margin:0 auto;
+           margin-top:.4rem;
+           color:#E34A54;
+           font-size:.32rem;
+       }
+       .gift_bag_buy {
+        width:3.626667rem;
+        height:.586667rem;
+        margin:0 auto;
+        margin-top:.08rem;
+        line-height:.586667rem;
+       }
+       .gift_bag_y_pricie {
+           font-size:.32rem;
+           color:#B5B4B3;
+
+       }
+       .gift_bag_buybtn {
+           width:1.8rem;
+           height:.586667rem;
+           float:right;
+           background: url("/image/activity/nianhuo/buybtn.png");
+           background-size: 100% 100%;
+       }
+       .gift_bag_left_radius {
+          height:0.4rem;
+           width:.466667rem;
+           position:absolute;
+           left:0;
+           top:0;
+           border-bottom-right-radius:.28rem;
+           background: url("/image/activity/nianhuo/left_left.png");
+           background-size: 100% 100%;
+       }
+       .gift_bag_right_radius {
+           height:.413333rem;
+           width:.346667rem;
+           border-bottom-left-radius:.28rem;
+           position:absolute;
+           top:0;
+           right:0;
+           background: url("/image/activity/nianhuo/right_right.png");
+           background-size: 100% 100%;
+       }
+       .mast_left,.tonic_left {
+           width:5.706667rem;
+           float:left;
+           height:100%;
+       }
+       .mast_title,.tonic_title {
+           width:4.48rem;
+           height:.413333rem;
+           font-size:.426667rem;
+           color:#323232;
+           margin:0 auto;
+           margin-top:.84rem;
+           overflow: hidden;
+           text-overflow:ellipsis;
+           white-space: nowrap;
+       }
+       .mast_desc,.tonic_desc {
+           height:.333333rem;
+           width:4.28rem;
+           font-size:.32rem;
+           color:#A8A7A5;
+           margin:0 auto;
+           margin-top:.186667rem;
+           overflow: hidden;
+           text-overflow:ellipsis;
+           white-space: nowrap;
+       }
+       .mast_price,.tonic_price {
+           height:.533333rem;
+           width:4.28rem;
+           margin:0 auto;
+           margin-top:.453333rem;
+           color:#E34A54;
+       }
+       .mast_buy,.tonic_buy {
+        height:.653333rem;
+        width:4.28rem;
+        margin:0 auto;
+        margin-top:.186667rem;
+       }
+       .mast_y_pricie,.tonic_y_price {
+           height:.373333rem;
+           color:#B5B4B3;
+       }
+       .y_pricie_content {
+        width:4.28rem;
+        margin:0 auto;
+        margin-top:.213333rem;
+       }
+       .mast_buybtn,.tonic_buybtn {
+           height:.653333rem;
+           width:2.28rem;
+           float:left;
+           background: url("/image/activity/nianhuo/buybtn.png");
+           background-size: 100% 100%;
+       }
+       .mast_right,.tonic_right {
+           width:3.44rem;
+           height:3.44rem;
+           margin-top:.546667rem;
+           float:left;
+       }
+       .mast_right {
+           background: url("/image/activity/nianhuo/detail.png");
+           background-size: 100% 100%;
+       }
+       .tonic_right {
+        background: url("/image/activity/nianhuo/detail.png");
+        background-size: 100% 100%;
+       }
+       .nh_header {
+           width:10rem;
+           height:6.293333rem;
+           background: url("/image/activity/nianhuo/nh_title.png");
+           background-size: 100% 100%;
+       }
+       .decorate_right1 {
+           height:1.506667rem;
+           width:2.586667rem;
+           float:right;
+           margin-top:-0.4rem;
+           background: url("/image/activity/nianhuo/middle_right.png");
+           background-size: 100% 100%;
+       }
+       .decorate_right {
+           height:1.506667rem;
+           width:10rem;
+           margin-top:-0.4rem;
+       }
+       .decorate_left {
+           height:1.506667rem;
+           width:2.586667rem;
+           background: url("/image/activity/nianhuo/middle_left.png");
+           background-size: 100% 100%;
+           margin-top:-0.4rem;
+       }
+
+       
+       
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <div class="nh_header"></div>
+        <div class="gift_bag">
+            <div class="gift_bag_img"></div>
+            <div class="gift_bag_detail">用贝壳抵现205元</div>
+           
+        </div>
+        <div class="gift_bag_content">
+             <%for(var i = 0; i < yingCunList.length;i++) {%>
+                <%if(i%2 == 0) {%>
+                    <div class="sign_shop" @click="gotoshopdetail('<%=yingCunList[i].goods_id%>')">
+                            <div class="gift_bag_left_radius"></div>
+                            <div class="gift_bag_right_radius"></div>
+                            <img class="shop_img" src="<%=yingCunList[i].pic_info_url%>"></img>
+                            <div class="gift_bag_shop_title"><%=yingCunList[i].title%></div>
+                            <div class="gift_bag_desc"><%=yingCunList[i].desc1%></div>
+                            <div class="gift_bag_price_detail"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=yingCunList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=yingCunList[i].beike_credit%>贝壳</span></div>
+                            <div class="gift_bag_buy"><s class="gift_bag_y_pricie">￥<%=yingCunList[i].sale_price.toFixed(2)%></s><div class="gift_bag_buybtn" ></div></div>
+                        </div>
+
+                <%} else {%>
+                    <div class="sign_shop1" @click="gotoshopdetail('<%=yingCunList[i].goods_id%>')">
+                        <div class="gift_bag_left_radius"></div>
+                        <div class="gift_bag_right_radius"></div>
+                        <img class="shop_img" src="<%=yingCunList[i].pic_info_url%>"></img>
+                        <div class="gift_bag_shop_title"><%=yingCunList[i].title%></div>
+                        <div class="gift_bag_desc"><%=yingCunList[i].desc1%></div>
+                        <div class="gift_bag_price_detail"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=yingCunList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=yingCunList[i].beike_credit%>贝壳</span></div>
+                        <div class="gift_bag_buy"><s class="gift_bag_y_pricie">￥<%=yingCunList[i].sale_price.toFixed(2)%></s><div class="gift_bag_buybtn"></div></div>
+                    </div>
+
+                <%}%>
+             
+             <%}%>
+                <div class="clear"></div>
+        </div>
+        <div class="decorate_right">
+                <div class="decorate_right1"></div>
+        </div>
+        
+        <div class="mast">
+                <div class="mast_img"></div>
+                <div class="mast_detail">用贝壳抵现100元</div>
+        </div>
+        <div class="mast_content">
+            <%for(var i = 0; i < jianGuoList.length;i++) {%>
+                <%if(i%2 == 0) {%>
+                    <div class="mast_content_shop1" @click="gotoshopdetail('<%=jianGuoList[i].goods_id%>')">
+                            <div class="mast_left">
+                                <div class="mast_title"><%=jianGuoList[i].title%></div>
+                                <div class="mast_desc"><%=jianGuoList[i].desc1%></div>
+                                <div class="mast_price"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=jianGuoList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=jianGuoList[i].beike_credit%>贝壳</span></div>
+                                <div class="y_pricie_content"><s class="mast_y_pricie">￥<%=jianGuoList[i].sale_price.toFixed(2)%></s></div>
+                                <div class="mast_buy"><div class="mast_buybtn"  ></div></div>
+                            </div>
+                            <img class="mast_right" src="<%=jianGuoList[i].pic_info_url%>"></img>
+                        </div>
+
+                <%} else {%>
+                    <div class="mast_content_shop2" @click="gotoshopdetail('<%=jianGuoList[i].goods_id%>')">
+                            <div class="mast_left">
+                                <div class="mast_title"><%=jianGuoList[i].title%></div>
+                                <div class="mast_desc"><%=jianGuoList[i].desc1%></div>
+                                <div class="mast_price"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=jianGuoList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=jianGuoList[i].beike_credit%>贝壳</span></div>
+                                <div class="y_pricie_content"><s class="mast_y_pricie">￥<%=jianGuoList[i].sale_price.toFixed(2)%></s></div>
+                                <div class="mast_buy"><div class="mast_buybtn"  ></div></div>
+                            </div>
+                            <img class="mast_right" src="<%=jianGuoList[i].pic_info_url%>"></img>
+                        </div>
+
+                <%}%>
+            <%}%>
+        </div>
+        
+        <div class="decorate_left"></div>
+       
+        <div class="tonic">
+            <div class="tonic_img"></div>
+            <div class="tonic_detail">用贝壳抵现最高109元</div>
+       </div>
+       <div class="tonic_content">
+           <%for(var i = 0; i <ziBuList.length;i++){%>
+               <%if(i%2 == 0) {%>
+                <div class="tonic_content_shop1" @click="gotoshopdetail('<%=ziBuList[i].goods_id%>')">
+                        <div class="tonic_left">
+                                <div class="tonic_title"><%=ziBuList[i].title%></div>
+                                <div class="tonic_desc"><%=ziBuList[i].desc1%></div>
+                                <div class="tonic_price"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=ziBuList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=ziBuList[i].beike_credit%>贝壳</span></div>
+                                <div class="y_pricie_content"><s class="mast_y_pricie">￥<%=ziBuList[i].sale_price.toFixed(2)%></s></div>
+                                <div class="tonic_buy"><div class="tonic_buybtn"  ></div></div>
+                            </div>
+                            <img class="mast_right" src="<%=ziBuList[i].pic_info_url%>"></img>
+                    </div>
+               <%}else{%>
+                <div class="tonic_content_shop2"  @click="gotoshopdetail('<%=ziBuList[i].goods_id%>')">
+                        <div class="tonic_left">
+                                <div class="tonic_title"><%=ziBuList[i].title%></div>
+                                <div class="tonic_desc"><%=ziBuList[i].desc1%></div>
+                                <div class="tonic_price"><span>￥</span><span style="font-size:.5rem;font-weight: 700"><%=ziBuList[i].vip_price.toFixed(2)%></span><span>+</span><span><%=ziBuList[i].beike_credit%>贝壳</span></div>
+                                <div class="y_pricie_content"><s class="mast_y_pricie">￥<%=ziBuList[i].sale_price.toFixed(2)%></s></div>
+                                <div class="tonic_buy"><div class="tonic_buybtn" ></div></div>
+                            </div>
+                            <img class="mast_right" src="<%=ziBuList[i].pic_info_url%>"></img>
+                    </div>
+               <%}%>
+            <%}%>
+    </div>
+    <div class="decorate_right">
+       <div class="decorate_right1"></div>
+    </div>
+    
+        
+      
+      </div>
+  
+  </body>
+  <script>
+      function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+      var app = new Vue({
+             el: '#app',
+             data:function(){
+                return {
+                
+               };
+            },
+            methods:{
+               gotoshopdetail:function(goods_id) {
+                gotosumit("gotoshopdetail",{"goods_id":goods_id})
+               } 
+            }
+  });
+  
+  </script>
+</html>

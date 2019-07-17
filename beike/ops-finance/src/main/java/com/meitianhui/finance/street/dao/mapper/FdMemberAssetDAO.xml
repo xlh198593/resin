@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdMemberAssetDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdMemberAsset">
+        <id column="asset_id" jdbcType="VARCHAR" property="assetId"/>
+        <result column="member_type_key" jdbcType="VARCHAR" property="memberTypeKey"/>
+        <result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+        <result column="cash_balance" jdbcType="DECIMAL" property="cashBalance"/>
+        <result column="cash_froze" jdbcType="DECIMAL" property="cashFroze"/>
+        <result column="settled_balance" jdbcType="DECIMAL" property="settledBalance"/>
+        <result column="gift_certificates_368" jdbcType="INTEGER" property="giftCertificates368"/>
+        <result column="gift_certificates_188" jdbcType="INTEGER" property="giftCertificates188"/>
+        <result column="gift_certificates_68" jdbcType="INTEGER" property="giftCertificates68"/>
+        <result column="point" jdbcType="DECIMAL" property="point"/>
+        <result column="gold" jdbcType="INTEGER" property="gold"/>
+        <result column="shell" jdbcType="DECIMAL" property="shell"/>
+        <result column="settled_shell_balance" jdbcType="DECIMAL" property="settledShellBalance"/>
+        <result column="cash_coupon" jdbcType="DECIMAL" property="cashCoupon"/>
+        <result column="experience" jdbcType="INTEGER" property="experience"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="invite_balance" jdbcType="DECIMAL" property="inviteBalance"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    asset_id, member_type_key, member_id, cash_balance, cash_froze, settled_balance, 
+    gift_certificates_368, gift_certificates_188, gift_certificates_68, point, gold, 
+    shell, settled_shell_balance, cash_coupon, experience, created_date, modified_date, remark, invite_balance
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_member_asset
+        where asset_id = #{assetId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByMemberInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_member_asset
+        where member_type_key = #{memberTypeKey,jdbcType=VARCHAR} and member_id = #{memberId,jdbcType=VARCHAR} limit 0,1
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.finance.street.entity.FdMemberAsset">
+        update fd_member_asset
+        <set>
+            <if test="cashBalance != null">
+                cash_balance = cash_balance + #{cashBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="cashFroze != null">
+                cash_froze = cash_froze + #{cashFroze,jdbcType=DECIMAL},
+            </if>
+            <if test="settledBalance != null">
+                settled_balance = settled_balance + #{settledBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="shell != null">
+                shell = shell + #{shell,jdbcType=DECIMAL},
+            </if>
+            <if test="settledShellBalance != null">
+                settled_shell_balance = settled_shell_balance + #{settledShellBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="modifiedDate != null">
+                modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where asset_id = #{assetId,jdbcType=VARCHAR}
+        <if test="cashBalance != null">
+            and cash_balance + #{cashBalance,jdbcType=DECIMAL} &gt;= 0
+        </if>
+        <if test="cashFroze != null">
+            and cash_froze + #{cashFroze,jdbcType=DECIMAL} &gt;= 0
+        </if>
+        <if test="settledBalance != null">
+            and settled_balance + #{settledBalance,jdbcType=DECIMAL} &gt;= 0
+        </if>
+        <if test="shell != null">
+            and shell + #{shell,jdbcType=DECIMAL} &gt;= 0
+        </if>
+        <if test="settledShellBalance != null">
+            and settled_shell_balance + #{settledShellBalance,jdbcType=DECIMAL} &gt;= 0
+        </if>
+    </update>
+
+</mapper>

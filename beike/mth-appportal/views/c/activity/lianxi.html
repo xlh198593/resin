@@ -1,0 +1,587 @@
+<!doctype html>
+<html>
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>
+
+        </title>
+        <style>
+            html,
+            body,
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            input {
+                background: none;
+                outline: none;
+                border: 0px;
+            }
+
+            #app {
+                width: 100%;
+                background: linear-gradient(0deg, rgba(239, 72, 70, 1) 0%, rgba(244, 98, 98, 1) 100%);
+            }
+
+            .top {
+                height: 3.52rem;
+                width: 100%;
+            }
+
+            .top_bg {
+                height: 1.76rem;
+                width: 100%;
+            }
+
+            .top_bgs {
+                background: url('/image/activity/fenxiang/toubu.png') no-repeat;
+                background-size: 100%;
+            }
+
+            .center {
+                height: 8.04rem;
+                width: 100%;
+                margin-top: 1.293333rem;
+            }
+
+            .center_img {
+                height: 1.786667rem;
+                width: 1.786667rem;
+                background-size: 100%;
+                position: absolute;
+                left: 50%;
+                margin-left: -0.893335rem;
+                top: 2.42rem;
+                border-radius: 0.893333rem;
+            }
+            .center_img img {
+                height: 1.786667rem;
+                width: 1.786667rem;
+                border-radius: 0.893333rem;
+            }
+
+            .center_name,
+            .center_text {
+                height: .466667rem;
+                width: 100%;
+                text-align: center;
+                font-size: .48rem;
+                font-weight: bold;
+                color: rgba(255, 255, 255, 1);
+                margin-bottom: .293333rem;
+            }
+
+            .center_phone {
+                background: rgba(255, 255, 255, 1);
+                width: 8.133333rem;
+                height: 1.173333rem;
+                margin: .8rem auto 0 auto;
+                border-radius: .586667rem;
+            }
+
+            .center_phone input {
+                margin-top: 0px;
+                width: 6.533333rem;
+                height: 0.983333rem;
+                background: rgba(255, 255, 255, 1);
+                border: 0;
+                font-size: .4rem;
+                margin-left: .7rem;
+            }
+
+            .center_code {
+                background: rgba(255, 255, 255, 1);
+                width: 8.133333rem;
+                height: 1.173333rem;
+                margin: .8rem auto 0 auto;
+                border-radius: .586667rem;
+                display: flex;
+            }
+
+            .center_code input {
+                margin-top: 0px;
+                width: 4.533333rem;
+                height: 0.983333rem;
+                background: rgba(255, 255, 255, 1);
+                border: 0;
+                font-size: .4rem;
+                margin-left: .7rem;
+            }
+
+            .center-yzm {
+                width: 2.52rem;
+                height: .546667rem;
+                line-height: .546667rem;
+                text-align: center;
+                margin-top: .313333rem;
+                color: #999999;
+                border-left: 1px solid #999999;
+                font-size: .373333rem;
+            }
+
+            .center_but {
+                height: 1.173333rem;
+                width: 8.133333rem;
+                margin: .933333rem auto 0 auto;
+                line-height: 1.173333rem;
+                text-align: center;
+                background: #C2C2C2;
+                border-radius: .586667rem;
+                color: #ffffff;
+                font-size: .48rem;
+            }
+
+            .center_but2 {
+                color: #B0520A;
+                background: #EDD59C;
+            }
+
+            .icon-box {
+                width: 9.2rem;
+                height: 4.773333rem;
+                margin: 0 auto;
+                border-radius: .133333rem;
+                background: #ffffff;
+            }
+
+            .icon-title {
+                color: #333333;
+                font-size: .48rem;
+                padding-top: .52rem;
+                margin-left: .44rem
+            }
+
+            .bottom {
+                height: 2.32rem;
+                width: 100%;
+                margin-top: .533333rem;
+                border-top: 4px solid #EDD59C;
+            }
+
+            .img-list {
+                height: 2.866667rem;
+                width: 100%;
+                margin-top: .386667rem;
+                display: flex;
+            }
+
+            .icon-img {
+                height: 2.866667rem;
+                width: 33.3%;
+                text-align: center;
+            }
+
+            .icon-img img {
+                height: 1.066667rem;
+                width: 1.066667rem;
+            }
+
+            .img_wz {
+                margin-top: .253333rem;
+                margin-bottom: .306667rem;
+                color: #333333;
+                font-size: .4rem;
+            }
+
+            .img_wz1 {
+                color: #EF1E0F;
+                font-size: .32rem;
+            }
+
+            .img_wzdb {
+                margin-top: .226667rem;
+            }
+
+            .wz-bkcq {
+                margin-top: .533333rem;
+                font-size: .48rem;
+                font-family: PingFangSC-Medium;
+                font-weight: bold;
+                color: rgba(237, 213, 156, 1);
+                text-align: center;
+            }
+
+            .wz-ybkdqh {
+                margin-top: .253333rem;
+                font-size: .373333rem;
+                font-family: PingFangSC-Medium;
+                font-weight: bold;
+                color: rgba(237, 213, 156, 1);
+                text-align: center;
+            }
+            .shade{
+                /* display: none; */
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                overflow: hidden;
+                outline: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 99;
+            }
+            .alert-box{
+                /* display: none; */
+                position: fixed;
+                width: 7.386667rem;
+                height: 5.12rem;
+                left: 50%;
+                top: 50%;
+                margin-top: -2.56rem;
+                margin-left: -3.693333rem;
+                border-radius: .133333rem;
+                background: #F36161;
+                z-index: 199;
+            }
+            .close{
+                /* display: none; */
+                position: fixed;
+                width: .373333rem;
+                height: .373333rem;
+                background: url('/image/newmember/cuowu.png') no-repeat;
+                background-size:100% 100%;
+                top: .933333rem;
+                right: .32rem;
+                z-index: 199;
+            }
+            .alert-text{
+                margin-top: .92rem;
+                text-align: center;
+                color: #FFEEAD;
+                font-size: .48rem;
+            }
+            .alert-xz{
+                margin-top: .373333rem;
+                text-align: center;
+                font-size: .48rem;
+                color:rgba(255,238,173,1);
+            }
+            .alert-btn{
+                width: 5.706667rem;
+                height: 1.173333rem;
+                text-align: center;
+                margin: .92rem auto 0 auto;
+                background: #FFFFFF;
+                color: #333333;
+                border-radius: .586667rem;
+                line-height: 1.173333rem;
+                font-size: .48rem;
+            }
+            .iswx {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: url("/image/activity/invoic/h5zgc.png") no-repeat;
+                background-size:100%;
+                z-index: 99;
+            }
+            .yzm-red{
+                color: #EF1E0F;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+        <script type="text/javascript" src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+        <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+        <script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-beta.49/polyfill.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="iswx" v-if="iswx"></div>
+
+        <div class="shade" v-if="shade"></div>
+        <div class="close" v-if="shade" @click="closeAlert()"></div>
+        <div class="alert-box" v-if="shade">
+            <div class="alert-text">{{wzts}}</div>
+            <div class="alert-xz">{{xzapp}}</div>
+            <div class="alert-btn" @click="downloadapp()" v-if="xzbtn">立即下载</div>
+        </div>
+
+        <div class="top">
+            <div class="top_bg "></div>
+            <div class="top_bg top_bgs"></div>
+        </div>
+        <div class="center_img">
+            <% if(doc_url != '') {%>
+                <img src="<%-doc_url%>"/>
+            <%}else{%>
+                <img src="/image/newmember/headimg.png"/>
+            <%}%>
+        </div>
+        <div class="center">
+            <div class="center_name">
+                <%-nick_name%>
+            </div>
+            <div class="center_text">邀请您加入贝壳传奇</div>
+            <div class="center_phone">
+                <input type="text" maxlength="11" placeholder="请输入手机号" v-model="mobile" oninput="value=value.replace(/[^\d]/g,'')" />
+            </div>
+            <div class="center_code">
+                <div>
+                    <input type="text" maxlength="4" placeholder="请输入验证码" v-model="yzm" ref="yzminput" v-on:input="yzmlj()" oninput="value=value.replace(/[^\d]/g,'')" />
+                </div>
+                <div class="center-yzm" v-if="miao">
+                    {{miaozhi}}s重新获取
+                </div>
+                <div :class="yzmgl ? 'center-yzm yzm-red' : 'center-yzm'" v-if="miao_yzm" @click="getyzm()">
+                        获取验证码
+                </div>
+            </div>
+            <div :class="anxs ? 'center_but center_but2':'center_but'" @click="gotologinorregister()">
+                立即注册
+            </div>
+        </div>
+        <div class="icon-box">
+            <div class="icon-title">
+                了解贝壳传奇
+            </div>
+            <div class="img-list">
+                <div class="icon-img">
+                    <p class="img">
+                        <img src="/image/activity/fenxiang/chaojihuiyuan@2x.png">
+                    </p>
+                    <p class="img_wz">超级会员</p>
+                    <p class="img_wz1">超多权益</p>
+                    <p class="img_wz1 img_wzdb">省真钱，真省钱</p>
+                </div>
+                <div class="icon-img">
+                    <p class="img">
+                        <img src="/image/activity/fenxiang/chaodijiage@2x.png">
+                    </p>
+                    <p class="img_wz">超低价格</p>
+                    <p class="img_wz1">海量商品</p>
+                    <p class="img_wz1 img_wzdb">成本价销售</p>
+                </div>
+                <div class="icon-img">
+                    <p class="img">
+                        <img src="/image/activity/fenxiang/chaoduowanfa@2x.png">
+                    </p>
+                    <p class="img_wz">超多玩法</p>
+                    <p class="img_wz1">省钱/ 赚钱</p>
+                    <p class="img_wz1 img_wzdb">一个都不落下</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="wz-bkcq">贝壳传奇</div>
+            <div class="wz-ybkdqh">用贝壳·当钱花</div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    function setCookie(name, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+        if (arr = document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+
+            return null;
+    }
+    function isWeiXin() {
+        //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+        var ua = window.navigator.userAgent.toLowerCase();
+        //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    var app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                wzts:"注册成功!",
+                shade:false,
+                xzapp:"下载APP开启更多玩法",
+                loginorregister: false,
+                member_id: "<%=member_id%>",
+                xzbtn:true,
+                miaozhi: 60,
+                mobile: "",
+                yzm: "",
+                iswx: false,
+                yzmgl:false,
+                miao: false,
+                anxs:false,
+                miao_yzm:true,
+                yzmreg: /^[0-9]{4}$/,
+                mobilereg: /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+            }
+        },
+        methods: {
+            yzmlj: function () {
+                this.yzm = this.$refs.yzminput.value;           
+            },
+            closeAlert: function() {
+                this.shade = false;
+                return;
+            },
+            downloadapp: function () {
+                    <%if (isiOS == "1") {%>
+                        window.location.href = "https://mps-static.huigujia.cn/apps/bkcq/bkcq-lastast-release.apk?mp.wexin.qq.com"
+                    <%} else {%>
+                        window.location.href = "https://itunes.apple.com/cn/app/%E8%B4%9D%E5%A3%B3%E4%BC%A0%E5%A5%87/id1431647984?mt=8&uo=4"
+                    <%}%>
+            },
+            gotologinorregister: function () {
+                if(!this.yzmgl || !this.anxs){
+                    return;
+                }
+                if (this.mobile == "") {
+                    this.wzts = "手机号不能为空";
+                    this.shade = true;
+                    return;
+                }
+                if (!this.mobilereg.test(this.mobile)) {
+                    this.wzts = "手机号格式不正确";
+                    this.shade = true;
+                    return;
+                }
+                if (this.yzm == "") {
+                    this.wzts = "验证码不能为空";
+                    this.shade = true;
+                    return;
+                }
+                if (!this.yzmreg.test(this.yzm)) {
+                    this.wzts = "验证码错误";
+                    this.shade = true;
+                    return;
+                }
+                var self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/login',
+                    data: {
+                        mobile: self.mobile,
+                        type: 'h5',
+                        request_info: "h5",
+                        check_code: self.yzm,
+                        member_id: self.member_id
+                    },
+                    success: function (data) {
+                        if (data.rsp_code == "fail") {
+                            if(data.error_msg == "您已是超级会员，请下载App开启更多功能"){
+                                self.xzapp = "";
+                            }
+                            self.wzts = data.error_msg;
+                            self.shade = true;
+                        } else {
+                            if(data.data.is_manager){
+                                self.wzts = '账号已存在!';
+                                self.shade = true;
+                            }else{
+                                self.wzts = '注册成功';
+                                self.shade = true;
+                            }
+                        }
+                    }
+                });
+            },
+            getyzm: function () {
+                if(!this.yzmgl){
+                    return;
+                }
+                var self = this;
+                if (this.mobile == "") {
+                    this.wzts = "手机号不能为空";
+                    this.shade = true;
+                    return;
+                }
+                if (!this.mobilereg.test(this.mobile)) {
+                    this.wzts = "手机号不符合规则";
+                    this.shade = true;
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/send_sms_code_lyh',
+                    data: {
+                        sms_source: 'llm',
+                        mobile: self.mobile,
+                        check_code: self.yzm,
+                        type: 'h5'
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                            self.tishi = data.error_msg
+                        } else {
+                            self.miao = true;
+                            self.miao_yzm = false;
+                            var time = setInterval(function () {
+                                self.miaozhi -= 1;
+                                setCookie('miao_yzm',self.miaozhi);
+                                if (self.miaozhi == 0) {
+                                    self.miao = false;
+                                    self.miao_yzm = true;
+                                    clearInterval(time);
+                                }
+                            }, 1000)
+                        }
+                    }
+                });
+            },
+        },
+        watch: {
+            miaozhi: function (current) {
+                if (current == "0") {
+                    this.miaozhi = 60;
+                }
+            },
+            mobile:function (mobile) {
+                if (this.mobilereg.test(mobile) && this.yzmreg.test(this.yzm)) {
+                    this.anxs = true;
+                }else if(!this.mobilereg.test(mobile) || !this.yzmreg.test(this.yzm)){
+                    this.anxs = false;
+                }
+                if(this.mobilereg.test(mobile)){
+                    this.yzmgl = true;
+                }else{
+                    this.yzmgl = false;
+                }
+
+            },
+            yzm:function (yzm) {
+                if (this.mobilereg.test(this.mobile) && this.yzmreg.test(yzm)) {
+                    this.anxs = true;
+                }else{
+                    this.anxs = false;
+                }
+            }
+        },
+
+        mounted: function () {
+            if(getCookie("miao_yzm") && getCookie("miao_yzm") != 0){
+                this.miaozhi = getCookie("miao_yzm");
+                this.miao = true;
+                this.miao_yzm = false;
+                var self = this;
+                var time = setInterval(function () {
+                    self.miaozhi -= 1;
+                    setCookie('miao_yzm',self.miaozhi);
+                    if (self.miaozhi == 0) {
+                        self.miao = false;
+                        self.miao_yzm = true;
+                        clearInterval(time);
+                    }
+                }, 1000)
+            }
+        }
+    });
+</script>

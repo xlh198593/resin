@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <title>扫描码</title>
+    <style type="text/css">
+        
+        .meMessage {
+            position: relative;
+            max-width:10rem;
+            margin:0 auto;
+        }
+
+        .meMessage img {
+            max-width:10rem;
+            height:17.69rem;
+        }
+
+        .hongbao {
+            position: absolute;
+            top:1rem;
+        }
+        .hongbao img {
+            width:10rem;
+            height:14rem;
+        }
+        .totalcoupon {
+            height:1rem;
+            width:5rem;
+            position: absolute;
+            top:1rem;
+            left:2.5rem;
+            line-height: 1rem;
+            font-size: 0.5rem;
+            text-align: center;
+        }
+        .message_box {
+            height:6.8rem;
+            width:5.6rem;
+            position:absolute;
+            top:2.5rem;
+            left:2rem;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .message_box::-webkit-scrollbar{
+            width:0px
+            }
+        .secur {
+            height:2.2rem;
+            width:6rem;
+            position: relative;
+        }
+        .secur img {
+            width:6rem;
+            height:2.5rem;
+        }
+        .sign {
+            height:1rem;
+            width:4rem;
+            position: absolute;
+            line-height: 1rem;
+            top:0.2rem;
+            left:1rem;
+            font-size:0.4rem;
+            color:gray;
+        }
+        .COUPON{
+            height:0.3rem;
+            width:4rem;
+            position: absolute;
+            left:1rem;
+            top:1.2rem;
+           }
+        .COUPON img {
+            height:0.2rem;
+            width:4rem;
+        }
+        .pscode {
+            height:0.6rem;
+            width:4rem;
+            position: absolute;
+            left:1rem;
+            top:1.5rem;
+            line-height: 0.6rem;
+            text-align:center;
+            font-size:0.3rem;
+        }
+        .five {
+            display: inline-block;
+            height:0.8rem;
+            width:1rem;
+            position: absolute;
+            font-size:0.7rem;
+            font-weight: 800;
+            text-align: center;
+
+        }
+        .sign img {
+            height:0.4rem;
+            width:0.4rem; 
+            position: absolute;
+            left:2.2rem;
+            top:0.3rem;
+        }
+
+        .use {
+            color:#eb6133;
+        }
+        .pscode {
+            color:gray;
+        }
+        .message_box_show {
+            margin-bottom:0.25rem;
+        }
+        .bottom {
+            position:absolute;
+            top:15.2rem;
+            left:4rem;
+            width:2.5rem;
+            height:2rem;
+        }
+        .bottom img {
+            width:2rem;
+            height:1.5rem;
+        }
+        .left_bug,.right_bug{
+            height:0.3rem;
+            width:1rem;
+            position: absolute;
+            top:10rem;
+            left:1.75rem;
+        }
+        .left_bug {
+            transform: rotate(41deg);
+            background-color: #de5c30;
+        }
+        .right_bug {
+            left:7.25rem;
+            transform: rotate(139deg); 
+            background-color: #de5c30;
+        }
+
+
+
+      
+    </style>
+</head>
+
+<body>
+    <div id="coupon">
+        <div class="meMessage">
+            <img src="/image/cashcoupon/bgc.png" alt="">
+             <div class="hongbao">
+                 <img src="/image/cashcoupon/hongbao.png" alt="">
+                 <div class="totalcoupon">您已领取{{list.length}}张代金劵</div>
+                 <div class='message_box'>
+                     <div class="message_box_show"  v-for="msg in list">
+                            <div v-if="msg.amount == 5 && msg.status == 1" class='secur'>
+                                    <img src="/image/cashcoupon/secur.png" alt="">
+                                    <div class="sign">
+                                        已使用<span class="five">5</span class="yuan"><span><img src="/image/cashcoupon/useY.png" alt=""></span>
+                                    </div>
+                                    <div class="COUPON">
+                                        <img src="/image/cashcoupon/COUPON1.png" alt="">
+                                    </div>
+                                    <div class="pscode">***{{msg.coupon_no}}***</div>
+                               </div> 
+                               <div v-if="msg.amount == 5 && msg.status == 0" class='secur'  v-on:click="buildQrcode(msg.coupon_no)">
+                                    <img src="/image/cashcoupon/secur.png" alt="">
+                                    <div class="sign use">
+                                        未使用<span class="five">5</span class="yuan"><span><img src="/image/cashcoupon/notY.png" alt=""></span>
+                                    </div>
+                                    <div class="COUPON">
+                                        <img src="/image/cashcoupon/NCOUPON.png" alt="">
+                                    </div>
+                                    <div class="pscode">***{{msg.coupon_no}}***</div>
+                               </div>
+                               <div v-if="msg.amount == 10 && msg.status == 1" class='secur'>
+                                    <img src="/image/cashcoupon/secur.png" alt="">
+                                    <div class="sign">
+                                        已使用<span class="five">10</span class="yuan"><span><img src="/image/cashcoupon/useY.png" alt=""></span>
+                                    </div>
+                                    <div class="COUPON">
+                                        <img src="/image/cashcoupon/COUPON1.png" alt="">
+                                    </div>
+                                    <div class="pscode">***{{msg.coupon_no}}***</div>
+                               </div>
+                               <div v-if="msg.amount == 10 && msg.status == 0" class='secur'  v-on:click="buildQrcode(msg.coupon_no)">
+                                    <img src="/image/cashcoupon/secur.png" alt="">
+                                    <div class="sign use">
+                                        未使用<span class="five">10</span class="yuan"><span><img src="/image/cashcoupon/notY.png" alt=""></span>
+                                    </div>
+                                    <div class="COUPON">
+                                        <img src="/image/cashcoupon/NCOUPON.png" alt="">
+                                    </div>
+                                    <div class="pscode">***{{msg.coupon_no}}***</div>
+                               </div>
+                     </div>
+                </div>
+             </div>
+             <div class="bottom">
+                 <img src="/image/cashcoupon/b_logo.png" alt="">
+             </div>
+             <div class="left_bug"></div>
+             <div class="right_bug"></div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    const vm = new Vue({
+        el: "#coupon",
+        data: {
+            list:[],
+            requestParams:JSON.parse('<%-JSON.stringify(requestParams)%>'),
+            
+        },
+        created:function() {
+            const self = this;
+            $.ajax({
+                type: 'POST',
+                url: '/cmpay/lyh/list',
+                data: {
+                    mobile:this.requestParams.account,   
+               },
+              success: function (data) {
+                var res = JSON.parse(data).data;
+                self.list = res;
+                
+               }         
+            });
+            },
+        methods: {
+         
+            buildQrcode: function (pscode) {
+                window.location.href=this.requestParams.pageHost+'/cmpay/lyh/qrcode?pscode='+pscode;
+            }
+        }
+    })
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,77 @@
+{{#  if (d.length === 0) { }}
+    <tr>
+    	<td colspan="18">无数据</td>
+    </tr> 
+{{#  } else { }}
+    {{#  layui.each(d, function(index, item){ }}
+        <tr data-id="{{ item.goods_id }}">
+	          <td><img src="{{ item.pic_info }}" width="60" height="60" ></td>
+	          <td>{{ item.title }}</td>
+	          <td>{{ item.desc1 }}</td>
+	          <td>{{ item.goods_code }}</td>
+	          <td>---</td>
+	          <td>{{ item.activity_start_time }} 到 {{item.ativity_end_time}}</td>
+	          <td>
+	              {{ item.perchase_notice.use_time }}
+	          </td>
+	          <td>
+	              {{# if (item.perchase_notice.max_count == 1) { }}
+	                  最多可以用一张
+	              {{# } else if (item.perchase_notice.max_count == 2) { }}
+	                  最多可用两张
+                  {{# } else if (item.perchase_notice.max_count == 3) { }}
+                      最多可用三种
+                  {{# } else if (item.perchase_notice.max_count == -1) { }}
+                      不限使用张数
+                  {{# } }}
+	          </td>
+	          <td>
+	             {{# if (item.perchase_notice.is_offer_invoice == 0) { }}
+	               不提供发票
+	             {{# } else { }}
+                   可提供发票
+	             {{# } }}
+	            
+	          </td>
+	          <td>
+                 {{# layui.each(JSON.parse(item.perchase_notice.rest_remark), function (i, val) { }}
+                     <p>{{ val }}</p>
+	             {{# }) }}
+	          </td>
+	          <td>
+                {{# layui.each(item.service_level.split(','), function (k, level) { }}
+                    {{# if (level == 1) { }}
+		          	    <p>随时退</p>
+		          	{{# } else if (level == 2) { }}
+	                    <p>过期退</p>
+		          	{{# } else if (level == 3) { }}
+	                    <p>免预约</p>
+		          	{{# } }}
+                {{# }) }}
+	          </td>
+	          <td>{{ item.activity_start_time }}</td>
+	          <td>{{ item.sale_price }}</td>
+	          <td>{{ item.vip_price }}</td>
+	          <td>{{ item.beike_credit }}</td>
+	          <td>
+	            {{# if (item.label == 11) { }}
+	          	    天天抢
+	          	{{# } else if (item.label == 12) { }}
+                    超划算
+                {{# } else { }}
+                    否
+                {{# } }}
+	          </td>
+	          <td>
+	          	{{# if (item.status == "on_shelf") { }}
+	          	    已上架
+	          	{{# } else if (item.status == "off_shelf") { }}
+	          	    已下架
+	          	{{# } }} 
+	          </td>
+	          <td>
+	          	    <a class="btn grounding_btn" data-dir="2">下架</a>
+	          </td>
+	    </tr>
+    {{# }) }}
+{{# } }} 

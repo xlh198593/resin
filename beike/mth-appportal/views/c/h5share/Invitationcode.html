@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>会员中心</title>
+        <style>
+            #app {
+                width:10rem;
+                margin:0 auto;
+            }
+            .iswx {
+    position:absolute;
+    top:0;
+    left:0;
+    height:136.24rem;
+    width:10rem;
+    background: url("/image/activity/invoic/gjjjj.png");
+    background-size:100% 100%;
+}
+           
+           
+        </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="iswx" v-if="iswx"></div>  
+        
+
+
+    </div>
+</body>
+
+
+<script type="text/javascript">
+function isWeiXin(){
+  //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+  var ua = window.navigator.userAgent.toLowerCase();
+  //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+  if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+  return true;
+  }else{
+  return false;
+  }
+}
+   new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                iswx:false,
+            }
+        },
+        computed: {
+
+        },
+        mounted: function () {
+          
+            if(isWeiXin()) {
+                this.iswx = true;
+            } else {
+                if ("<%=isios%>" == "0") {
+                    window.location.href = "https://itunes.apple.com/cn/app/%E8%B4%9D%E5%A3%B3%E4%BC%A0%E5%A5%87/id1431647984?mt=8&uo=4"
+                } else {
+                    window.location.href = "https://mps-static.huigujia.cn/apps/bkcq/bkcq-lastast-release.apk?mp.wexin.qq.com"
+                    // window.location.href = "<%=appBaseName%>/openapi/h5/c/activity/download"
+                }
+            }
+        }
+    })
+
+
+
+</script>
+
+</html>

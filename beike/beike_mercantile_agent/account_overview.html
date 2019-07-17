@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>账户总览</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/people.css">
+</head>
+<body>
+    <div class="container">
+    	<div class="people_info_con account_overview_con">
+    	    <div class="header" style="background:#54C375;color: #fff;">
+                <a onclick="javascript:history.go(-1);" class="back_btn" style="background:url('images/back_btn2.png') no-repeat center;background-size:10px;"></a>
+                账户总览
+            </div>
+            <div class="tit">可用余额（元）</div>
+            <div class="surplus use_money">6666.66</div>
+            <div class="total_pay">待结算金额： <span class="in_money">5555.55</span></div>
+    	</div>
+        <ul class="people_use_list">
+            <li>
+                <span class="title">支付宝</span>
+                <a href="./pay_info.html" class="txt bank_account" style="color:#999;">（已绑定）</a>
+      
+            </li>
+            <li>
+                <span class="title">提现</span>
+                <a href="#" class="txt">（可提现<span class="use_money">6666.66</span>元）</a>
+         
+            </li>
+        </ul>
+    </div>
+     
+
+
+
+
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/account_overview.js"></script>
+</body>
+</html>

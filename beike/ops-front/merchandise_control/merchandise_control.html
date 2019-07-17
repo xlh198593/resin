@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>商品管理</title>
+    <link rel="stylesheet" href="../layui/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" type="text/css" href="../css/merchandise_control.css">
+</head>
+<body>
+
+  <span class="layui-breadcrumb">
+      <a href="./merchandise_control.html">商品管理</a>
+      <a><cite>选择目录</cite></a>
+  </span>
+
+  <div class="merchandise_control">
+      <h1>商品类目:</h1>
+      <form class="layui-form" action=""> 
+          <div class="layui-form-item">
+              <div class="layui-inline">
+                  <label class="layui-form-label">一级类目：</label>
+                  <div class="layui-input-inline">
+                    <select name="quiz">
+                      <option value="">请选择</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="layui-inline">
+                  <label class="layui-form-label">二级类目：</label>
+                  <div class="layui-input-inline">
+                    <select name="modules" lay-verify="required" lay-search="">
+                      <option value="">请选择</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="layui-inline">
+                  <label class="layui-form-label">三级类目：</label>
+                  <div class="layui-input-inline">
+                    <select name="quiz">
+                      <option value="">请选择</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+      </form>
+      <a href="#" class="read_btn">我已阅读以下规则，开始发布商品</a>
+      <div class="text">
+          <h2></h2>
+      </div>
+  </div>
+  
+  <script src="../layui/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../js/common/common.js"></script>
+  <script type="text/javascript" src="../js/common/url.js"></script>
+  <script type="text/javascript" src="../js/merchandise_control/merchandise_control.js"></script>
+</body>
+</html>

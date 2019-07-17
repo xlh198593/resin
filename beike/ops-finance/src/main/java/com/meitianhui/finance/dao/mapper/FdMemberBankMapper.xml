@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.finance.dao.FdMemberBankDao">
+
+	<select id="findMemberBankBindingInfo" parameterType="Map" resultType="Map">
+		SELECT
+			f.member_type_key,
+			f.member_id,
+			f.cash_balance,
+			b.id,
+			b.mobile,
+			b.proposer,
+			b.bank_code,
+			b.bank_account
+		FROM
+			fd_member_asset f  LEFT JOIN  fd_member_bank b  ON  f.member_id = b.member_id
+		<where>
+			<if test="member_id != null and member_id != '' ">
+				f.member_id =#{member_id}
+			</if>
+		</where>
+		ORDER BY b.created_date DESC
+	</select>
+
+	<insert id="addFdMemberBankInfo" parameterType="com.meitianhui.finance.entity.FdMemberBank">
+		INSERT INTO `fddb`.`fd_member_bank` (
+			`id`,
+			`member_type_key`,
+			`member_id`,
+			`mobile`,
+			`proposer`,
+			`bank_code`,
+			`bank_account`,
+			`created_date`,
+			`remark`
+		)
+		VALUES
+			(
+			#{id},
+			#{member_type_key},
+			#{member_id},
+			#{mobile},
+			#{proposer},
+			#{bank_code},
+			#{bank_account},
+			#{created_date},
+			#{remark}
+			);
+	
+	</insert>
+	
+	<select id="findFdMemberBankInfo" parameterType="Map" resultType="com.meitianhui.finance.entity.FdMemberBank">
+		SELECT
+			f.member_type_key,
+			f.member_id,
+			f.mobile,
+			f.proposer,
+			f.bank_code,
+			f.bank_account
+		FROM
+			fd_member_bank f 
+		<where>
+			<if test="member_id != null and member_id != '' ">
+				f.member_id =#{member_id}
+			</if>
+			<if test="bank_id != null and bank_id != '' ">
+				f.id =#{bank_id}
+			</if>
+		</where>
+		ORDER BY f.created_date DESC
+	</select>
+	
+	<insert id="addFdWithdraw" parameterType="FdWithdraw">
+		INSERT INTO `fddb`.`fd_withdraw` (
+			`id`,
+			`mobile`,
+			`proposer`,
+			`add_time`,
+			`amount`,
+			`poundage`,
+			`bank_code`,
+			`bank_account`,
+			`status`,
+			`proof_img`,
+			`member_id`,
+			`remark`,
+			`opt_time`,
+			`reject_text`
+		)
+		VALUES
+			(
+			#{id},
+			#{mobile},
+			#{proposer},
+			#{add_time},
+			#{amount},
+			#{poundage},
+			#{bank_code},
+			#{bank_account},
+			#{status},
+			#{proof_img},
+			#{member_id},
+			#{remark},
+			#{opt_time},
+			#{reject_text}
+			);
+	</insert>
+
+	<select id="findFdWithdraw" parameterType="Map" resultType="FdWithdraw">
+		<![CDATA[
+		SELECT
+			f.id,
+			f.mobile,
+			f.proposer,
+			f.add_time,
+			f.amount,
+			f.poundage,
+			f.bank_code,
+			f.bank_account,
+			f.status,
+			f.proof_img,
+			f.member_id,
+			f.remark,
+			f.opt_time,
+			f.reject_text
+		FROM
+			fd_withdraw f 
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != '' ">
+				 AND f.member_id =#{member_id}
+			</if>
+			<if test="bank_id != null and bank_id != '' ">
+				AND f.id =#{bank_id}
+			</if>
+			<if test="month != null ">
+				AND DATE_FORMAT( f.opt_time, '%Y%m' ) = DATE_FORMAT( #{month} , '%Y%m' )
+			</if>
+			<if test="status_in != null">
+				AND  f.status in
+				<foreach item="item" index="index" collection="status_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY f.opt_time DESC
+	</select>
+
+</mapper>

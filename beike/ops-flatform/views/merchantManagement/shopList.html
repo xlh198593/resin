@@ -1,0 +1,50 @@
+{{# layui.each(d.verifyList, function (index, item) { }}
+    <tr item='{{JSON.stringify(item)}}'>
+		<td>
+			{{# if (item.head_pic_path) { }}
+				<img src="{{ d.requestUrl.imgUrl + '/' + item.head_pic_path }}" width="90" height="90">
+    	    {{# } else { }}
+    	    	<img src="../../images/default_img.png" width="90" height="90">
+    	    {{# } }}
+		</td>
+		<td>{{ item.stores_type }}</td>
+		<td>{{ item.stores_name }}</td>
+		<td>----</td>
+		<td>----</td>
+		<td>{{ item.cat_name }}</td>
+		<td>{{ item.addr }}</td>
+		<td>
+		    {{# if (item.stores_type == '个体') { }}
+                {{ item.contact_person }}
+            {{# } else { }}
+                {{ item.legal_person }}
+            {{# } }}
+		</td>
+		<td>{{ item.contact_tel }}</td>
+		<td>{{ item.created_date }}</td>
+		<td>
+			{{# if (item.sys_status == 'normal') { }}
+			   正常
+			{{# } else if (item.sys_status == 'delete') { }}
+			   停用
+			{{# } }}
+		</td>
+
+
+		<td>
+		    <p class="td_text">
+		   	    {{ item.remark }}
+		    </p>
+		</td>
+		
+		<td>
+			<input type="button" class="layui-btn layui-btn-xs change_page"  value="查看">
+			<a href="./shopDetail.html"  class="layui-btn layui-btn-xs change_page_btn" style="display:none;"><span>查看{{ index }}</span></a>
+		</td>
+	</tr>
+{{# }) }}
+{{# if (d.verifyList.length == 0) { }}
+    <tr>
+    	<td colspan="12">没有数据</td>
+    </tr>
+{{# } }}

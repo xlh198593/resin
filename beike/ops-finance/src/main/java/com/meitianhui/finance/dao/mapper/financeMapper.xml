@@ -1,0 +1,2154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.finance.dao.FinanceDao">
+
+	<insert id="insertFDTransactions" parameterType="FDTransactions">
+		INSERT INTO
+		fd_transactions (
+		transaction_no
+		,data_source
+		,order_type_key
+		,payment_way_key
+		,transaction_date
+		,detail
+		,amount
+		,currency_code
+		,out_trade_no
+		,out_trade_body
+		,buyer_id
+		,seller_id
+		,created_date
+		,remark
+		,trade_type_key
+		)
+		VALUES (
+		 #{transaction_no}
+		,#{data_source}
+		,#{order_type_key}
+		,#{payment_way_key}
+		,#{transaction_date}
+		,#{detail}
+		,#{amount}
+		,#{currency_code}
+		,#{out_trade_no}
+		,#{out_trade_body}
+		,#{buyer_id}
+		,#{seller_id}
+		,#{created_date}
+		,#{remark}
+		,#{trade_type_key}
+		)
+	</insert>
+
+	<insert id="insertFDTransactionsResult" parameterType="FDTransactionsResult">
+		INSERT
+		INTO
+		fd_transactions_result
+		(
+		 transaction_no
+		,data_source
+		,trade_type_key
+		,order_type_key
+		,payment_way_key
+		,transaction_date
+		,detail
+		,amount
+		,out_trade_no
+		,out_trade_body
+		,transaction_body
+		,buyer_member_type
+		,buyer_id
+		,buyer_name
+		,buyer_contact
+		,buyer_account_no
+		,buyer_account_name
+		,seller_member_type
+		,seller_id
+		,seller_name
+		,seller_contact
+		,seller_account_no
+		,seller_account_name
+		,transaction_status
+		,created_date
+		,modified_date
+		,closed_date
+		,external_number
+		,remark
+		)
+		VALUES (
+		 #{transaction_no}
+		,#{data_source}
+		,#{trade_type_key}
+		,#{order_type_key}
+		,#{payment_way_key}
+		,#{transaction_date}
+		,#{detail}
+		,#{amount}
+		,#{out_trade_no}
+		,#{out_trade_body}
+		,#{transaction_body}
+		,#{buyer_member_type}
+		,#{buyer_id}
+		,#{buyer_name}
+		,#{buyer_contact}
+		,#{buyer_account_no}
+		,#{buyer_account_name}
+		,#{seller_member_type}
+		,#{seller_id}
+		,#{seller_name}
+		,#{seller_contact}
+		,#{seller_account_no}
+		,#{seller_account_name}
+		,#{transaction_status}
+		,#{created_date}
+		,#{modified_date}
+		,#{closed_date}
+		,#{external_number}
+		,#{remark}
+		)
+	</insert>
+
+	<insert id="insertFDMemberAsset" parameterType="FDMemberAsset">
+		INSERT INTO
+		fd_member_asset (
+		asset_id
+		,member_type_key
+		,member_id
+		,cash_balance
+		,cash_froze
+		,gift_certificates_368
+		,gift_certificates_188
+		,gift_certificates_68
+		,point
+		,gold
+		,shell
+		,cash_coupon
+		,experience
+		,created_date
+		,modified_date
+		,remark
+		)
+		VALUES (
+		#{asset_id}
+		,#{member_type_key}
+		,#{member_id}
+		,0.00
+		,0.00
+		,0
+		,0
+		,0
+		,0
+		,0
+		,#{shell}
+		,0.00
+		,0
+		,#{created_date}
+		,#{modified_date}
+		,#{remark}
+		)
+	</insert>
+
+
+	<insert id="insertFDMemberCouponsLog">
+		insert into fd_member_coupons_log (
+			coupons_id
+			,member_id
+			,oper_type
+			,coupons_type
+			,order_no
+			,lsn
+			,created_time
+		) VALUES (
+			#{coupons_id}
+			,#{member_id}
+			,#{oper_type}
+			,#{coupons_type}
+			,#{order_no}
+			,#{lsn}
+			,#{created_time}
+		)
+	</insert>
+
+	<insert id="insertFDStoresCashier" parameterType="FDStoresCashier">
+		INSERT INTO
+		fd_stores_cashier (
+		flow_id
+		,flow_no
+		,stores_id
+		,amount
+		,discount_amount
+		,reduce_amount
+		,rebate_cash
+		,reward_gold
+		,pay_amount
+		,payment_way_key
+		,json_data
+		,cashier_id
+		,created_date
+		,remark
+		)
+		VALUES (
+		#{flow_id}
+		,#{flow_no}
+		,#{stores_id}
+		,#{amount}
+		,#{discount_amount}
+		,#{reduce_amount}
+		,#{rebate_cash}
+		,#{reward_gold}
+		,#{pay_amount}
+		,#{payment_way_key}
+		,#{json_data}
+		,#{cashier_id}
+		,#{created_date}
+		,#{remark}
+		)
+	</insert>
+
+
+	<insert id="insertFdMemberAssetCoupon" parameterType="FdMemberAssetCoupon">
+		INSERT INTO
+		fd_member_asset_coupon (
+		asset_id
+		,member_type_key
+		,member_id
+		,sku_id
+		,item_id
+		,sku_code
+		,title
+		,pic_path
+		,expired_date
+		,status
+		,created_date
+		,remark
+		)
+		VALUES (
+		#{asset_id}
+		,#{member_type_key}
+		,#{member_id}
+		,#{sku_id}
+		,#{item_id}
+		,#{sku_code}
+		,#{title}
+		,#{pic_path}
+		,#{expired_date}
+		,#{status}
+		,#{created_date}
+		,#{remark}
+		)
+	</insert>
+
+	<insert id="insertFdMemberRebateLog" parameterType="FDMemberRebateLog">
+		INSERT INTO fd_member_rebate_log ( member_id, category,pre_balance,cash_money,balance, create_time, mobile,invite_mobile,type,remark )
+		VALUES
+			( #{member_id},#{category},#{pre_balance},#{cash_money},#{balance},#{create_time},#{mobile},#{inviteMobile},#{type},#{remark})
+	</insert>
+
+	<select id="selectFDTransactions" parameterType="Map"
+		resultType="FDTransactions">
+		<![CDATA[
+			SELECT
+				transaction_id
+				,transaction_no
+				,data_source
+				,trade_type_key
+				,order_type_key
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,currency_code
+				,out_trade_no
+				,out_trade_body
+				,buyer_id
+				,seller_id
+				,created_date
+				,remark
+			FROM
+				fd_transactions
+		]]>
+		<where>
+			transaction_no=#{transaction_no}
+			<if test="trade_type_key != null and trade_type_key != ''">
+				AND trade_type_key=#{trade_type_key}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectListFDTransactions" parameterType="Map"
+		resultType="FDTransactions">
+		<![CDATA[
+			SELECT
+				transaction_id
+				,transaction_no
+				,data_source
+				,order_type_key
+				,trade_type_key
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,currency_code
+				,out_trade_no
+				,out_trade_body
+				,buyer_id
+				,seller_id
+				,created_date
+				,remark
+			FROM
+				fd_transactions
+		]]>
+		<where>
+			1=1
+			<if test="transaction_no != null and transaction_no != ''">
+				AND transaction_no=#{transaction_no}
+			</if>
+			<if test="order_type_key != null and order_type_key != ''">
+				AND order_type_key=#{order_type_key}
+			</if>
+			<if test="payment_way_key != null and payment_way_key != ''">
+				AND payment_way_key=#{payment_way_key}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDTransactionsResult" parameterType="Map"
+		resultType="FDTransactionsResult">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,data_source
+				,order_type_key
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,buyer_id
+				,seller_id
+				,transaction_status
+				,created_date
+				,external_number
+				,remark
+			FROM
+				fd_transactions_result
+		]]>
+		<where>
+			1=1
+			<if test="transaction_no != null and transaction_no != ''">
+				AND transaction_no=#{transaction_no}
+			</if>
+			<if test="out_trade_no != null and out_trade_no != ''">
+				AND out_trade_no=#{out_trade_no}
+			</if>
+			<if test="seller_id != null and seller_id != ''">
+				AND seller_id=#{seller_id}
+			</if>
+			<if test="buyer_id != null and buyer_id != ''">
+				AND buyer_id=#{buyer_id}
+			</if>
+			<if test="payment_way_key != null and payment_way_key != ''">
+				AND payment_way_key=#{payment_way_key}
+			</if>
+			<if test="business_type_key != null and business_type_key != ''">
+				AND business_type_key=#{business_type_key}
+			</if>
+			<if test="transaction_status != null and transaction_status != ''">
+				AND transaction_status=#{transaction_status}
+			</if>
+			<if test="created_date_start != null and created_date_start != ''">
+				AND created_date  &gt;= #{created_date_start}
+			</if>
+			<if test="created_date_end != null and created_date_end != ''">
+				AND created_date &lt; #{created_date_end}
+			</if>
+			<if test="order_type_key != null and order_type_key != ''">
+				AND order_type_key=#{order_type_key}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDMemberAssetByMemberIdAndShell" parameterType="Map" resultType="FDMemberAsset">
+		<![CDATA[
+			SELECT
+				asset_id
+				,member_id
+				,member_type_key
+				,cash_balance
+				,cash_froze
+				,gift_certificates_368
+				,gift_certificates_188
+				,gift_certificates_68
+				,gold
+				,shell
+				,cash_coupon
+				,experience
+				,created_date
+				,modified_date
+				,remark
+			FROM
+				fd_member_asset
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>			
+			<if test="shell != null">
+				AND shell>=#{shell}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectFDMemberAsset" parameterType="Map" resultType="FDMemberAsset">
+		<![CDATA[
+			SELECT
+				asset_id
+				,member_id
+				,member_type_key
+				,cash_balance
+				,cash_froze
+				,gift_certificates_368
+				,gift_certificates_188
+				,gift_certificates_68
+				,gold
+				,shell
+				,cash_coupon
+				,experience
+				,created_date
+				,modified_date
+				,remark
+				,invite_balance
+			FROM
+				fd_member_asset
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_id_in != null">
+				AND member_id in
+				<foreach item="item" index="index" collection="member_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDMemberAssetList" parameterType="Map"
+		resultType="FDMemberAsset">
+			<![CDATA[
+				SELECT
+					member_id
+					,member_type_key
+					,cash_balance
+					,gold
+				FROM
+					fd_member_asset
+			]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_id_in != null">
+				AND member_id in
+				<foreach item="item" index="index" collection="member_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="selectFDMemberAssetPageList" parameterType="Map"
+		resultType="Map">
+			<![CDATA[
+				SELECT
+					member_id
+					,member_type_key
+					,cash_balance
+					,gold
+					,bonus 
+				FROM
+					fd_member_asset 
+			]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_id_in != null">
+				AND member_id in
+				<foreach item="item" index="index" collection="member_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY bonus DESC
+	</select>
+
+
+	<select id="selectFDVoucher" parameterType="Map" resultType="FDVoucher">
+		<![CDATA[
+			SELECT
+				voucher_id
+				,voucher_type_key
+				,card_no
+				,amount_key
+				,registered_date
+				,expired_date
+				,status
+			FROM
+				fd_voucher
+		]]>
+		<where>
+			<if test="serial_num != null and serial_num != ''">
+				AND serial_num=#{serial_num}
+			</if>
+			<if test="secret != null and secret != ''">
+				AND secret=#{secret}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectStoreCashierCount" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				sum(pay_amount) in_sum,
+				sum(case when payment_way_key = 'ZFFS_04' then pay_amount end) in_case_sum,
+				count(flow_id ) num_count
+			FROM
+				fd_stores_cashier
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND stores_id=#{member_id}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(created_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDMemberCashLog" parameterType="Map"
+	resultType="Map">
+			SELECT
+					member_id
+					,member_type_key
+					,commission_cash
+					,category
+					,pre_balance
+					,amount
+					,balance
+					,tracked_date
+					,remark
+				FROM
+			(SELECT
+					member_id,
+					member_type_key,
+					NULL AS commission_cash,
+					category,
+					pre_balance,
+					amount,
+					balance,
+					tracked_date,
+					remark
+				FROM
+					fddb.fd_member_cash_log f2
+			<where>
+				1=1
+				<if test="member_type_key != null and member_type_key != ''">
+					AND f2.member_type_key=#{member_type_key}
+				</if>
+				<if test="member_id != null and member_id != ''">
+					AND f2.member_id=#{member_id}
+				</if>
+			</where>
+		UNION
+			SELECT
+					store_id AS member_id,
+					NULL AS member_type_key,
+					commission_cash,
+					NULL AS category,
+					NULL AS pre_balance,
+					NULL AS amount,
+					NULL AS balance,
+					created_date AS tracked_date,
+					remark
+				FROM
+					fddb.fd_cash_commission_log f1
+			<where>
+				1=1
+				<if test="member_id != null and member_id != ''">
+					AND f1.store_id=#{member_id}
+				</if>
+			</where>
+				) a
+				ORDER BY tracked_date DESC
+	</select>
+
+	<select id="selectFDMemberCashLogNew" parameterType="Map"
+		resultType="FDMemberCashLog">
+		<![CDATA[
+			SELECT
+				member_id
+				,member_type_key
+				,category
+				,pre_balance
+				,amount
+				,balance
+				,tracked_date
+				,remark
+			FROM
+				fd_member_cash_log
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(tracked_date, '%Y-%m-%d') =	DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND tracked_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND tracked_date &lt;date_add(#{transaction_date_end},interval 1 day)
+			</if>
+			<if test="tracked_date_start != null and tracked_date_start != ''">
+				AND tracked_date &gt;= #{tracked_date_start}
+			</if>
+			<if test="tracked_date_end != null and tracked_date_end != ''">
+				AND tracked_date &lt;date_add(#{tracked_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY tracked_date DESC
+	</select>
+	
+	<select id="selectFDMemberGoldLog" parameterType="Map"
+		resultType="FDMemberGoldLog">
+		<![CDATA[
+			SELECT
+				member_id
+				,member_type_key
+				,category
+				,pre_balance
+				,amount
+				,balance
+				,tracked_date
+				,remark
+			FROM
+				fd_member_gold_log
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+			<if test="tracked_date != null and tracked_date != ''">
+				AND DATE_FORMAT(tracked_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{tracked_date}, '%Y-%m-%d')
+			</if>
+			<if test="tracked_date_start != null and tracked_date_start != ''">
+				AND tracked_date &gt;= #{tracked_date_start}
+			</if>
+			<if test="tracked_date_end != null and tracked_date_end != ''">
+				AND tracked_date &lt;
+				date_add(#{tracked_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY tracked_date DESC
+	</select>
+
+	<select id="selectFDMemberVoucherLog" parameterType="Map"
+		resultType="FDMemberVoucherLog">
+		<![CDATA[
+			SELECT
+				member_id
+				,member_type_key
+				,category
+				,pre_balance
+				,amount
+				,balance
+				,tracked_date
+				,remark
+			FROM
+				fd_member_voucher_log
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+			<if test="tracked_date != null and tracked_date != ''">
+				AND DATE_FORMAT(tracked_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{tracked_date}, '%Y-%m-%d')
+			</if>
+			<if test="tracked_date_start != null and tracked_date_start != ''">
+				AND tracked_date &gt;= #{tracked_date_start}
+			</if>
+			<if test="tracked_date_end != null and tracked_date_end != ''">
+				AND tracked_date &lt;
+				date_add(#{tracked_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY tracked_date DESC
+	</select>
+
+
+	<select id="selectFDVoucherDailyAccountStoreCount"
+		parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+				count(1) as count_num
+			FROM
+				fd_voucher_daily_account_store
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="business_type_key != null and business_type_key != ''">
+				AND business_type_key=#{business_type_key}
+			</if>
+			<if test="business_type_in != null">
+				AND business_type_key in
+				<foreach item="item" index="index" collection="business_type_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="data_source != null and data_source != ''">
+				AND data_source=#{data_source}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDStoreVoucherRewardAccountCount"
+		parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+				count(DISTINCT detail) count_num
+			FROM
+				fd_voucher_daily_account_store
+		]]>
+		<where>
+			business_type_key = 'JYLX_09'
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectFDVoucherAmountCount" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				sum(amount) as total_amount
+			FROM
+				fd_voucher_daily_account_store
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="business_type_key != null and business_type_key != ''">
+				AND business_type_key=#{business_type_key}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+	</select>
+
+	<select id="selectFDStoresCashier" parameterType="Map"
+		resultType="FDStoresCashier">
+		<![CDATA[
+			SELECT
+				flow_no 
+				,stores_id
+				,amount
+				,discount_amount
+				,reduce_amount
+				,rebate_cash
+				,reward_gold
+				,pay_amount
+				,payment_way_key
+				,json_data
+				,cashier_id
+				,created_date
+			FROM
+				fd_stores_cashier
+		]]>
+		<where>
+			stores_id=#{member_id}
+			<if test="created_date != null and created_date != ''">
+				AND DATE_FORMAT(created_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{created_date}, '%Y-%m-%d')
+			</if>
+			<if test="created_date_start != null and created_date_start != ''">
+				AND created_date &gt;= #{created_date_start}
+			</if>
+			<if test="created_date_end != null and created_date_end != ''">
+				AND created_date &lt;
+				date_add(#{created_date_start},interval 1 day)
+			</if>
+			<if test="payment_way_key != null and payment_way_key != ''">
+				AND payment_way_key=#{payment_way_key}
+			</if>
+		</where>
+		order by created_date desc
+	</select>
+
+	<select id="selectFdMemberAssetCoupon" parameterType="Map"
+		resultType="FdMemberAssetCoupon">
+		<![CDATA[
+			SELECT
+				asset_id
+				,member_id
+				,sku_id
+				,item_id
+				,sku_code
+				,title
+				,pic_path
+				,expired_date
+				,created_date
+				,status
+			FROM
+				fd_member_asset_coupon
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="sku_code != null and sku_code != ''">
+				AND sku_code=#{sku_code}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+		</where>
+		ORDER BY created_date DESC
+	</select>
+
+	<select id="selectFdMemberAssetCouponCount" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				count(1) as count_num
+			FROM
+				fd_member_asset_coupon
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectTradeConsumerListForStores" parameterType="Map"
+		resultType="Map">
+		SELECT c.transaction_member_id as member_id,c.transaction_member_name
+		as name,c.transaction_member_contact AS contact,c.transaction_date AS
+		date,c.amount AS amount FROM
+		fddb.fd_cash_daily_account_store c WHERE
+		c.transaction_member_type = 'consumer' AND c.member_id =
+		#{stores_id}
+		<if test="transaction_date_start != null and transaction_date_start != ''">
+			AND c.transaction_date &gt;= #{transaction_date_start}
+		</if>
+		<if test="transaction_date_end != null and transaction_date_end != ''">
+			AND c.transaction_date &lt;
+			date_add(#{transaction_date_end},interval 1 day)
+		</if>
+		ORDER BY c.transaction_date DESC
+	</select>
+
+	<update id="updateFDMemberAsset" parameterType="Map">
+		update fd_member_asset set
+		created_date = SYSDATE(),
+		<trim suffixOverrides=",">
+			<if test="trade_cash_balance != null">
+				cash_balance = cash_balance + #{trade_cash_balance},
+			</if>
+			<if test="invite_balance != null">
+				invite_balance = invite_balance + #{invite_balance},
+			</if>
+			<if test="point != null">
+				point = point + #{point},
+			</if>
+			<if test="shell != null">
+				shell = shell + #{shell},
+			</if>
+			<if test="trade_cash_froze != null">
+				cash_froze = cash_froze + #{trade_cash_froze},
+			</if>
+			<if test="trade_voucher_balance != null">
+				voucher_balance = voucher_balance +
+				#{trade_voucher_balance},
+			</if>
+			<if test="trade_gold != null">
+				gold = gold + #{trade_gold},
+			</if>
+			<if test="trade_bonus != null">
+				bonus = bonus + #{trade_bonus},
+			</if>
+			<if test="gift_certificates_68 != null">
+				gift_certificates_68 = gift_certificates_68 + #{gift_certificates_68},
+			</if>
+			<if test="gift_certificates_188 != null">
+				gift_certificates_188 = gift_certificates_188 + #{gift_certificates_188},
+			</if>
+			<if test="gift_certificates_368 != null">
+				gift_certificates_368 = gift_certificates_368 + #{gift_certificates_368},
+			</if>
+			<if test="trade_experience != null">
+				experience = experience + #{trade_experience},
+			</if>
+		</trim>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_id_in != null">
+				AND member_id in
+				<foreach item="item" index="index" collection="member_id_in"
+						 open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</update>
+	
+	<update id="updateMemberShell" parameterType="Map">
+		UPDATE fd_member_asset
+		SET 
+		modified_date = SYSDATE(),
+		<trim suffixOverrides=",">
+			<if test="cash_balance != null">
+				cash_balance = #{cash_balance},
+			</if>
+			<if test="shell != null">
+				shell = #{shell},
+			</if>
+		</trim>
+		<where>
+			member_id = #{member_id}
+		</where>
+	</update>
+	
+	
+	<update id="updateFDVoucher" parameterType="Map">
+		update fd_voucher set
+		<trim suffixOverrides=",">
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+		</trim>
+		<where>
+			serial_num=#{serial_num} and secret=#{secret}
+		</where>
+	</update>
+
+
+	<update id="updateFdMemberAssetCoupon" parameterType="Map">
+		update fd_member_asset_coupon set
+		<trim suffixOverrides=",">
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+		</trim>
+		<where>
+			sku_code=#{sku_code}
+		</where>
+	</update>
+
+	<update id="updateDisabledCouponAssetStatus" parameterType="Map">
+		UPDATE fd_member_asset_coupon SET status = 'revoked',
+		remark = '优惠券已过期'
+		WHERE status = 'activated'
+		AND expired_date &lt; #{lt_date} AND
+		expired_date &gt; #{gt_date}
+	</update>
+
+	<select id="selectFDCashDailyAccountConsumer" parameterType="Map"
+		resultType="FDCashDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,currency_code
+				,amount
+				,out_trade_no
+				,booking_mark
+				,transaction_member_name
+				,transaction_member_contact
+			FROM
+				fd_cash_daily_account_consumer
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(created_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+
+	<select id="selectFDCashDailyAccountStore" parameterType="Map"
+		resultType="FDCashDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,currency_code
+				,amount
+				,out_trade_no
+				,booking_mark
+				,business_type_key
+				,transaction_member_name
+				,transaction_member_contact
+			FROM
+				fd_cash_daily_account_store
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+
+	<select id="selectFDVoucherDailyAccountConsumer" parameterType="Map"
+		resultType="FDVoucherDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,booking_mark
+			FROM
+				fd_voucher_daily_account_consumer
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+	<select id="selectFDVoucherDailyAccountStore" parameterType="Map"
+		resultType="FDVoucherDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,booking_mark
+				,business_type_key
+			FROM
+				fd_voucher_daily_account_store
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="business_type_key != null and business_type_key != ''">
+				AND business_type_key=#{business_type_key}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+
+
+	<select id="selectFDGoldDailyAccountConsumer" parameterType="Map"
+		resultType="FDGoldDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,booking_mark
+				,business_type_key
+				,transaction_member_name
+				,transaction_member_contact
+			FROM
+				fd_gold_daily_account_consumer
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+	<select id="selectFDGoldDailyAccountStore" parameterType="Map"
+		resultType="FDGoldDailyAccountMember">
+		<![CDATA[
+			SELECT
+				transaction_no
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,booking_mark
+				,business_type_key
+				,transaction_member_name
+				,transaction_member_contact
+			FROM
+				fd_gold_daily_account_store
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="status != null and status != ''">
+				AND status=#{status}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND DATE_FORMAT(transaction_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{transaction_date}, '%Y-%m-%d')
+			</if>
+			<if test="transaction_date_start != null and transaction_date_start != ''">
+				AND transaction_date &gt;= #{transaction_date_start}
+			</if>
+			<if test="transaction_date_end != null and transaction_date_end != ''">
+				AND transaction_date &lt;
+				date_add(#{transaction_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY transaction_date DESC
+	</select>
+
+	<select id="selectBillCheckLog" parameterType="Map"
+		resultType="Map">
+			SELECT
+				transaction_no
+				,bill_type
+				,bill_date
+				,data_source
+				,order_type_key
+				,business_type_key
+				,payment_way_key
+				,transaction_date
+				,detail
+				,amount
+				,out_trade_no
+				,buyer_id
+				,buyer_member_type
+				,buyer_name
+				,buyer_contact
+				,seller_id
+				,seller_member_type
+				,seller_name
+				,seller_contact
+				,transaction_status
+			FROM
+				fd_bill_check_log
+		<where>
+			<if test="bill_type != null and bill_type != ''">
+				AND bill_type=#{bill_type}
+			</if>
+			<if test="bill_date != null and bill_date != ''">
+				AND bill_date=#{bill_date}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectStoresCashCommission" parameterType="Map" resultType="Map">
+		SELECT 
+			store_id,
+			commission_cash,
+			remark
+		FROM
+			fd_cash_commission_store
+		<where>
+			store_id = #{store_id}
+		</where>
+	</select>
+	
+	<select id="selectStoresCashCommissionLogList" parameterType="Map" resultType="Map">
+		SELECT 
+			log_id,
+			store_id,
+			commission_cash,
+			booking_mark,
+			created_date,
+			remark
+		FROM
+			fd_cash_commission_log
+		<where>
+			log_id = #{log_id}
+		</where>
+	</select>
+	
+	<insert id="insertStoresCashCommission" parameterType="FDCashCommissionStore">
+		INSERT INTO
+		fd_cash_commission_store (
+		store_id
+		,commission_cash
+		,remark
+		,updated_date
+		)
+		VALUES (
+		#{store_id}
+		,#{commission_cash}
+		,#{remark}
+		,#{updated_date}
+		)
+	</insert>
+	
+		<update id="updateStoresCashCommission" parameterType="Map">
+		update fd_cash_commission_store set
+		updated_date = SYSDATE(),
+		<trim suffixOverrides=",">
+			<if test="commission_cash != null">
+				commission_cash = commission_cash + #{commission_cash},
+			</if>
+		</trim>
+		<where>
+			store_id=#{store_id}
+		</where>
+	</update>
+	
+	<insert id="insertStoresCashCommissionLog" parameterType="Map">
+		INSERT INTO
+		fd_cash_commission_log (
+		log_id
+		,store_id
+		,commission_cash
+		,booking_mark
+		,created_date
+		,remark
+		)
+		VALUES (
+		#{log_id}
+		,#{store_id}
+		,#{commission_cash}
+		,#{booking_mark}
+		,#{created_date}
+		,#{remark}
+		)
+	</insert>
+	
+		
+	<insert id="insertFdMemberPointLog" parameterType="Map">
+		INSERT INTO
+		fd_member_point_log (
+		log_id
+		,member_type_key
+		,member_id
+		,category
+		,pre_balance
+		,amount
+		,balance
+		,tracked_date
+		,remark
+		)
+		VALUES (
+		#{log_id}
+		,#{member_type_key}
+		,#{member_id}
+		,#{category}
+		,#{pre_balance}
+		,#{amount}
+		,#{balance}
+		,#{tracked_date}
+		,#{remark}
+		)
+	</insert>
+	
+	<select id="selectFDMemberPointLog" parameterType="Map"
+		resultType="FDMemberPointLog">
+		<![CDATA[
+			SELECT
+				log_id
+				,member_type_key
+				,member_id
+				,category
+				,pre_balance
+				,amount
+				,transaction_no
+				,balance
+				,tracked_date
+				,remark
+			FROM
+				fd_member_point_log
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+			<if test="tracked_date != null and tracked_date != ''">
+				AND DATE_FORMAT(tracked_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{tracked_date}, '%Y-%m-%d')
+			</if>
+			<if test="tracked_date_start != null and tracked_date_start != ''">
+				AND tracked_date &gt;= #{tracked_date_start}
+			</if>
+			<if test="tracked_date_end != null and tracked_date_end != ''">
+				AND tracked_date &lt;
+				date_add(#{tracked_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY tracked_date DESC
+	</select>
+	
+	<select id="selectTransactionsnoByOuttradno" parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+				transaction_id
+				,transaction_no
+				,out_trade_no
+				,payment_way_key
+				,out_trade_body
+			FROM
+				fd_transactions_result
+		]]>
+		<where>
+			1=1
+			<if test="order_id != null and order_id != ''">
+			AND substring(
+				out_trade_body,
+				locate(
+					'order_id',
+					out_trade_body
+				) + 11,
+				32
+			) = #{order_id}
+			</if>
+			<if test="transaction_date != null and transaction_date != ''">
+				AND transaction_date &gt; #{transaction_date}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertListFDTransactionsResult" parameterType="FDTransactionsResult">
+		INSERT INTO
+			fd_transactions_result
+			(
+			,transaction_no
+			,data_source
+			,trade_type_key
+			,order_type_key
+			,payment_way_key
+			,transaction_date
+			,detail
+			,amount
+			,out_trade_no
+			,out_trade_body
+			,transaction_body
+			,buyer_member_type
+			,buyer_id
+			,buyer_name
+			,buyer_contact
+			,buyer_account_no
+			,buyer_account_name
+			,seller_member_type
+			,seller_id
+			,seller_account_no
+			,seller_account_name
+			,transaction_status
+			,seller_contact
+			,transaction_status
+			,created_date
+			,modified_date
+			,closed_date
+			,external_number
+			,remark
+			)
+		VALUES (
+		<foreach collection="list" item="item" index= "index" separator =",">
+	    	(#{transaction_no}
+			,#{data_source}
+			,#{trade_type_key}
+			,#{order_type_key}
+			,#{payment_way_key}
+			,#{transaction_date}
+			,#{detail}
+			,#{amount}
+			,#{out_trade_no}
+			,#{out_trade_body}
+			,#{transaction_body}
+			,#{buyer_member_type}
+			,#{buyer_id}
+			,#{buyer_name}
+			,#{buyer_contact}
+			,#{buyer_account_no}
+			,#{buyer_account_name}
+			,#{seller_member_type}
+			,#{seller_id}
+			,#{seller_name}
+			,#{seller_contact}
+			,#{seller_account_no}
+			,#{seller_account_name}
+			,#{transaction_status}
+			,#{created_date}
+			,#{modified_date}
+			,#{closed_date}
+			,#{external_number}
+			,#{remark}
+			)
+		</foreach>
+	</insert>
+	
+	<select id="selectFDMemberShellLog" parameterType="Map"
+		resultType="FDMemberShellLog">
+		<![CDATA[
+			SELECT
+				log_id
+				,member_type_key
+				,member_id
+				,category
+				,pre_balance
+				,amount
+				,transaction_no
+				,balance
+				,tracked_date
+				,remark
+			FROM
+				fd_member_shell_log
+		]]>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="transaction_no != null and transaction_no != ''">
+				AND transaction_no=#{transaction_no}
+			</if>
+			<if test="member_type_key != null and member_type_key != ''">
+				AND member_type_key=#{member_type_key}
+			</if>
+			<if test="tracked_date != null and tracked_date != ''">
+				AND DATE_FORMAT(tracked_date, '%Y-%m-%d') =
+				DATE_FORMAT(#{tracked_date}, '%Y-%m-%d')
+			</if>
+			<if test="tracked_date_start != null and tracked_date_start != ''">
+				AND tracked_date &gt;= #{tracked_date_start}
+			</if>
+			<if test="tracked_date_end != null and tracked_date_end != ''">
+				AND tracked_date &lt;
+				date_add(#{tracked_date_end},interval 1 day)
+			</if>
+		</where>
+		ORDER BY tracked_date DESC
+	</select>
+	
+	<insert id="insertFdMemberCoupons" parameterType="java.util.ArrayList">
+        insert into fd_member_coupons (member_id,coupons_validity,coupons_key,created_date,coupons_mun,coupons_validity_start,is_activate,repair_count,is_first,coupons_validity_end) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.member_id},#{item.coupons_validity},#{item.coupons_key},#{item.created_date},#{item.coupons_mun},#{item.coupons_validity_start},#{item.is_activate},#{item.repair_count},#{item.is_first},#{item.coupons_validity_end})
+        </foreach>
+    </insert>
+    
+	<update id="updateFDMemberAssetShell"  parameterType="java.util.ArrayList">
+	    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+	        update fd_member_asset
+	        <set>
+	            shell= shell + #{item.shell}
+	        </set>
+	        where member_id = #{item.member_id}
+	    </foreach>      
+	</update>
+
+
+	<update id="updateFdMemberCouponsRepairCount"  parameterType="java.util.ArrayList">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update fd_member_coupons
+			<set>
+				<if test="item.repair_count!=null">
+					repair_count= #{item.repair_count},
+				</if>
+				<if test="item.repair_count_all!=null">
+					repair_count_all= #{item.repair_count_all}
+				</if>
+			</set>
+			where member_coupons_id = #{item.member_coupons_id}
+		</foreach>
+	</update>
+
+
+	<update id="updateFdMemberCouponsRepairCount02">
+			update fd_member_coupons
+			<set>
+				<if test="repair_count!=null">
+					repair_count= #{repair_count},
+				</if>
+				<if test="repair_count_all!=null">
+					repair_count_all= #{repair_count_all}
+				</if>
+			</set>
+			where member_coupons_id = #{member_coupons_id}
+	</update>
+
+
+	<select id="selectCouponsLSN" resultType="map">
+			SELECT
+				 member_coupons_id
+				,member_id
+				,coupons_validity_start
+				,coupons_validity
+				,is_activate
+				,coupons_key
+				,created_date
+			FROM
+				fd_member_coupons
+		where
+			member_id = #{member_id}
+		ORDER BY member_coupons_id ASC
+	</select>
+
+
+	<select id="selectFdMemberCoupons" parameterType="Map"
+			resultType="FDMemberCoupons">
+		<![CDATA[
+			SELECT
+				 member_coupons_id
+				,member_id
+				,coupons_mun
+				,shell_count
+				,repair_count
+				,repair_count_all
+				,coupons_validity_start
+				,coupons_validity_end
+				,coupons_validity
+				,sign_data
+				,sign_data_repair
+				,is_activate
+				,coupons_key
+				,created_date
+			FROM
+				fd_member_coupons
+		]]>
+		<where>
+			1=1
+			<if test="coupons_mun != null ">
+				AND coupons_mun > 0
+			</if>
+			<if test="is_first != null and is_first != ''">
+				AND is_first = #{is_first}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="coupons_validity != null ">
+				AND coupons_validity >= #{coupons_validity}
+			</if>
+			<if test="actiDate != null and actiDate != '' ">
+				AND coupons_validity_start &lt;= #{actiDate} AND coupons_validity_end &gt;= #{actiDate}
+			</if>
+			<if test="coupons_key != null and coupons_key != '' ">
+				AND coupons_key = #{coupons_key}
+			</if>
+			<if test="shell_count != null and shell_count != '' ">
+				AND  (shell_count != 1 or shell_count is null)
+			</if>
+			<if test="member_coupons_id != null and member_coupons_id != '' ">
+				AND member_coupons_id = #{member_coupons_id}
+			</if>
+			<if test="is_activate != null and is_activate != ''">
+				AND is_activate=#{is_activate}
+			</if>
+		</where>
+		ORDER BY created_date desc
+	</select>
+	
+	
+	<select id="selectMemberCouponsList" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				m.member_coupons_id,
+				m.member_id,
+				m.coupons_mun,
+				DATE_FORMAT(m.coupons_validity, '%Y-%m-%d') AS coupons_validity,
+				m.coupons_key,
+				IFNULL(m.is_activate,'N') AS is_activate,
+				DATE_FORMAT(m.created_date, '%Y-%m-%d') AS created_date,
+				DATE_FORMAT(m.coupons_validity_start, '%Y-%m-%d') AS coupons_validity_start,
+				f.coupons_name,
+				f.name,
+				f.coupons_amount,
+				f.coupons_subtract
+			FROM
+				fd_member_coupons m
+			INNER JOIN fd_coupons_dict f ON m.coupons_key = f.coupons_key
+		]]>
+		<where>
+			<if test="coupons_mun != null">
+				AND m.coupons_mun &gt; 0
+			</if>
+			<if test="coupons_id_in != null">
+				AND m.member_coupons_id  in
+				<foreach collection="coupons_id_in" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	        	</foreach>
+	        </if>
+	        <if test="coupons_id != null and coupons_id != ''">
+				AND m.member_coupons_id=#{coupons_id}
+			</if>
+			<if test="coupons_key != null and coupons_key != ''">
+				AND m.coupons_key   LIKE CONCAT('%',#{coupons_key},'%')
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND m.member_id=#{member_id}
+			</if>
+			<if test="is_activate != null and is_activate != ''">
+				AND m.is_activate=#{is_activate}
+			</if>
+			<if test="coupons_validity != null ">
+				AND m.coupons_validity &gt;= #{coupons_validity}
+			</if>
+		</where> 
+		ORDER BY m.coupons_validity_start ASC ,m.created_date DESC
+	</select>
+	
+	<select id="selectMemberCoupons" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				member_coupons_id,
+				member_id,
+				coupons_mun,
+				DATE_FORMAT( coupons_validity, '%Y-%m-%d' ) AS coupons_validity,
+				DATE_FORMAT( coupons_validity_start, '%Y-%m-%d' ) AS coupons_validity_start,
+				is_activate,
+				coupons_key,
+				DATE_FORMAT(created_date, '%Y-%m-%d') AS created_date
+			FROM
+				fd_member_coupons
+		]]>
+		<where>
+			<if test="member_coupons_id != null and member_coupons_id != ''">
+				AND member_coupons_id=#{member_coupons_id}
+			</if>
+			<if test="member_id != null and member_id != ''">
+				AND member_id=#{member_id}
+			</if>
+			<if test="coupons_validity != null ">
+				AND coupons_validity &gt;= #{coupons_validity}
+			</if>
+			<if test="coupons_key != null and coupons_key != '' ">
+				AND coupons_key = #{coupons_key}
+			</if>
+			<if test="coupons_mun != null ">
+				AND coupons_mun > #{coupons_mun}
+			</if>
+			<if test="is_activate != null ">
+				AND is_activate = #{is_activate}
+			</if>
+			<if test="coupons_id_in != null">
+				AND member_coupons_id  in
+				<foreach collection="coupons_id_in" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	        	</foreach>
+	        </if>
+		</where> 
+		ORDER BY created_date DESC
+	</select>
+	
+	<select id="selectFDMemberRebateLog" parameterType="Map" resultType="FDMemberRebateLog">
+		SELECT
+			member_id,
+			category,
+			pre_balance,
+			cash_money,
+			balance,
+			create_time,
+			mobile,
+			invite_mobile,
+			type,
+			remark
+			FROM
+				fd_member_rebate_log 
+			<where>
+				<if test="member_id != null and member_id != '' ">
+					member_id =#{member_id}
+				</if>
+			</where>
+			ORDER BY
+				create_time DESC
+	</select>
+	
+	
+	<select id="selectMemberMoneyLog" parameterType="Map" resultType="Map">
+		SELECT
+			category,
+			cash_money AS amount,
+			create_time tracked_date,
+			remark,
+			mobile,
+			invite_mobile
+		FROM
+			fd_member_rebate_log
+		<where>
+			<if test="member_id != null and member_id != '' ">
+				and	member_id =#{member_id}
+			</if>
+			<if test="type != null and type != '' ">
+				and	type =#{type}
+			</if>
+		</where>
+		ORDER BY
+			create_time DESC
+	</select>
+	
+	<select id="selectMemberRateLog" parameterType="Map" resultType="Map">
+		SELECT
+			category,
+			cash_money AS amount,
+			create_time tracked_date,
+			remark,
+			mobile,
+			invite_mobile
+		FROM
+			fd_member_rebate_log
+		<where>
+			<if test="member_id != null and member_id != '' ">
+				and	member_id =#{member_id}
+			</if>
+			and (type &lt;&gt; 'nextdirect'    or  type is NULL)
+		</where>
+		ORDER BY
+			create_time DESC
+	</select>
+	
+	
+	<select id="getMemberManagerRateCount" parameterType="Map" resultType="java.math.BigDecimal">
+		SELECT
+			sum(cash_money) amount  
+		FROM
+			fd_member_rebate_log
+		<where>
+			cash_money &gt; 0
+			<if test="member_id != null and member_id != '' ">
+				and	member_id =#{member_id}
+			</if>
+			<if test="type != null and type != '' ">
+				and	type =#{type}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getMemberManagerRateMonCount" parameterType="Map" resultType="java.math.BigDecimal">
+		SELECT
+			IFNULL(SUM(cash_money),0) amount
+		FROM
+			fddb.fd_member_rebate_log
+		WHERE
+			member_id = #{member_id}
+		AND DATE_FORMAT(create_time, '%Y%m') = DATE_FORMAT(
+			DATE_SUB(curdate(), INTERVAL 1 MONTH),
+			'%Y%m'
+		)
+		AND type = 'nextdirect'
+		AND cash_money &gt; 0
+	</select>
+	
+	
+	<update id="updateMemberCoupons" parameterType="Map">
+		update fd_member_coupons set
+		<trim suffixOverrides=",">
+			<if test="coupons_mun != null and coupons_mun != ''">
+				coupons_mun = coupons_mun - #{coupons_mun},
+			</if>
+		</trim>
+		<where>
+			1=1
+			<if test="coupons_id_in != null">
+				AND member_coupons_id  in
+				<foreach collection="coupons_id_in" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	        	</foreach>
+	        </if>
+		</where>
+	</update>
+	
+	
+	<update id="updateMemberCouByMemberId" parameterType="Map">
+		update fd_member_coupons 
+		<set>
+			<if test="coupons_mun != null">
+				coupons_mun =#{coupons_mun},
+			</if>
+			<if test="sign_data != null and sign_data != '' ">
+				sign_data =#{sign_data},
+			</if>
+			<if test="is_activate != null and is_activate != '' ">
+				is_activate =#{is_activate},
+			</if>
+			<if test="shell_count != null ">
+				shell_count =#{shell_count},
+			</if>
+			<if test="repair_count != null ">
+				repair_count =#{repair_count},
+			</if>
+			<if test="repair_count_all != null ">
+				repair_count_all =#{repair_count_all},
+			</if>
+			<if test="sign_data_repair != null and sign_data_repair != '' ">
+				sign_data_repair =#{sign_data_repair},
+			</if>
+			<if test="coupons_validity != null ">
+				coupons_validity =#{coupons_validity},
+			</if>
+		</set>
+		<where>
+			<if test="member_id != null and member_id != '' ">
+				and  member_id =#{member_id}
+			</if>
+			<if test="coupons_key != null and coupons_key != '' ">
+				AND coupons_key = #{coupons_key}
+			</if>
+			<if test="member_coupons_id != null and member_coupons_id != ''">
+				AND member_coupons_id=#{member_coupons_id}
+			</if>
+			<if test="coupons_id_in != null">
+				AND member_coupons_id  in
+				<foreach collection="coupons_id_in" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	        	</foreach>
+	        </if>
+		</where>
+	</update>
+	
+	
+	<select id="selectTelephoneOrderMonth" parameterType="Map" resultType="java.lang.String">	 
+		 SELECT
+			transaction_no
+		FROM
+			fddb.fd_transactions
+		WHERE
+			buyer_id = #{member_id}
+		AND DATE_FORMAT(created_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+		AND order_type_key = #{order_type_key}
+	</select>
+	
+	<update id="updateFdMemberCouponsCouponsKey" parameterType="Map">
+		update fd_member_coupons f
+		<set>
+			<if test="to_couponsKey != null and to_couponsKey != '' ">
+				coupons_key =#{to_couponsKey},
+			</if>
+			<if test="coupons_validity_start != null and coupons_validity_start != '' ">
+				coupons_validity_start =#{coupons_validity_start},
+			</if>
+			<if test="coupons_validity != null and coupons_validity != '' ">
+				coupons_validity =#{coupons_validity},
+			</if>
+			<if test="is_activate_to != null and is_activate_to != '' ">
+				is_activate =#{is_activate_to},
+			</if>
+		</set>
+		<where>
+			f.coupons_validity = (SELECT a.coupons_validity FROM 
+										(
+										SELECT
+											MAX(coupons_validity) as coupons_validity
+										FROM
+											fd_member_coupons m
+										<where>
+											1=1
+											<if test = "member_id != null and member_id != '' ">
+												AND m.member_id = #{member_id}
+											</if>
+											<if test="coupons_key != null and coupons_key != ''">
+												AND m.coupons_key = #{coupons_key}
+											</if>
+											<if test="is_activate != null and is_activate != ''">
+												AND m.is_activate = #{is_activate}
+											</if>
+											<if test="coupons_validity_end != null and coupons_validity_end != ''">
+												AND m.coupons_validity >= #{coupons_validity_end}
+											</if>
+										</where>
+										) a
+								 )
+			<if test = "member_id != null and member_id != '' ">
+				AND f.member_id = #{member_id}
+			</if>
+		</where>
+	</update>
+
+	<update id="updateFdMemberCoupons" parameterType="Map">
+		update fd_member_coupons
+		<set>
+			<if test="coupons_validity != null and coupons_validity != '' ">
+				coupons_validity =#{coupons_validity}
+			</if>
+		</set>
+		where
+			member_coupons_id = #{member_coupons_id}
+		
+	</update>
+	
+	<select id="selectFdMemberCouponsCouponsKey" resultType="map">
+		select member_coupons_id
+		FROM fd_member_coupons f
+		<where>
+			f.coupons_validity = (SELECT a.coupons_validity FROM
+				(
+					SELECT
+					MAX(coupons_validity) as coupons_validity
+					FROM
+					fd_member_coupons m
+					<where>
+						1=1
+						<if test = "member_id != null and member_id != '' ">
+							AND m.member_id = #{member_id}
+						</if>
+						<if test="coupons_key != null and coupons_key != ''">
+							AND m.coupons_key = #{coupons_key}
+						</if>
+						<if test="is_activate != null and is_activate != ''">
+							AND m.is_activate = #{is_activate}
+						</if>
+						<if test="coupons_validity_end != null and coupons_validity_end != ''">
+							AND m.coupons_validity >= #{coupons_validity_end}
+						</if>
+					</where>
+				) a
+			)
+			<if test = "member_id != null and member_id != '' ">
+				AND f.member_id = #{member_id}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateGiftCouponMun" parameterType="Map">
+		update fd_member_coupons 
+		<set>
+			<if test="coupons_mun != null">
+				coupons_mun =#{coupons_mun},
+			</if>
+			<if test="sign_data != null and sign_data != '' ">
+				sign_data =#{sign_data},
+			</if>
+			<if test="is_activate != null and is_activate != '' ">
+				is_activate =#{is_activate},
+			</if>
+		</set>
+		<where>
+			1=1
+			<if test="member_id != null and member_id != '' ">
+				and  member_id =#{member_id}
+			</if>
+			<if test="coupons_key != null and coupons_key != '' ">
+				AND coupons_key = #{coupons_key}
+			</if>
+			<if test="member_coupons_id != null and member_coupons_id != ''">
+				AND member_coupons_id=#{member_coupons_id}
+			</if>
+			<if test="coupons_id_in != null">
+				AND member_coupons_id  in
+				<foreach collection="coupons_id_in" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	        	</foreach>
+	        </if>
+		</where>
+	</update>
+	
+	<update id="updateFdMemberCouponsIsActivate" parameterType="Map">
+		update fd_member_coupons f
+		<set>
+			<if test="to_couponsKey != null and to_couponsKey != '' ">
+				coupons_key =#{to_couponsKey},
+			</if>
+			<if test="coupons_validity_start != null and coupons_validity_start != '' ">
+				coupons_validity_start =#{coupons_validity_start},
+			</if>
+			<if test="coupons_validity != null and coupons_validity != '' ">
+				coupons_validity =#{coupons_validity},
+			</if>
+			<if test="is_activate_to != null and is_activate_to != '' ">
+				is_activate =#{is_activate_to},
+			</if>
+		</set>
+		<where>
+			f.coupons_validity = (SELECT a.coupons_validity FROM 
+										(
+										SELECT
+											MIN(coupons_validity) as coupons_validity
+										FROM
+											fd_member_coupons m
+										<where>
+											1=1
+											<if test = "member_id != null and member_id != '' ">
+												AND m.member_id = #{member_id}
+											</if>
+											<if test="coupons_key != null and coupons_key != ''">
+												AND m.coupons_key = #{coupons_key}
+											</if>
+											<if test="is_activate != null and is_activate != ''">
+												AND m.is_activate = #{is_activate}
+											</if>
+											<if test="coupons_validity_end != null and coupons_validity_end != ''">
+												AND m.coupons_validity >= #{coupons_validity_end}
+											</if>
+										</where>
+										) a
+								 )
+			<if test = "member_id != null and member_id != '' ">
+				AND f.member_id = #{member_id}
+			</if>
+		</where>
+	</update>
+	
+</mapper>

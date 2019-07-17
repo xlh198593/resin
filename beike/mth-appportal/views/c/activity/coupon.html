@@ -1,0 +1,834 @@
+<!doctype html>  
+<html>  
+<head>  
+<% include ../../commonHead.html %>
+
+<title>
+    
+</title>
+<style>
+    html,body {
+        margin:0;
+        padding:0;
+    }
+    .contain {
+        width:10rem;
+        height:103.146667rem;
+        background: url("http://app-static.huigujia.cn/communityDocs/nodepic/bjt.png");
+        overflow: hidden;
+        background-size: 100% 100%;
+        margin-bottom:1.733333rem;
+    }
+   
+    .sigleshop {
+        height:11.493333rem;
+        width:9.333333rem;
+        background: url("/image/activity/invoic/sigleup1.jpg");
+        background-size:100% 100%;
+        margin:0 auto;
+        margin-top:23.026667rem;
+        position: relative;
+    }
+    .sigleshop1 {
+        height:11.493333rem;
+        width:9.333333rem;
+        background: url("/image/activity/invoic/sigledown1.jpg");
+        background-size:100% 100%;
+        margin:0 auto;
+        margin-top:1rem;
+        position: relative;
+    }
+    .sigleshop div,.sigleshop1 div {
+        height:4rem;
+        width:3.5rem;
+        position:absolute;
+    }
+    .btn1 {
+        left:0.9rem;
+        top:2rem;
+    }
+    .btn2 {
+        left:4.9rem;
+        top:2rem;
+    }
+    .btn3 {
+        left:0.9rem;
+        top:6.2rem;
+    }
+    .btn4 {
+        left:4.9rem;
+        top:6.2rem;
+    }
+    .btn {
+        height:1.733333rem;
+        width:9.5rem;
+        margin-left:0.25rem;
+        position: fixed;
+        bottom:0;
+        background: url("/image/activity/invoic/endbtn.gif");
+        background-size:100% 100%;
+    }
+    .bbb {
+        height:1.733333rem;
+        width:9.5rem;
+        margin-left:0.25rem;
+        position: fixed;
+        bottom:0;
+        background: url("/image/activity/invoic/endbtn.gif");
+        background-size:100% 100%;
+    }
+    .loginorregister {
+    width: 7.466667rem;
+    height: 6.586667rem;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    position: fixed;
+    left: 1.266667rem;
+    top: 4.6rem;
+    z-index: 2;
+}
+
+.phonemobile,
+.yzm,
+.pwd {
+    height: 1.106667rem;
+    width: 6.933333rem;
+    background: rgba(249, 249, 249, 1);
+    border-radius: 10px;
+    /* border:1px solid red; */
+    margin-left: .266667rem;
+}
+
+.yzm,
+.pwd {
+    margin-top: .506667rem;
+}
+.yzm {
+    margin-bottom:0.8rem;
+}
+
+.pwd {
+    margin-bottom: .8rem;
+}
+
+.gotologinorregister {
+    height: .96rem;
+    width: 5.333333rem;
+    margin: 0 auto;
+    line-height: .96rem;
+    font-size: .413333rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(200, 200, 200, 1);
+    border-radius: 36px;
+}
+
+.loginicon {
+    height: .466667rem;
+    width: .293333rem;
+    float: left;
+    margin-left: .24rem;
+    margin-right: .266667rem;
+    margin-top: .32rem;
+}
+
+.stdin {
+    height: 1.106667rem;
+    width: 5rem;
+    /* border:1px solid red; */
+    line-height:0.8rem;
+    font-size: .333333rem;
+    color: #C8C8C8;
+    background: none;
+    outline: none;
+    border: 0px;
+    float: left;
+    caret-color: #C8C8C8;
+
+
+}
+
+.bgc {
+    height: 106.146667rem;
+    width: 10rem;
+    opacity: 0.7;
+    background-color: #2C2B2A;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.login_close {
+    height: .386667rem;
+    width: .386667rem;
+    float: right;
+    margin-right: .28rem;
+    margin-top: .28rem;
+    background: url("/image/newmember/close.png");
+    background-size: 100% 100%;
+}
+
+.phonemobile .loginicon {
+    background: url("/image/newmember/phone.png");
+    background-size: 100% 100%;
+}
+
+.yzm .loginicon {
+    background: url("/image/newmember/dun.png");
+    background-size: 100% 100%;
+}
+
+.yzm .stdin {
+    width: 3.5rem;
+}
+
+.pwd .loginicon {
+    background: url("/image/newmember/lock.png");
+    background-size: 100% 100%;
+}
+
+.getyzm {
+    height: .48rem;
+    width: 1.333333rem;
+    border: 1px solid #F45687;
+    float: right;
+    margin-top: 0.35rem;
+    line-height: .48rem;
+    text-align: center;
+    color: rgba(244, 86, 135, 1);
+    font-size: .293333rem;
+    border-radius: .24rem;
+} 
+.tishikuan {
+    height: .32rem;
+    width: 100%;
+    text-align: center;
+    margin-top: .2rem;
+    color: red;
+}
+
+.loginorregister .title {
+    height: .453333rem;
+    text-align: center;
+    font-size: .453333rem;
+    color: #333333;
+    margin-top: .333333rem;
+    margin-bottom: .586667rem;
+}
+.btnbgc {
+    background-color: #f45687;
+}
+.iswx {
+    position:absolute;
+    top:0;
+    left:0;
+    height:105.146667rem;
+    width:10rem;
+    background: url("/image/activity/invoic/h5zgc.png");
+    background-size:100% 100%;
+}
+.download,
+.nonewperson {
+    position: fixed;
+    height: 8.586667rem;
+    width: 7.466667rem;
+    top: 3.786667rem;
+    left: 5rem;
+    margin-left: -3.7333335rem;
+    z-index: 2;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+
+.bgc {
+    height: 106.146667rem;
+    width: 10rem;
+    opacity: 0.7;
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+}
+
+.download .img {
+    height: 3.466667rem;
+    width: 3.733335rem;
+    margin-top: 1.346667rem;
+    position: absolute;
+    left: 3.733335rem;
+    margin-left: -1.7333335rem;
+    background: url("/image/activity/newperson/huojian.png");
+    background-size: 100% 100%;
+}
+
+.downloadapp {
+    height: .426667rem;
+    font-size: .426667rem;
+    text-align: center;
+    margin-top: 5.106667rem;
+    color: #000000;
+    font-weight: 500;
+}
+
+.downloadappfu {
+    height: .7rem;
+    font-size: .386667rem;
+    text-align: center;
+    margin-top: .24rem;
+    padding: 0 0.2rem;
+    color: #8F8F8F;
+    font-weight: 500;
+    margin-bottom: .493333rem;
+    line-height: 0.7rem;
+}
+ 
+.getbtn {
+    width: 5.333333rem;
+    height: .96rem;
+    margin: 0 auto;
+    margin-top:0.5rem;
+    background: linear-gradient(90deg, rgba(74, 145, 250, 1), rgba(100, 161, 255, 1));
+    border-radius: 36px;
+    color: #FFFFFF;
+    font-size: .426667rem;
+    text-align: center;
+    line-height: .96rem;
+}
+
+.close3 {
+    height: .386667rem;
+    width: .386667rem;
+    float: right;
+    margin-right: .266667rem;
+    margin-top: .266667rem;
+    background: url("/image/newmember/close.png");
+    background-size: 100% 100%;
+}
+.bgc {
+    height:106.146667rem;
+    width: 10rem;
+    opacity: 0.7;
+    background-color: #2C2B2A;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.nimei {
+    height:1rem;
+    width:10rem;
+    font-size:0.4rem;
+    text-align: center;
+    height:1.733333rem;
+    width:10rem;
+    position: fixed;
+    bottom:0;
+    background-color:red;
+    line-height: 1.733333rem;
+    background: url("/image/activity/invoic/btn.gif");
+    background-size: 100% 100%;
+}
+.gotobuy_bgc {
+    width:10rem;
+    height:17.786667rem;
+    background: url("/image/activity/invoic/j2.gif");
+    background-size: 100% 100%;
+    position: fixed;;
+    top:0;
+}
+.gotobuy_close {
+    height:.6rem;
+    width:.6rem;
+    position: absolute;
+    right:.6rem;
+    top:.6rem;
+    border-radius: 0.3rem;
+    background: url("/image/activity/invoic/buyclose.png");
+    background-size: 100% 100%;
+}
+.download1{
+    position: fixed;
+    height: 6.586667rem;
+    width: 7.466667rem;
+    top: 3.786667rem;
+    left: 5rem;
+    margin-left: -3.7333335rem;
+    z-index: 2;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+
+.download1 .img {
+    height: 3.466667rem;
+    width: 3.733335rem;
+    margin-top: 1.346667rem;
+    position: absolute;
+    left: 3.733335rem;
+    margin-left: -1.7333335rem;
+    background: url("/image/activity/invoic/faile.png");
+    background-size: 100% 100%;
+}
+.download1 .downloadapp {
+    height: .426667rem;
+    font-size: .426667rem;
+    text-align: center;
+    margin-top: 5.5rem;
+    color: #000000;
+    font-weight: 500;
+}
+
+
+</style>
+<script type="text/javascript" src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-beta.49/polyfill.min.js"></script>
+</head>
+<body>
+    <div id="app">
+    <div class="contain" ref="contain">
+     
+        <%if(gotobuy == "true"){%>
+            <!-- <div class="gotobuy_bgc" ref="gotobuy">
+                <div class="gotobuy_close" @click="buyclose()"></div>
+            </div> -->
+            <div class="bbb" @click="downloadapp()"></div>
+        <%}else{%>
+            <div class="btn" @click="gotologinh5()"></div>
+        <%}%>
+       
+        <div class="loginorregister" v-if="loginorregister" ref="loginorregister">
+                <div class="login_close" @click="login_close()"></div>
+                <div class="title">登录/注册</div>
+                <div class="phonemobile">
+                    <div class="loginicon"></div>
+                    <input type="text" class="stdin" @focus="focus(event)" maxlength="11" placeholder="请输入手机号" v-model="mobile">
+                </div>
+                <div class="yzm">
+                    <div class="loginicon"></div>
+                    <input type="text" class="stdin"  @focus="focus(event)" maxlength="4" placeholder="请输入验证码" v-model="yzm">
+                    <div class="getyzm" v-if="miao">{{miaozhi}}s</div>
+                    <div class="getyzm" v-else @click="getyzm()">获取</div>
+                </div>
+                <!-- <div class="pwd">
+                    <div class="loginicon"></div>
+                    <input type="password" class="stdin" maxlength="20" @blur="bulr('pwd')"  @focus="focus()" @keyup="getFullPassword()" placeholder="请输入密码" v-model="password">
+                </div> -->
+                <div class="gotologinorregister btnbgc" v-if="btnbgc" @click="gotologinorregister()">立即登录/注册</div>
+                <div class="gotologinorregister" v-else>立即登录/注册</div>
+                <div class="tishikuan">{{tishi}}</div>
+
+            </div>
+            <div class="bgc" v-if="bgc"></div>
+            <div class="iswx" v-if="iswx"></div>
+          
+               
+                <!-- <div class="bgc" v-if="download"></div> -->
+    </div>
+    <div class="download" v-if="download">
+        <div class="close3" @click="changeclosestatus()"></div>
+        <div class="img"></div>
+        <div class="downloadapp">注册成功</div>
+        <div class="downloadappfu">抢限量会员，开启更多特权</div>
+        <div class="getbtn" @click="downloadapp()">立即下载</div>
+    </div>
+    <div class="bgc" v-if="gotobuy"></div>
+    <div class="download" v-if="gotobuy">
+        <div class="close3" @click="changeclosestatus()"></div>
+        <div class="img"></div>
+        <div class="downloadapp">注册成功</div>
+        <div class="downloadappfu">抢限量会员，开启更多特权</div>
+        <div class="getbtn" @click="downloadapp()">立即下载</div>
+    </div>
+</div>
+</body>  
+
+</html>
+<script type="text/javascript">
+    function setCookie(name, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+        if (arr = document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+
+
+            return null;
+    }
+
+function isWeiXin(){
+  //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+  var ua = window.navigator.userAgent.toLowerCase();
+  //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+  if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+  return true;
+  }else{
+  return false;
+  }
+}
+ 
+     var app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                loginorregister:false,
+                member_id:"<%=member_id%>",
+                download:"<%=dowanapp%>",
+                gotobuy:"<%=gotobuy%>",
+                payfaile:"<%=payfaile%>",
+                miaozhi: 60,
+                goods_id:'',
+                tishi: "",
+                mobile: "",
+                yzm: "",
+                top:0,
+                // password: "",
+                iswx:true,
+                bgc: false,
+                btnbgc: true,
+                miao: false,
+                // passwordreg:/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/,
+                yzmreg :/^[0-9]{4}$/,
+                // mobilereg:/^1([38]\d|5[0-35-9]|4[6579]|7[35678])|9[89]\d{8}$/,
+                mobilereg:/^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+            }
+              
+        },
+        methods: {
+            changeclosestatus: function () {
+                    this.download = false;
+                    this.bgc = false;
+                    // this.payfaile = false;
+            },
+            buyclose:function() {
+                this.$refs.gotobuy.style.display = 'none';
+            },
+            login_close: function () {
+               
+                this.$refs.loginorregister.style.position = 'fixed';
+                // this.$refs.loginorregister.style= "20px";
+                this.loginorregister = false;
+                this.bgc = false;
+            },
+            gotologinh5: function (e,goods_id) {
+               this.top = $(document).scrollTop();
+                // this.top = e.view.pageYOffset;
+                // console.log(e.pageY)
+                // this.top = e.pageY;
+                this.goods_id = goods_id;
+                this.loginorregister = true;
+                this.bgc = true;
+            },
+            // getFullPassword: function () {
+            //     if (this.mobile != "" && this.yzm != "" && this.password.length >= 6) {
+            //         this.btnbgc = true;
+            //     }
+            // },
+            focus:function(e) {
+                e.target.style.color="black";
+                // this.$refs.loginorregister.style.position = 'absolute';
+                // this.$refs.loginorregister.style.top= this.top+"px";
+                // let height = this.$refs.contain.scrollTop;
+                this.$refs.loginorregister.style.position = 'absolute';
+                // console.log(this.$refs.loginorregister)
+                 <%if(isiOS == "1") {%>
+                    this.$refs.loginorregister.style.top = this.top+100+"px";
+                 <%} else {%>
+                    this.$refs.loginorregister.style.top = this.top+300+"px";
+                 <%}%>
+                
+            },
+            subimt: function () {
+                var self = this;
+                console.log("h5支付:::",JSON.stringify({
+                        user_token: getCookie("<%=mobile%>user_token"),
+                        service: "finance.prepayCardPay",
+                        //{data_source:"meitianhui",ip:returnCitySN["cip"], mobile: "<%=mobile%>",consumer_id:"<%=member_id%>",amount: 399}
+                        //{data_source:"meitianhui",ip:returnCitySN["cip"], mobile: self.mobile,consumer_id:self.member_id,goods_id: self.goods_id, amount: 399, delivery_address: self.choiceAreaCon + self.detail_adress, username: self.username }
+                        params: JSON.stringify({data_source:"meitianhui",ip:returnCitySN["cip"], mobile: "<%=mobile%>",consumer_id:"<%=member_id%>",goods_id: "19", amount: 399, delivery_address: "wuweishi", username: "sushengxi" }),
+                        sign:self.sign(),
+                        paymethods:"h5",
+
+                    }));
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/payh5',
+                    data: {
+                        user_token: getCookie("<%=mobile%>user_token"),
+                        service: "finance.prepayCardPay",
+                        //{data_source:"meitianhui",ip:returnCitySN["cip"], mobile: "<%=mobile%>",consumer_id:"<%=member_id%>",amount: 399}
+                        //{data_source:"meitianhui",ip:returnCitySN["cip"], mobile: self.mobile,consumer_id:self.member_id,goods_id: self.goods_id, amount: 399, delivery_address: self.choiceAreaCon + self.detail_adress, username: self.username }
+                        params: JSON.stringify({data_source:"meitianhui",ip:returnCitySN["cip"], mobile: "<%=mobile%>",consumer_id:"<%=member_id%>",goods_id: "19", amount: 399, delivery_address: "sss", username: "sss" }),
+                        sign:self.sign(),
+                        paymethods:"h5",
+
+                    },
+                    beforeSend: function () {
+                        isCollecting = true;
+                    },
+                    success: function (data) {
+                       if(data.rsp_code == 'succ') {
+                           window.location.href = data.data.url;
+                       } else {
+                           self.tishi = data.error_msg;
+                       }
+                    }
+                });
+
+
+            },
+            bulr: function (type) {
+                // if (type == 'pwd') {
+                //     if (!this.passwordreg.test(this.password)) {
+                //         this.tishi = "密码必须同时包含字母和数字";
+                //     }
+                // } else 
+                if (type == 'yzm') {
+                    if (!this.yzmreg.test(this.yzm)) {
+                        this.tishi = "验证码与手机号不匹配";
+                    }
+                } else {
+                    if (!this.mobilereg.test(this.mobile)) {
+                        this.tishi = "请输入正确的手机号";
+                    }
+                }
+            },
+            downloadapp: function () {
+                    <%if(isiOS == "1") {%>
+                        window.location.href = "https://mps-static.huigujia.cn/apps/bkcq/bkcq-lastast-release.apk?mp.wexin.qq.com"
+                    <%}else{%>
+                        window.location.href = "https://itunes.apple.com/cn/app/%E8%B4%9D%E5%A3%B3%E4%BC%A0%E5%A5%87/id1431647984?mt=8&uo=4"
+                    <%}%>
+            },
+            sign: function () {
+                var params = {
+                    user_token:getCookie("<%=mobile%>user_token"),
+                    params:JSON.stringify({data_source:"meitianhui",ip:returnCitySN["cip"], mobile: "<%=mobile%>",consumer_id:"<%=member_id%>",goods_id: "19", amount: 399, delivery_address: "sss", username: "sss" }),
+                    service:"finance.prepayCardPay",
+                    paymethods:"h5"
+                }
+
+                // 请求参数中的所有key值
+                var keyArr = [];
+                for (var key in params) {
+                    if (key != '') {
+                        keyArr.push(key);
+                    }
+                }
+
+                // 将所有key按字母a~z排序
+                keyArr.sort();
+
+
+                // 临时数组，用于存放各kv字符串
+                var tmpArray = [];
+
+                for (var i = 0; i < keyArr.length; i++) {
+                    var val = params[keyArr[i]];
+                    if (typeof val != 'string') {
+                        val = JSON.stringify(val);
+                    }
+                    tmpArray.push(keyArr[i] + '=' + val);
+                }
+
+                // 待加密字符串
+                var stringToBeMd5 = tmpArray.join('&') +getCookie("<%=mobile%>security_code");
+
+                // MD5加密
+                var thisSign = md5(stringToBeMd5);
+                return thisSign;
+            },
+            gotologinorregister: function () {
+                if (this.mobile == "") {
+                    this.tishi = "手机号不能为空";
+                    return;
+                }
+                if(!this.mobilereg.test(this.mobile)) {
+                    this.tishi = "手机号格式不正确";
+                    return;
+                }
+                if (this.yzm == "") {
+                    this.tishi = "验证码不能为空";
+                    return;
+                }
+                if(!this.yzmreg.test(this.yzm)) {
+                    this.tishi = "验证码错误";
+                    return;
+                }
+
+                // if (this.password == "") {
+                //     this.tishi = "密码不能为空";
+                //     return;
+                // }
+                // if(!this.passwordreg.test(this.password)) {
+                //     this.tishi = "密码必须是数字+字母不能小于6大于20位";
+                //     return;
+                // }
+                var self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/login',
+                    data: {
+                        password: md5("wangzhonghulian"),
+                        mobile: self.mobile,
+                        type: 'h5',
+                        request_info: "h5",
+                        check_code: self.yzm,
+                        member_id: self.member_id
+                    },
+                    success: function (data) {
+                        if (data.rsp_code == "fail") {
+                            self.tishi = data.error_msg;
+                        } else {
+                            console.log(data)
+                            setCookie(self.mobile + "security_code", data.data.security_code)
+                            setCookie(self.mobile + "user_token", data.data.user_token)
+                            window.localStorage[self.mobile+"security_code"] = data.data.security_code;
+                            window.localStorage[self.mobile+"user_token"] = data.data.user_token;
+                            var redirectUrl="<%=appBaseName%>/openapi/h5/c/activity/invoic?gotobuy=true&mobile="+self.mobile+"&member_id="+data.data.member_id;
+                            window.location.href = redirectUrl;
+                            // self.login_close();
+                            // self.bgc = true;
+                            // self.download = true;
+                        
+                        }
+                    }
+                });
+            },
+            getyzm: function () {
+                var self = this;
+                if (this.mobile == "") {
+                    this.tishi = "手机号不能为空";
+                    return;
+                }
+                if (!this.mobilereg.test(this.mobile)) {
+                    this.tishi = "手机号不符合规则";
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/send_sms_code_lyh',
+                    data: {
+                        sms_source: 'llm',
+                        mobile: self.mobile,
+                        check_code: self.yzm,
+                        type: 'h5'
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                            self.tishi = data.error_msg
+                        } else {
+                            self.miao = true;
+                            var time = setInterval(function(){
+                                self.miaozhi -= 1;
+                                if (self.miaozhi == 0) {
+                                    self.miao = false;
+                                    clearInterval(time);
+
+                                }
+                            }, 1000)
+                        }
+                    }
+                });
+            },
+            // gotoDetail(goods_id) {
+            //    let redirectUrl="<%=appBaseName%>/openapi/h5/c/redenvelope?goods_id="+goods_id;
+            //    let wxRedirectUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfe6a3658c17840ec&redirect_uri="+redirectUrl+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            //    window.location.href=wxRedirectUrl;
+            // }
+
+        },
+        watch:{
+            // mobile:function(current) {
+            //     if(current.length == 11 && this.yzm.length == 4) {
+            //         this.btnbgc = true; 
+            //     }
+            //    if(current.length <11 || current == "") {
+            //        this.btnbgc = false;
+            //        this.tishi ="手机号不符合规则";         
+            //      }
+                
+            // },
+            // password:function(current) {
+            //     if(current.length < 6) {
+            //        this.btnbgc = false;
+            //        this.tishi ="密码不能小于6位"; 
+            //   }
+            // },
+            tishi: function (current) {
+                var self = this;
+                if (current != "") {
+                    setTimeout(function(){
+                        self.tishi = "";
+                    }, 2000)
+                }
+            },
+            miaozhi: function (current) {
+                if (current == "0") {
+                    this.miaozhi = 60;
+                }
+            },
+            // yzm:function(current) {
+            //     if(this.mobile.length == 11 && current.length == 4) {
+            //         this.btnbgc = true; 
+            //     }
+            //     if(current.length < 4) {
+            //        this.btnbgc = false;
+            //        this.tishi ="验证码不相符"; 
+            //   }
+            // }
+
+        },
+        mounted:function() {
+            this.iswx = isWeiXin();
+        }
+    });
+      
+    //     let params = {
+    //         appid:'jjjj',
+    //         mch_id:'jjj',
+    //         nonce_str:'jjj',
+    //         body:"jjjjj",
+    //         out_trade_no:'jjjj',
+    //         total_fee:25,
+    //         notify_url:"localhost:3001:callback",
+    //         trade_type:'MWEB',
+    //     }
+    //     delete params.sign;
+    
+    // // 请求参数中的所有key值
+    // var keyArr = [];
+    // for(var key in params) {
+    //     if(key != '') {
+    //         keyArr.push(key);
+    //     }
+    // }
+    
+    // // 将所有key按字母a~z排序
+    // keyArr.sort();
+    
+    
+    // // 临时数组，用于存放各kv字符串
+    // var tmpArray = [];
+    
+    // for(var i=0; i<keyArr.length; i++) {
+    //     var val = params[keyArr[i]];
+    //     if(typeof val != 'string') {
+    //         val = JSON.stringify(val);
+    //     }
+    //     tmpArray.push(keyArr[i] + '=' + val);
+    // }
+    
+    // // 待加密字符串
+    // console.log("tmpArray",tmpArray)
+    // var stringToBeMd5 = tmpArray.join('&')+"&key=192006250b4c09247ec02edce69f6a2d";
+    // console.log("stringToBeMd5",stringToBeMd5)
+    
+    // // MD5加密
+    // var thisSign = hex_md5(stringToBeMd5).toUpperCase();
+    // console.log(thisSign)
+    
+    
+    </script>

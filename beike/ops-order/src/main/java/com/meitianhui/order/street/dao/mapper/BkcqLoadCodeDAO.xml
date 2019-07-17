@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.order.street.dao.BkcqLoadCodeDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.order.street.entity.BkcqLoadCode">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="check_code" jdbcType="VARCHAR" property="checkCode"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="code_status" jdbcType="VARCHAR" property="codeStatus"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="expired_date" jdbcType="TIMESTAMP" property="expiredDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, check_code, order_no, code_status, created_date, modified_date, expired_date, 
+    remark
+  </sql>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.order.street.entity.BkcqLoadCode" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into bkcq_load_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="checkCode != null">
+                check_code,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="codeStatus != null">
+                code_status,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="modifiedDate != null">
+                modified_date,
+            </if>
+            <if test="expiredDate != null">
+                expired_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="checkCode != null">
+                #{checkCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="codeStatus != null">
+                #{codeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expiredDate != null">
+                #{expiredDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.order.street.entity.BkcqLoadCode">
+        update bkcq_load_code
+        <set>
+            <if test="codeStatus != null">
+                code_status = #{codeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedDate != null">
+                modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        <if test="oldCodeStatus != null">
+            and code_status = #{oldCodeStatus,jdbcType=VARCHAR}
+        </if>
+    </update>
+
+    <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_load_code
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPk" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bkcq_load_code
+        where id = #{id,jdbcType=BIGINT} for update
+    </select>
+
+    <select id="selectExpireCode" resultMap="BaseResultMap">
+        select
+        id
+        from bkcq_load_code
+        <where>
+            <if test="expiredDate != null">
+                and expired_date &lt; #{expiredDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="statuses != null">
+                <foreach item="status" collection="statuses" separator="," open=" and code_status in (" close=")"
+                         index="">
+                    #{status, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+        order by created_date
+    </select>
+
+</mapper>

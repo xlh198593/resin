@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>成长值</title>
+        <style>
+            #app {
+                position: absolute;
+                top:0;
+            }
+            html::-webkit-scrollbar {
+                display: none;
+            }
+
+            body::-webkit-scrollbar {
+                display: none;
+            }
+
+            #app::-webkit-scrollbar {
+                display: none;
+            }
+
+            .upscroll {
+                margin-top: -20rem;
+            }
+
+            .columar {
+                height: 5.333333rem;
+                width: 10rem;
+                padding-top:.92rem;
+            }
+
+            .columar .level {
+                height: .333333rem;
+                font-size: .333333rem;
+                color: #E1B25D;
+                margin-top: .386667rem;
+                width: 5rem;
+                margin-left: .253333rem;
+            }
+            .level span {
+                font-size:.25rem;
+            }
+
+            .columar .growthpoint {
+                height: .5rem;
+                font-size: 0.3px;
+                color: black;
+                margin-top: .186667rem;
+                width: 5rem;
+                margin-left: .253333rem;
+                border:1px solid red;
+            }
+
+            .siglecolumar {
+                width: 7.413333rem;
+                height: 4.16rem;
+                margin-left: 1.24rem;
+                position: relative;
+            }
+
+            .siglecolumar .sigle-columar {
+                width: .24rem;
+                position: absolute;
+                bottom: .826667rem;
+                background: rgba(234, 236, 238, 1);
+                border-radius: 9px;
+            }
+
+            .c-level1 {
+                height: .306667rem;
+                margin-left: .04rem;
+            }
+
+            .c-level2 {
+                height: .8rem;
+                margin-left: 1.177333rem;
+            }
+
+            .c-level3 {
+                height: 1.306667rem;
+                margin-left: 2.324rem;
+            }
+
+            .c-level4 {
+                height: 1.8rem;
+                margin-left: 3.524rem;
+            }
+
+            .c-level5 {
+                height: 2.28rem;
+                margin-left: 4.710667rem;
+            }
+
+            .c-level6 {
+                height: 2.72rem;
+                margin-left: 5.884rem;
+            }
+
+            .c-level7 {
+                height: 3.093333rem;
+                margin-left: 7.057333rem;
+            }
+
+            .uparrows {
+                height: .1rem;
+                width: 9rem;
+                position: absolute;
+                bottom: 3rem;
+                left: -1rem;
+                transform: rotate(-24deg);
+                background: url("/image/newmember/upup2.png");
+                background-size: 100% 100%;
+            }
+            .siglecolumar img {
+                height:0.75rem;
+                width: 0.75rem; 
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            .headimg1,.headimg2,.headimg3,.headimg4,.headimg5,.headimg6,.headimg7 {
+                position: absolute;
+                height: .8rem;
+                width: 0.8rem;
+                top: 1.5rem;
+                left: -0.4rem;
+                border-radius: 50%;
+                border:2px solid rgba(225, 178, 93, 1);
+                z-index:20;
+                overflow: hidden;
+                /* background: url("/image/newmember/quan.png");
+                background-size: 100% 100%; */
+            }
+            .headimg1 {
+                top: 1.5rem;
+                left: -0.4rem;  
+            }
+            .headimg2 {
+                top: 1rem;
+                left: 0.8rem;
+            }
+            .headimg3 {
+                top: 0.4rem;
+                left: 2rem;
+            }
+            .headimg4 {
+                top: 0rem;
+                left: 3.1rem;
+            }
+            .headimg5 {
+                top: -0.65rem;
+                left: 4.4rem;
+            }
+            .headimg6 {
+                top: -1.3rem;
+                left: 5.6rem;
+            }
+            .headimg7 {
+                top: -1.6rem;
+                left: 6.7rem;
+            }
+
+            .siglecolumar .levelzhi {
+                position: absolute;
+                height: .213333rem;
+                width: .613333rem;
+                top: -0.3rem;
+                left: -0.2rem;
+                font-size: .213333rem;
+                color: rgba(153, 153, 153, 1);
+                text-align: center;
+            }
+
+            .siglecolumar .levelV {
+                height: .293333rem;
+                width: 7.413333rem;
+                position: absolute;
+                bottom: 0.2rem;
+            }
+
+            .levelV div {
+                height: .386667rem;
+                width: .293333rem;
+                float: left;
+                margin-left: .85rem;
+                font-size: .386667rem;
+                color: #333333;
+
+            }
+
+            .siglecolumar .selectbgc {
+                background: rgba(225, 178, 93, 1);
+
+            }
+
+            .siglecolumar .selectfont {
+                color: #E1B25D;
+            }
+
+            .levelV .lv1 {
+                margin-left: 0;
+            }
+
+            .update {
+                height: .36rem;
+                line-height: .36rem;
+                text-align: center;
+                margin-top: .56rem;
+                width: 10rem;
+                margin-bottom: .493333rem;
+            }
+
+            .gotoupdate {
+                height: .866667rem;
+                width: 6.133333rem;
+                color: #FFFFFF;
+                background: rgba(225, 178, 93, 1);
+                font-size: .4rem;
+                line-height: .866667rem;
+                border-radius: 33px;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .rankprivilege {
+                height: .453333rem;
+                color: #333333;
+                font-size: .453333rem;
+                margin-left: .106667rem;
+                margin-top: 1.426667rem;
+                font-weight: 500;
+            }
+
+            .rankprivilegedown {
+                height: .6rem;
+                width: 10rem;
+                background: rgba(234, 236, 238, 1);
+                margin-top: .253333rem;
+            }
+
+            .rankprivilegedown1 {
+                height: .6rem;
+                width: 10rem;
+                background: rgba(234, 236, 238, 1);
+            }
+
+            .rankprivilegedown2 {
+                height: .133333rem;
+                width: 10rem;
+                background: rgba(234, 236, 238, 1);
+            }
+
+            .rankprivilegedetail {
+                height: 10.906667rem;
+                width: 10rem;
+            }
+
+            .rankprivilegedetail .left {
+                height:10.906667rem;
+                width: 2.4rem;
+                border-left: 1px solid #EEEEEE;
+                border-top: 1px solid #EEEEEE;
+                border-right: 1px solid #EEEEEE;
+                box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.15);
+                float: left;
+            }
+
+            .left div {
+                height: 1.2rem;
+                line-height: 1.2rem;
+                width: 2.4rem;
+                border-bottom: 1px solid #EEEEEE;
+                font-size: .4rem;
+                font-family: PingFangSC-Medium;
+                font-weight: 500;
+                color: rgba(51, 51, 51, 1);
+                text-align: center;
+            }
+            .left .sale {
+                font-size: .346667rem;
+            }
+
+            .left .refend,
+            .left .orderrefend {
+                font-size: .346667rem;
+            }
+
+            .rankprivilegedetail .right {
+                height: 10.906667rem;
+                width: 7.5rem;
+                float: left;
+                overflow-x: auto;
+            }
+
+            .right table {
+                height: 10.906667rem;
+                width: 16.8rem;
+            }
+
+            .right table td {
+                height: 1.2rem;
+                width: 2.4rem;
+                text-align: center;
+                line-height: 1.2rem;
+            }
+
+            .right table td img {
+                /* margin-top: 0.4rem; */
+                vertical-align: middle;
+            }
+
+            .right table tr {
+                border-bottom: 1px solid #EEEEEE;
+            }
+
+            .right table .title td {
+                font-size: .4rem;
+                color: #333333;
+                font-family: PingFangSC-Medium;
+                font-weight: 500;
+                line-height: 1.2rem;
+                text-align: center;
+            }
+
+            .right table .bgc1 {
+                background: rgba(248, 248, 250, 1);
+            }
+
+            .right table .refendtr td,
+            .right table .orderrefendtr td {
+                font-size: .4rem;
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1.2rem;
+                text-align: center;
+            }
+
+            .right::-webkit-scrollbar {
+                display: none;
+            }
+
+            .updatetreasure {
+                height: .96rem;
+                font-size: .48rem;
+                font-family: PingFangSC-Medium;
+                font-weight: 500;
+                color: rgba(51, 51, 51, 1);
+                line-height: .96rem;
+                margin-left: .253333rem;
+            }
+
+            .reasure-content div {
+                height: 2.146667rem;
+                width: 10rem;
+            }
+
+            .reasure-content .reasure-content-left {
+                width: 7rem;
+                height: 2.146667rem;
+                float: left;
+            }
+
+            .reasure-content .reasure-content-right {
+                width: 2rem;
+                height: .8rem;
+                float: right;
+                margin-top: .733333rem;
+                margin-right: .4rem;
+                background: rgba(225, 178, 93, 1);
+                border-radius: 30px;
+                font-size: .386667rem;
+                text-align: center;
+                line-height: .8rem;
+                color: #FFFFFF;
+            }
+
+            .reasure-content .reasure-content-left .title {
+                height: .386667rem;
+                margin-left: .266667rem;
+                color: #333333;
+                font-weight: 500;
+                font-size: .386667rem;
+                width: 3rem;
+                margin-top: .666667rem;
+            }
+
+            .reasure-content .reasure-content-left .futitle {
+                height: .306667rem;
+                margin-left: .266667rem;
+                color: #999999;
+                font-size: .32rem;
+                width: 7rem;
+                margin-top: .253333rem;
+            }
+            .siglecolumar .procress {
+                width: .24rem;
+                height:0.5rem;
+                background: rgba(225, 178, 93, 1);
+                border-radius: 9px;
+                position:absolute;
+                bottom:0;
+                z-index:2;
+            }
+
+            .columar .processbgc  {
+                background-color: #E1B25D;
+            }
+            .reasure-content .border {
+                border:1px solid #EEEEEE;
+            }
+            table td {
+                font-size: .4rem;
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                color: rgba(153, 153, 153, 1);
+                line-height: 1.2rem;
+                text-align: center;
+            }
+        </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="columar">
+            <div class="level">SVIP<%-level%><br/> <span>成长值<%-growth_value%>点</span> </div>
+            <div class="siglecolumar">
+                <%if(level == "1") {%>
+                    <div ref="procress" class="sigle-columar c-level1 processbgc">
+                        <!-- <div v-bind:style="{height:height}" class="procress"></div> -->
+                        <div class="levelzhi selectfont">0</div>
+                    </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level1">
+                        <div class="levelzhi">0</div>
+                    </div>
+                <%}%>
+                <%if(level == "2") {%>
+                    <div ref="procress" class="sigle-columar c-level2 processbgc">
+                        <!-- <div v-bind:style="{height:height}"  class="procress"></div> -->
+                        <div class="levelzhi selectfont">400</div>
+                    </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level2">
+                        <div class="levelzhi">400</div>
+                    </div>
+                <%}%>
+                <%if(level == "3") {%>
+                    <div ref="procress" class="sigle-columar c-level3 processbgc">
+                            <!-- <div v-bind:style="{height:height}" class="procress"></div> -->
+                            <div class="levelzhi selectfont">1000</div>
+                        </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level3">
+                            <div class="levelzhi">1000</div>
+                        </div>
+                <%}%>
+                <%if(level == "4") {%>
+                    <div ref="procress" class="sigle-columar c-level4 processbgc">
+                        <!-- <div v-bind:style="{height:height}" class="procress"></div> -->
+                        <div class="levelzhi selectfont">2000</div>
+                    </div>
+                <%} else {%>
+                    <div class="sigle-columar c-level4">
+                        <div class="levelzhi">2000</div>
+                    </div>
+                <%}%>
+                <%if(level == "5") {%>
+                    <div ref="procress" class="sigle-columar c-level5 processbgc">
+                        <!-- <div v-bind:style="{height:height}" class="procress"></div> -->
+                        <div class="levelzhi selectfont">5000</div>
+                    </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level5">
+                        <div class="levelzhi">5000</div>
+                    </div>
+                <%}%>
+                <%if(level == "6") {%>
+                    <div ref="procress" class="sigle-columar c-level6 processbgc">
+                        <!-- <div class="procress" v-bind:style="{height:height}"></div> -->
+                        <div class="levelzhi selectfont">10000</div>
+                    </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level6">
+                        <div class="levelzhi">10000</div>
+                    </div>
+                <%}%>
+                <%if(level == "7") {%>
+                    <div ref="procress" class="sigle-columar c-level7 processbgc">
+                        <!-- <div  class="procress" v-bind:style="{height:height}"></div> -->
+                        <div class="levelzhi selectfont">20000</div>
+                    </div>
+                <%} else{%>
+                    <div class="sigle-columar c-level7">
+                        <div class="levelzhi">20000</div>
+                    </div>
+                <%}%>
+                <div class="uparrows"></div>
+                <%if(level == "1") {%>
+                <div class="headimg1">
+                    <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                </div> 
+                <%}else if(level == "2"){%>
+                    <div class="headimg2">
+                            <img  onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}else if(level == "3"){%>
+                    <div class="headimg3">
+                            <img  onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}else if(level == "4"){%>
+                    <div class="headimg4">
+                            <img  onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}else if(level == "5"){%>
+                    <div class="headimg5" >
+                            <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}else if(level == "6"){%>
+                    <div class="headimg6">
+                            <img  onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}else if(level == "7"){%>
+                    <div class="headimg7">
+                            <img class="headimg" onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>"></img>
+                    </div>
+                    
+                <%}%>
+                    
+                
+                <div class="levelV">
+                    <div class="lv1">V1</div>
+                    <div class="lv2">V2</div>
+                    <div class="lv3">V3</div>
+                    <div class="lv4">V4</div>
+                    <div class="lv5">V5</div>
+                    <div class="lv6">V6</div>
+                    <div class="lv7">V7</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="update">太棒了,再加
+            <span style="color:#E1B25D">{{have}}</span>点就能成为
+            <span style="color:#E1B25D">SVIP{{level1}}</span>,升级后更多特权</div>
+        <div class="gotoupdate" @click="upscroll()">立即升级</div>
+        <div class="rankprivilege">等级特权</div>
+        <div class="rankprivilegedown"></div>
+        <div class="rankprivilegedetail">
+            <div class="left">
+                <div class="ranklevel">等级特权</div>
+                <div class="memberdate">超级会员日</div>
+                <div class="caption">尊贵标识</div>
+                <div class="refend">每月优惠券</div>
+                <div class="refend">生日礼包</div>
+                <div class="orderrefend">赠送礼券</div>
+                <div class="everyday">赠送贝壳</div>
+                <div class="birthday">免邮券</div>
+                <div class="sale">邀请会员返利</div>
+            </div>
+            <div class="right">
+                <table>
+                    <tr class="title">
+                        <td class="bgc1">SVIP1</td>
+                        <td>SVIP2</td>
+                        <td class="bgc1">SVIP3</td>
+                        <td>SVIP4</td>
+                        <td class="bgc1">SVIP5</td>
+                        <td>SVIP6</td>
+                        <td class="bgc1">SVIP7</td>
+                    </tr>
+                    <tr>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                    </tr>
+                    <tr class="refendtr">
+                        <td class="bgc1">
+                            <img src="/image/newmember/hengxiang.png">
+                        </td>
+                        <td>2张/月</td>
+                        <td class="bgc1">2张/月</td>
+                        <td>2张/月</td>
+                        <td class="bgc1">2张/月</td>
+                        <td>2张/月</td>
+                        <td class="bgc1">2张/月</td>
+                    </tr>
+                    <tr class="refendtr">
+                            <td class="bgc1">
+                                <img src="/image/newmember/hengxiang.png">
+                            </td>
+                            <td>
+                                <img src="/image/newmember/hengxiang.png">
+                            </td>
+                            <td class="bgc1">
+                                <img src="/image/newmember/duigou.png">
+                            </td>
+                            <td>
+                                <img src="/image/newmember/duigou.png">
+                            </td>
+                            <td class="bgc1">
+                                <img src="/image/newmember/duigou.png">
+                            </td>
+                            <td>
+                                <img src="/image/newmember/duigou.png">
+                            </td>
+                            <td class="bgc1">
+                                <img src="/image/newmember/duigou.png">
+                            </td>
+                        </tr>
+                    <tr class="orderrefendtr">
+                        <td class="bgc1">
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                            <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1"><img src="/image/newmember/duigou.png"></td>
+                        <td><img src="/image/newmember/duigou.png"></td>
+                        <td class="bgc1"><img src="/image/newmember/duigou.png"></td>
+                        <td><img src="/image/newmember/duigou.png"></td>
+                        <td class="bgc1"><img src="/image/newmember/duigou.png"></td>
+                    </tr>
+                    <tr>
+                        <td class="bgc1"><img src="/image/newmember/duigou.png"></td>
+                        <td><img src="/image/newmember/duigou.png"></td>
+                        <td class="bgc1"><img src="/image/newmember/duigou.png"></td>
+                        <td>
+                                <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                                <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td>
+                                <img src="/image/newmember/duigou.png">
+                        </td>
+                        <td class="bgc1">
+                                <img src="/image/newmember/duigou.png">
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="bgc1">
+                                    <img src="/image/newmember/hengxiang.png">
+                                </td>
+                                <td>
+                                    <img src="/image/newmember/hengxiang.png">
+                                </td>
+                                <td class="bgc1">1张/月</td>
+                                <td>2张/月</td>
+                                <td class="bgc1">3张/月</td>
+                                <td>3张/月</td>
+                                <td class="bgc1">3张/月</td>
+                       
+                    </tr>
+                    <tr>
+                            <td class="bgc1">
+                                    30%
+                                </td>
+                                <td>
+                                    30%
+                                </td>
+                                <td class="bgc1">30%</td>
+                                <td>30%</td>
+                                <td class="bgc1">30%</td>
+                                <td>30%</td>
+                                <td class="bgc1">30%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="rankprivilegedown1"></div>
+        <div class="updatetreasure" ref="position">升级宝典</div>
+        <div class="rankprivilegedown2"></div>
+        <div class="reasure-content">
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">每日成长值</div>
+                    <div class="futitle">会员期间获得10点/天</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('czz')">已完成</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">首次购买会员</div>
+                    <div class="futitle">首次购买会员获得68点</div>
+                </div>
+                <div class="reasure-content-right">已完成</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">购物</div>
+                    <div class="futitle">成功购物可获得等同实付订单的成长值</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('qgw')">去购物</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">邀请会员</div>
+                    <div class="futitle">根据被邀请人开通的会员类型获得对应的成长值</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('yqhy')">去邀请</div>
+            </div>
+            <!-- <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">邀请好友注册</div>
+                    <div class="futitle">邀请好友注册贝壳传奇可获得10点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('yqzc')">去邀请</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">邀请好友下单</div>
+                    <div class="futitle">邀请好友成功下单可获得20点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('yqxd')">去邀请</div>
+            </div> -->
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">分享商品</div>
+                    <div class="futitle">每日可分享三次商品,每次获得5点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('fx')">去分享</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">绑定微信</div>
+                    <div class="futitle">成功绑定微信可获得10点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('bd')">去绑定</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">完善个人资料</div>
+                    <div class="futitle">每完善一项可获得10点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('ws')">去完善</div>
+            </div>
+            <div class="border">
+                <div class="reasure-content-left">
+                    <div class="title">购物天数达标</div>
+                    <div class="futitle">每个自然月有两天成功购物可获得10点</div>
+                </div>
+                <div class="reasure-content-right" @click="gotorealize('gwdb')">去购物</div>
+            </div>
+        </div>
+
+        <div>
+</body>
+
+
+<script type="text/javascript">
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+
+    var app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                level:"<%-level%>",
+                level1:"<%-level+1%>",
+                growth_value:"<%-growth_value%>",
+                height:0,
+                have:0,
+            }
+              
+        },
+        methods: {
+            upscroll() {
+                let height = this.$refs.position.offsetTop;
+                $(window).scrollTop(height);
+                // document.documentElement.scrollTop = height;
+            },
+            gotorealize:function(type) {
+                gotosumit("torealize",{type:type})
+            }
+
+        },
+        mounted:function() {
+            let progressheight = this.$refs.procress.clientHeight;
+            let height = null;
+            switch(this.level) {
+                case "1":
+                height = this.growth_value/400*progressheight;
+                this.have=400-this.growth_value;
+                break;
+                case "2":
+                height = this.growth_value/1000*progressheight;
+                this.have=1000-this.growth_value;
+                break;
+                case "3":
+                height = this.growth_value/2000*progressheight;
+                this.have=2000-this.growth_value;
+                break;
+                case "4":
+                height = this.growth_value/5000*progressheight;
+                this.have=5000-this.growth_value;
+                break;
+                case "5":
+                height = this.growth_value/10000*progressheight;
+                this.have=10000-this.growth_value;
+                break;
+                case "6":
+                height = this.growth_value/20000*progressheight;
+                this.have=20000-this.growth_value;
+                break;
+                case "7":
+                height = this.growth_value/20000*progressheight;
+                this.have=20000-this.growth_value;
+                break;
+            }
+            let self = this;
+            let WD = 0;
+            let oHeight = this.$refs.procress.clientHeight;
+           let timer = setInterval(function() {
+               if(WD > height || oHeight > height) {
+                    clearInterval(timer);
+                    self.height += WD+"px";
+                  
+               } else if(WD > oHeight) {
+                self.height = oHeight+"px";
+               } else {
+                   WD+= 10;
+                   self.height = WD+"px";
+               }
+            
+           },40)
+        }
+    });
+
+
+
+</script>
+
+</html>

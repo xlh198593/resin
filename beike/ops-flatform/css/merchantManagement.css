@@ -1,0 +1,22 @@
+.business_img{
+	width:150px;
+	float:left;
+}
+.business_img .img{
+	height:60px;
+	border:1px solid #e5e5e5;
+	overflow:hidden;
+}
+.business_img .txt{
+	height:20px;
+	line-height:20px;
+	text-align:center;
+	margin-top:5px;
+}
+.verify_btn_group{
+    width:310px;
+    margin:60px auto 0;
+}
+.verify_btn_group .layui-btn{
+	margin:0 20px;
+}

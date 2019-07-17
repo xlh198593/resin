@@ -1,0 +1,371 @@
+<form class="layui-form" action="" style="margin-top:25px;">
+	<div style="width:47%;float:left;">
+    	<div class="layui-form-item">
+		    <label class="layui-form-label" style="font-weight:bold;font-size:14px;">1.审核状态</label>
+		</div>
+    	<div class="layui-form-item">
+		    <div class="layui-inline">
+		      <label class="layui-form-label">审核状态</label>
+		      <div class="layui-input-inline">
+		      	    <input type="tel" name="status" class="layui-input shop_status" value="{{ d.shopInfo.audit_status }}" disabled="disabled">
+		      </div>
+		    </div>
+		</div>
+	     
+		{{# if (d.shopInfo.audit_status == '拒绝') { }}
+			<div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">拒绝原因:</label>
+			    <div class="layui-input-block">
+			      <textarea  class="layui-textarea" style="width:600px;" disabled="disabled">{{d.shopInfo.remark}}</textarea>
+			    </div>
+			</div>
+		{{# } }}
+		   
+
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="font-weight:bold;font-size:14px;">2.店铺类型</label>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		      <label class="layui-form-label">店铺类型</label>
+		      <div class="layui-input-inline">
+		        <input type="text" name="shoptype" class="layui-input" disabled="disabled" value="{{d.shopInfo.stores_type}}">
+		      </div>
+		    </div>
+		</div>
+
+	    <div class="layui-form-item">
+		    <label class="layui-form-label" style="font-weight:bold;font-size:14px;">3.店铺资料</label>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">主营类目:</label>
+		        {{# layui.each(d.shopInfo.cat_name.split('/'), function (index, catname) { }}
+			        <div class="layui-input-inline">
+			            <input type="text" name="shoptype"  class="layui-input" disabled="disabled" value="{{ catname }}"> 
+			        </div> 
+		        {{# }) }}
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店铺简称:</label>
+		        <div class="layui-input-inline">
+		            <input type="text" name="shoptype" class="layui-input" value="{{d.shopInfo.stores_name}}" disabled="disabled">
+		        </div>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店铺全称:</label>
+		        <div class="layui-input-inline">
+		            <input type="text" name="shoptype"  class="layui-input" value="{{ d.dataInfro.outer_platfrom_info.store_fullname }}" disabled="disabled">
+		        </div>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">是否入驻其它平台:</label>
+		        <div class="layui-input-inline">
+                    {{# if (d.dataInfro.outer_platfrom_info.other_account == 1) { }}
+                        <input type="text" name="shoptype" class="layui-input" value="是" disabled="disabled">
+                    {{# } else { }}
+                        <input type="text" name="shoptype" class="layui-input" value="否" disabled="disabled">
+                    {{# } }}
+		        </div>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店铺微信号:</label>
+		        <div class="layui-input-inline">
+		            <input type="text" name="shoptype" class="layui-input" value="{{ d.dataInfro.outer_platfrom_info.wechat_account }}" disabled="disabled">
+		        </div>
+		    </div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">店铺/品牌介绍:</label>
+		    <div class="layui-input-block"  style="width:600px;">
+		        <textarea  class="layui-textarea" disabled="disabled">
+		      	    {{ d.dataInfro.outer_platfrom_info.store_desc }}
+		        </textarea>
+		    </div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">店铺地址:</label>
+		    <div class="layui-input-block" style="width:600px;">
+		      <textarea class="layui-textarea" disabled="disabled">{{d.shopInfo.addr}}</textarea>
+		    </div>
+		</div>
+          	<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店铺logo:</label>
+		        <div class="layui-input-inline">
+		            <div class="business_img">
+		            	<div class="img show_big_img">
+		            		<img src="{{d.imgUrl + '/' + d.dataInfro.certification_pic_path}}" width="100%">
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div style="width:47%;float:right;">
+        <div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店铺背景图:</label>
+		        <div class="layui-input-inline">
+		            <div class="business_img">
+		            	<div class="img show_big_img">
+		            	    <img src="{{d.imgUrl + '/' + d.dataInfro.opened_pic_path}}" width="100%">
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">门脸照片:</label>
+		        <div class="layui-input-inline">
+		            <div class="business_img">
+		            	<div class="img show_big_img">
+		            		<img src="{{d.imgUrl + '/' + d.dataInfro.facade_pic_path}}" width="100%">
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">店内环境图:</label>
+		        <div class="layui-input-inline">
+		            <div class="business_img">
+		            	<div class="img show_big_img">
+		            		<img src="{{d.imgUrl + '/' + d.dataInfro.stores_pic_path}}" width="100%">
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        
+
+        {{# if (d.shopInfo.stores_type == "个体") { }}
+	        <div class="people">
+	            <div class="layui-form-item">
+				    <label class="layui-form-label" style="font-weight:bold;font-size:14px;">4、商户资料</label>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">店老板姓名:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="bossname"  class="layui-input" disabled="disabled" value="{{ d.shopInfo.contact_person }}">
+				        </div>
+				    </div>
+				</div>
+
+		        <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">联系电话:</label>
+				        <div class="layui-input-inline">
+				            <input type="text" name="email"  class="layui-input" disabled="disabled" value="{{ d.shopInfo.contact_tel}}">
+				        </div>
+				    </div>
+				</div>
+
+	            <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">个体注册号:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="phone"  class="layui-input" disabled="disabled" value="{{ d.dataInfro.outer_platfrom_info.pravite_regno }}">
+				        </div>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">个体工商户执照:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.certification_pic_path}}" width="100%">
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">经营许可证:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.licence_pic_path}}" width="100%">
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">店老板身份证:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[0]}}" width="100%">
+				            	</div>
+				            	<p class="txt">身份证正面（人像）</p>
+				            </div>
+				        </div>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[1]}}" width="100%">
+				            	</div>
+				            	<p class="txt">身份证反面（国徽）</p>
+				            </div>
+				        </div>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[2]}}" width="100%">
+				            	</div>
+				            	<p class="txt">手持身份证照片</p>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+	        </div>
+        {{# } else { }}
+	        <div class="company">
+	            <div class="layui-form-item">
+				    <label class="layui-form-label" style="font-weight:bold;font-size:14px;">4、商户资料</label>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">法人姓名:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="phone"  class="layui-input" disabled="disabled" value="{{ d.dataInfro.legal_person }}">
+				        </div>
+				    </div>
+				</div>
+
+		        <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">法人电话:</label>
+				        <div class="layui-input-inline">
+				            <input type="text" name="email"  class="layui-input" disabled="disabled" value="{{ d.shopInfo.contact_tel}}">
+				        </div>
+				    </div>
+				</div>
+
+	            <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">公司名称:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="phone"  class="layui-input" disabled="disabled" value="{{d.dataInfro.corporation_name}}">
+				        </div>
+				    </div>
+				</div>
+
+	            <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">统一社会信用代码:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="phone"  class="layui-input" disabled="disabled" value="{{d.dataInfro.organization_code}}">
+				        </div>
+				    </div>
+				</div>
+
+		        <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">开户银行:</label>
+				        <div class="layui-input-inline">
+				            <input type="text" name="email"  class="layui-input" disabled="disabled" value="{{d.dataInfro.bank_account}}">
+				        </div>
+				    </div>
+				</div>
+
+	            <div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">对公账户:</label>
+				        <div class="layui-input-inline">
+				            <input type="tel" name="phone"  class="layui-input" disabled="disabled" value="{{d.dataInfro.bank_no}}">
+				        </div>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">营业执照:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{ d.imgUrl + '/' + d.dataInfro.certification_pic_path }}">
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">经营许可证:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{ d.imgUrl + '/' + d.dataInfro.licence_pic_path }}">
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+
+				<div class="layui-form-item">
+				    <div class="layui-inline">
+				        <label class="layui-form-label">法人身份证:</label>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[0]}}" width="100%">
+				            	</div>
+				            	<p class="txt">身份证正面（人像）</p>
+				            </div>
+				        </div>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[1]}}" width="100%">
+				            	</div>
+				            	<p class="txt">身份证反面（国徽）</p>
+				            </div>
+				        </div>
+				        <div class="layui-input-inline">
+				            <div class="business_img">
+				            	<div class="img show_big_img">
+				            		<img src="{{d.imgUrl + '/' + d.dataInfro.id_card_pic_path[2]}}" width="100%">
+				            	</div>
+				            	<p class="txt">手持身份证照片</p>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+	        </div>
+        {{# } }}
+
+		 
+		{{# if (d.shopInfo.sys_status == 'pending' && d.shopInfo.audit_status == '待审核') { }}
+	        <div class="verify_btn_group">
+				<input type="button" class="layui-btn verify_btn1" value="审核通过" data-status="pass">
+				<input type="button" class="layui-btn verify_btn2" value="审核拒绝" data-status="reject">
+			</div>
+        {{# }  }}
+	</div>
+</form>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <link rel="stylesheet" type="text/css" href="/css/red/red.css?v20180927">
+    <title>商品详情</title>
+</head>
+
+<body>
+<div id="app">
+<div class="banner">
+    <div id="slider" class="swipe">
+        <div class="swipe-wrap">
+                <% for(var i in goods.picUrlArr) { %>
+                    <div>
+                        <img src="<%=goods.picUrlArr[i] %>" />
+                    </div>
+        
+                <% } %>
+        </div>
+    </div>
+    <nav>
+        <ul id="position">
+             <% for(var i in goods.picUrlArr) { %>
+                <% if(i == 0) { %>
+                <li class="on"></li>
+                <% } else { %>
+                <li></li>
+                <% } %>
+             <% } %>
+        </ul>
+    </nav>
+</div>
+<div class="shop_detail">
+    <div class="first_tit">
+        <div class="tit"><%=goods.title%></div>
+    </div>
+    <div class="seconed_tit"><%=goods.desc1%></div>
+    <div class="member_price">
+            <div class="price"><span>￥<%=goods.goods_hongbao ? goods.goods_hongbao :goods.hongbao_price %></span></div>
+            <!-- <img class="free" src="/image/common/freepostage.png" alt="">
+            <img class="member" src="/image/common/member.png" alt=""> -->
+    </div>
+    <!-- <div class="free_postage">
+        快递:免邮费
+    </div> -->
+</div>
+<div class="detail">
+        <div class="pic_detail_tit">商品详情</div>
+        <div class="detail_pic">
+            <% for(var i=0; i<goods.picDetailArr.length; i++) { %>
+                <div>
+                    <img src="<%=goods.picDetailArr[i].url %>" />
+                </div>
+            <% } %>
+        </div>
+</div>
+<div class="bottom">
+        <% if(goods.sale_qty > 0) { %>
+            <%if(entry == 'h5') {%>
+                <a class="submit" href="javascript: void(0);" v-on:click="gotobuyh5()">立即购买</a>
+            <%}else{%>
+                <a class="submit" href="javascript: void(0);" v-on:click="gotobuy()">立即兑换</a>
+            <%}%>
+            
+        <% } else { %>
+            <a class="submit disable" href="javascript: void(0);">库存不足</a>   
+        <% } %>
+    
+</div>
+</div>
+
+
+
+</body>
+<script type="text/javascript">
+   var vue = new Vue({
+       el:"#app",
+       data:function() {
+           return {
+               detail:true,
+               record:false,
+               member_id:'<%=member_id%>',
+               mobile:"<%=mobile %>",
+               goods_id:'<%=goods.goods_id %>',
+               buydata:{
+                   hongbao_price:'<%=goods.hongbao_price %>',
+                   goods_code:'<%=goods.goods_code %>',
+                   sale_qty:'<%=goods.sale_qty %>',
+                   title: '<%=goods.title %>',
+                   goods_id:'<%=goods.goods_id %>',
+                   imgPath: '<%=goods.picUrlArr ? goods.picUrlArr[0] : "" %>',  
+               }
+
+            }
+       },
+       methods:{
+          changedetailorrecord:function(btntype) {
+              if(btntype == 'detail') {
+                  this.detail = true;
+                  this.record = false;
+              } else {
+                  this.detail =false;
+                  this.record = true;
+              }
+            
+          },
+          gotobuyh5:function() {
+            let redirectUrl="<%=appBaseName%>/openapi/h5/c/activity/order?goods_id="+this.goods_id+"&mobile="+this.mobile+"&member_id="+this.member_id;
+             window.location.href = redirectUrl;
+          },
+          gotobuy:function() {
+              this.andoridOrIos('showSelectDialog',this.buydata)
+          },
+          andoridOrIos:function(method,obj) {
+            if(window.jsObj) {  // Android
+            if(window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+              }
+            } else {    // IOS
+               setupWebViewJavascriptBridge(function(bridge) {
+                bridge.callHandler(method, obj);
+              });
+            }
+          },
+          }
+   })
+   M.initSwipe();
+</script>
+</html>

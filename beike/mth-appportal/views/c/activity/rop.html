@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../commonHead.html %>
+    <title>抢红包</title>
+    <style>
+        #app {
+            background:url("http://app-static.huigujia.cn/communityDocs/nodepic/hb1.jpg");
+            background-size: 100% 100%; 
+            overflow: hidden;
+            height:34.5rem;
+            width:10rem;
+            margin:0 auto;
+        }
+        .share {
+            height:2.146667rem;
+            width:9.066667rem;
+            margin:0 auto;
+            margin-top:9.253333rem;
+            /* box-shadow:0px .12rem .266667rem .013333rem rgba(134,2,2,0.41); */
+            background:url("/image/activity/ropredpacket/gotoshare.png");
+            background-size: 100% 100%; 
+        }
+        .my_share,.why_share,.share_skill,.share_rule {
+            height:4.746667rem;
+            width:9.066667rem;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top:0.8rem;
+            box-shadow:0px .12rem.266667rem .013333rem rgba(134,2,2,0.41);
+            border-radius:.133333rem;
+        }
+        .my_share {
+            background:url("/image/activity/ropredpacket/my.png");
+            background-size: 100% 100%; 
+        }
+        .why_share {
+            background:url("/image/activity/ropredpacket/zenme.png");
+            background-size: 100% 100%; 
+        }
+        .share_rule {
+            background:url("/image/activity/ropredpacket/guize.png");
+            background-size: 100% 100%; 
+        }
+        .share_skill {
+            background:url("/image/activity/ropredpacket/jiqiao.png");
+            background-size: 100% 100%; 
+        }
+        .person_number,.person_redpacket {
+            height:.426667rem;
+            width:9.066667rem;
+            margin-top:1.386667rem;
+            font-weight:500;
+            color:rgba(51,51,51,1);
+            font-size:.453333rem;
+
+        }
+        .person_redpacket {
+            margin-top:.413333rem;
+        }
+        .ropredpacked {
+            height:1.093333rem;
+            width:8.04rem;
+            margin:0 auto;
+            margin-top:.586667rem;
+            background:linear-gradient(90deg,rgba(255,66,68,1),rgba(186,19,14,1));
+            border-radius:.546667rem;
+            line-height:1.093333rem;
+            text-align: center;
+            font-size:.453333rem;
+            color:rgba(255,255,255,1);
+        }
+        .left {
+            float:left;
+            height:.426667rem;
+            margin-left:.64rem;
+        }
+        .right {
+            float:right;
+            height:.426667rem;
+            margin-right:.48rem;
+            color:#BE1511;
+            font-weight: 800;
+           
+        }
+        @keyframes comein {
+            0% {
+                top:-5rem;
+            }
+            25% {
+               top:8rem;
+            }
+            50% {
+                top:-0.5rem;
+            }
+            75% {
+               top:6rem;
+            }
+            100% {
+               
+            }
+        }
+        @-webkit-keyframes comein {
+            0% {
+                top:-5rem;
+            }
+            25% {
+               top:8rem;
+            }
+            50% {
+                top:-0.5rem;
+            }
+            75% {
+               top:6rem;
+            }
+            100% {
+               
+            }
+        }
+        @-o-keyframes comein {
+            0% {
+                top:-5rem;
+            }
+            25% {
+               top:8rem;
+            }
+            50% {
+                top:-0.5rem;
+            }
+            75% {
+               top:6rem;
+            }
+            100% {
+               
+            }
+        }
+        @-moz-keyframes comein {
+            0% {
+                top:-5rem;
+            }
+            25% {
+               top:8rem;
+            }
+            50% {
+                top:-0.5rem;
+            }
+            75% {
+               top:6rem;
+            }
+            100% {
+               
+            }
+        }
+        .rop {
+            height:8.653333rem;
+            width:8.6rem;
+            position:fixed;
+            top:4rem;
+            margin-left:.7rem;
+            background:url("/image/activity/ropredpacket/chai.png");
+            background-size: 100% 100%; 
+            -webkit-animation: comein;
+            -o-animation: comein;
+            -moz-animation: comein;
+            -webkit-animation-duration: 1.5s;
+            -moz-animation-duration: 1.5s;
+            -o-animation-duration: 1.5s;
+        }
+        .blackbgc {
+            position:fixed;
+            top:0;
+            width:10rem;
+            height:32.813333rem;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .close {
+            position: absolute;
+            top:-0.5rem;
+            width:.666667rem;
+            height:.666667rem;
+            right:0.2rem;
+            margin-left:-0.333333rem;
+            border-radius: .333333rem;
+            background:url("/image/activity/ropredpacket/guanbi.png");
+            background-size: 100% 100%;
+        }
+        .ropend {
+            height:10.666667rem;
+            width:8.6rem;
+            top:3.5rem;
+            margin-left:0.7rem;
+            position:fixed;
+            background:url("/image/activity/ropredpacket/chaiend.png");
+            background-size: 100% 100%;
+            animation-name: comein;
+            animation-duration: 1.5s;
+        }
+        .continue_share {
+            height:1rem;
+            width:5rem;
+            margin-left:2rem;
+            margin-top:1.2rem;
+        }
+        .pulldownbtn {
+            width:2.5rem;
+            height:2.5rem;
+            margin-left:3.25rem;
+            margin-top:3.25rem;
+        }
+        .redpackednumber {
+            padding-top:0.2rem;
+            height:1rem;
+            margin:0 auto;
+            margin-top:4.666667rem;
+            color:#FFFCF0;
+            text-align: center;
+        }
+        .symbol {
+            font-size:0.6rem;
+        }
+        .money {
+            font-size:0.8rem;
+        }
+        .errmessage {
+            height:0.6rem;
+            line-height:0.6rem;
+            width:7rem;
+            position:fixed;
+            top:8rem;
+            left:1.5rem;
+            background-color: rgba(0,0,0,0.6);
+            font-size:0.4rem;
+            color:white;
+            text-align: center;
+            border-radius: 0.3rem;
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+         }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+
+        
+        
+
+       
+       
+       
+    </style>
+  </head>
+  <body>
+    <div id="app">
+         <div class="share" @click="share()"></div>
+         <div class="my_share">
+             <div class="person_number">
+                 <div class="left">分享用户数量：</div>
+                 <div class="right"><%=memberCount%>位</div>
+             </div>
+             <div class="person_redpacket">
+                    <div class="left">获得红包金额：</div>
+                    <div class="right">{{amountSum.toFixed(2)}}</div>
+             </div>
+             <div class="ropredpacked" @click="ropredpacked()">抽取红包（剩余{{hongbaoCount}}次）</div>
+         </div>
+         <div class="why_share"></div>
+         <div class="share_skill"></div>
+         <div class="share_rule"></div>
+         <div class="blackbgc" v-if="pulldown == true || pulldownend == true"></div>
+                <div class="rop"  v-if="pulldown == true">
+                        <div class="pulldownbtn" @click="pullDown()"></div>
+                        <div class="close" @click="close()"></div>
+                    </div> 
+                <div class="ropend"  v-if="pulldownend == true">
+                        <div class="close" @click="close('end')"></div>
+                        <div class="redpackednumber">
+                            <span class="symbol">￥</span><span class="money">{{redpackednumber}}</span>
+                        </div>
+                        <div class="continue_share" @click="share()"></div>
+                 </div>
+                 <transition name="fade">
+                    <div class="errmessage" v-if="errmessage != ''">{{errmessage}}</div>
+                  </transition>
+                 
+       </div>
+       
+  
+  </body>
+  <script>
+      function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+      var app = new Vue({
+             el: '#app',
+             data:function(){
+                 return {
+                    pulldown:false,
+                    pulldownend:false,
+                    isCollecting:false,
+                    redpackednumber:0,
+                    errmessage:'',
+                    hongbaoCount:<%=hongbaoCount%>,
+                    amountSum:<%=amountSum%>
+                 }
+            },
+            methods:{
+              share:function() {
+                 gotosumit("ropRedPackedShare",{})
+              },
+              ropredpacked:function() {
+                  if(this.hongbaoCount == 0) {
+                      this.errmessage = "您暂时还没有可以抽取的红包";
+                      return;
+                  }
+                  this.pulldown = true;
+              },
+              pullDown:function() {
+                if(!this.isCollecting) {
+                    var self = this;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/openapi/h5/c/pulldown',
+                        data: {
+                            "member_id":"<%=member_id%>"
+                        },
+                        beforeSend: function () {
+                            self.isCollecting = true;
+                        },
+                        success: function (data) {
+                           if(data.rsp_code == "succ") {
+                               self.pulldown = false;
+                               self.pulldownend = true;
+                               self.redpackednumber = data.data.amount.toFixed(2);
+                               self.amountSum =self.amountSum + data.data.amount;
+                               if(self.hongbaoCount == 0) {
+                                 return;
+                               } else {
+                                   self.hongbaoCount--;
+                               }
+                           } else {
+                               self.errmessage = data.error_msg
+                           }
+                        },
+                       complete: function () {
+                           setTimeout(function () {
+                                self.isCollecting = false;
+                        }, 3000);
+                    }
+                   });
+                }
+              },
+              close:function(type) {
+                  if(type == "end") return this.pulldownend = false;
+                  this.pulldown = false;
+              }
+
+
+             },
+             watch: {
+                 errmessage:function(value) {
+                     var self = this;
+                     if(value != '') {
+                         setTimeout(function() {
+                             self.errmessage = "";
+                         },1000)
+                     }
+                 }
+             },
+            mounted:function(){
+
+           }
+  });
+  
+  </script>
+</html>

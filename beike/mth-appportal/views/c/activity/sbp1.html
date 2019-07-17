@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>canvas圆形进度球html5水波动画特效</title>
+    <style type="text/css">
+       .time-graph {
+	padding-top: 20px;
+	display:flex;
+	display:-webkit-flex;
+	justify-content: center;
+	align-items: center;
+}
+ 
+#time-graph-canvas {
+	width: 300px;
+	height: 300px;
+}
+    </style>
+</head>
+
+<body>
+        <div class="time-graph">
+                <canvas id="time-graph-canvas" width="160" height="160"></canvas>
+              </div>
+    <script type="text/javascript">
+      function drawMain(drawing_elem, percent, forecolor, bgcolor) {
+            /*
+                @drawing_elem: 绘制对象
+                @percent：绘制圆环百分比, 范围[0, 100]
+                @forecolor: 绘制圆环的前景色，颜色代码
+                @bgcolor: 绘制圆环的背景色，颜色代码
+            */
+            var context = drawing_elem.getContext("2d");
+            var center_x = drawing_elem.width / 2;
+            var center_y = drawing_elem.height / 2;
+            var rad = Math.PI*2/100; 
+            var speed = 0;
+            var xOffset = 0
+            var mW = 300;
+            var mH  = 250;
+            var sX = 0;
+            var sY = mH / 2;
+            var axisLength = mW; //轴长
+            var waveWidth = 0.03; //波浪宽度,数越小越宽 
+            var waveHeight = 8; //波浪高度,数越大越高
+            var speed = 0.09; //波浪速度，数越大速度越快
+            
+            // 绘制背景圆圈
+            function backgroundCircle(){
+                context.save();
+                context.beginPath();
+                context.lineWidth = 8; //设置线宽
+                var radius = center_x - context.lineWidth;
+                context.lineCap = "round";
+                context.strokeStyle = bgcolor;
+                context.arc(center_x, center_y, radius, 0, Math.PI*2, false);
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+ 
+            //绘制运动圆环
+            function foregroundCircle(n){
+                context.save();
+                context.strokeStyle = forecolor;
+                context.lineWidth = 8;
+                context.lineCap = "round";
+                var radius = center_x - context.lineWidth;
+                context.beginPath();
+                context.arc(center_x, center_y, radius , -Math.PI/2, -Math.PI/2 +n*rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+             //画sin 曲线函数
+        var drawSin = function (xOffset,nowRange) {
+            context.save();
+            var points = []; //用于存放绘制Sin曲线的点
+            context.beginPath();
+            //在整个轴长上取点
+            for (var x = sX; x < sX + axisLength; x += 20 / axisLength) {
+                //此处坐标(x,y)的取点，依靠公式 “振幅高*sin(x*振幅宽 + 振幅偏移量)”
+                var y = -Math.sin((sX + x) * waveWidth + xOffset);
+                var dY = mH * (1 - nowRange / 100);
+                points.push([x, dY + y * waveHeight]);
+                context.lineTo(x, dY + y * waveHeight);
+            }
+            //封闭路径
+            context.lineTo(axisLength, mH);
+            context.lineTo(sX, mH);
+            context.lineTo(points[0][0], points[0][1]);
+            context.fillStyle = '#E5E5E5';
+            context.fill();
+            context.restore();
+        };
+ 
+            //绘制文字
+            function text(n){
+                context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+                context.fillStyle = forecolor;
+                var font_size = 40;
+                context.font = font_size + "px Helvetica";
+                var text_width = context.measureText(n.toFixed(0)+"%").width;
+                context.fillText(n.toFixed(0)+"%", center_x-text_width/2, center_y + font_size/2);
+                context.restore();
+            }
+ 
+            //执行动画
+            (function drawFrame(){
+                window.requestAnimationFrame(drawFrame);
+                context.clearRect(0, 0, drawing_elem.width, drawing_elem.height);
+                drawSin(xOffset,100);
+                backgroundCircle(0,60);
+                text(speed);
+                foregroundCircle(speed);
+                xOffset += speed;
+                if(speed >= percent) return;
+                speed += 1;
+               
+            }());
+        }
+        var time_canvas = document.getElementById("time-graph-canvas");
+        drawMain(time_canvas, 150, "#85d824", "#eef7e4");
+ 
+        // var weather_canvas = document.getElementById("weather-graph-canvas");
+        // this.drawMain(weather_canvas, 90, "#2ba0fb", "#e5f1fa");
+    </script>
+</body>
+
+</html>

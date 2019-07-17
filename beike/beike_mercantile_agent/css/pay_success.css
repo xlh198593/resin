@@ -1,0 +1,31 @@
+.pay_success_con{
+	overflow:hidden;
+	margin:0 auto;
+	padding:0 1.5rem;
+}
+.pay_success_con .icon{
+	width:20.2%;
+	overflow:hidden;
+	margin:3.5rem auto 2rem;
+}
+.pay_success_con .text{
+	height:2rem;
+    line-height:2rem;
+    overflow:hidden;
+    text-align:center;
+    font-size:1.4rem;
+}
+.main_btn{
+	display:block;
+	width:100%;
+	height:4.5rem;
+	line-height:4.5rem;
+
+	text-align:center;
+	overflow:hidden;
+	font-size:1.6rem;
+	background:#37CF84;
+	color:#fff;
+	margin-top:5rem;
+	border-radius:1rem;
+}

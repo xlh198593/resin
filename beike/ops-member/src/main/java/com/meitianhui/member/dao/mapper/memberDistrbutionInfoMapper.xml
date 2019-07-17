@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.MemberDistrbutionInfoDao">
+	<resultMap type="com.meitianhui.member.entity.MDMemberDistrbutionInfo" id="MemberDistributionInfoMap">
+		<id column="id" property="id"/>
+		<result column="member_id" property="memberId"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="status" property="status"/>
+		<result column="create_time" property="createTime"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.meitianhui.member.entity.MDMemberDistrbutionInfo"> 
+		insert into md_member_distribution_info(member_id,parent_id,status,create_time) 
+			   values(#{memberId},#{parentId},#{status},#{createTime})
+	</insert>
+
+	<select id="findMemberDistr" resultMap="MemberDistributionInfoMap"  parameterType="map">
+	  <![CDATA[
+			SELECT  d.parent_id, COUNT(*) as cCount from fddb.fd_member_coupons c JOIN mddb.md_member_distribution_info d on c.member_id = d.parent_id
+			where d.member_id = #{member_id} and status = 1
+			and c.coupons_key = 'lj_399'
+			and c.coupons_validity_start < d.create_time
+			and c.coupons_validity > d.create_time
+			and c.coupons_validity_start < now()
+			and c.coupons_validity > now()
+		]]>
+	</select>
+
+
+	<select id="findMemberDistrInfo" resultMap="MemberDistributionInfoMap"  parameterType="java.util.Map">
+		select  id,member_id,parent_id,status,create_time
+		from md_member_distribution_info
+		<where>
+			<if test="member_id !=null and member_id !=''">
+				member_id = #{member_id}
+			</if>
+		</where>
+		ORDER BY   create_time  desc limit 1
+	</select>
+
+	<select id="findMemberDistrInfoById" resultMap="MemberDistributionInfoMap"  parameterType="java.util.Map">
+		select  id,member_id,parent_id,status,create_time
+		from md_member_distribution_info
+		where 1=1
+			<if test="member_id !=null and member_id !=''">
+				and member_id = #{member_id}
+			</if>
+			and status = 1
+		limit 1
+	</select>
+
+	
+	<select id="getMemberDistrData" resultMap="MemberDistributionInfoMap"  parameterType="java.util.Map">
+		SELECT
+			id,member_id,parent_id,status,create_time
+		FROM
+			md_member_distribution_info
+		WHERE
+			member_id =#{member_id}
+		and status  = 1
+	</select>
+	
+	
+	<update id="update" parameterType="com.meitianhui.member.entity.MDMemberDistrbutionInfo">
+		update md_member_distribution_info
+			set 
+				member_id = #{memberId},
+				parent_id = #{parentId},
+				status = #{status},
+				create_time = #{createTime}
+		where 
+				id =#{id}
+	</update>
+	
+</mapper>

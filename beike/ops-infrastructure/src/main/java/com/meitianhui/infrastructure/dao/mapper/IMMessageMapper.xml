@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.infrastructure.dao.IMMessageDao">
+
+
+    <insert id="insertMsgInfo" useGeneratedKeys="true" keyProperty="message_id" parameterType="Map">
+        INSERT INTO id_im_message
+        (
+        message_sender
+        ,message_receiver
+        ,message_content
+        ,created_time
+        )
+        VALUES(
+        #{message_sender}
+        ,#{message_receiver}
+        ,#{message_content}
+        ,#{created_time}
+        )
+    </insert>
+
+    <select id="getRecentContacts" resultType="String" parameterType="Map">
+        <![CDATA[
+        (SELECT
+        im.message_receiver
+        FROM
+        iddb.id_im_message as im
+        WHERE
+        im.message_sender = #{mobile}
+        AND
+        im.created_time<#{timeEnd})
+        UNION
+        (SELECT
+        im.message_receiver
+        FROM
+        iddb.id_im_message as im
+        WHERE
+        im.message_receiver = #{mobile}
+        AND
+        im.created_time<#{timeEnd})
+        	]]>
+    </select>
+
+
+
+</mapper>

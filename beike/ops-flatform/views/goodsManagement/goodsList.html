@@ -1,0 +1,64 @@
+{{# layui.each(d.goodsList, function (index, item) {  }}
+    <tr item='{{ JSON.stringify(item) }}'>
+		<td>
+			{{# if (item.pic_info) { }}
+               <img src="{{d.imgUrl + '/' + item.pic_info}}" width="90" height="90">
+            {{# } else { }}
+               <img src="../../images/default_img.png" width="90" height="90">
+            {{# } }}
+		</td>
+		<td>{{item.goods_id}}</td>
+		<td>{{item.goods_code}}</td>
+		<td>{{item.title}}</td>
+		<td>{{ item.sale_price }}</td>
+		<td>{{ item.vip_price }}</td>
+		<td>{{item.beike_credit}}</td>
+		<td>{{item.store}}</td>
+		<td>
+		    {{# if (item.label == 0) { }}
+			    否
+			{{# } else { }}
+		     	{{ item.label_promotion }}
+			{{# } }}
+		</td>
+		<td>
+			{{# layui.each(item.service_level, function (i, level) { }}
+		     	<p>{{level}}</p>
+			{{# }) }}
+		</td>
+		<td>{{item.stores_name}}</td>
+		<td>
+		    
+
+            {{# if (item.status == 'delete') { }}
+                已删除
+            {{# } else if (item.status == 'off_shelf') { }}
+                已下架
+            {{# } else if (item.status == 'on_shelf') { }}
+                已上架
+            {{# } else if (item.status == 'normal') { }}
+                待上架
+            {{# } }}
+		</td>
+		<td>{{item.created_date}}</td>
+		
+		
+		<td>
+			<p class="td_text">
+		   	    {{ item.remark }}
+		    </p>
+		</td>
+		<td>
+		    <input type="button" class="layui-btn layui-btn-xs detail_btn" value="查看" data-id="{{item.goods_id}}">
+			<a href="./goodDetail.html"  class="layui-btn layui-btn-xs change_page_btn" style="display:none;"><span>查看</span></a>
+		</td>
+	</tr>
+{{# }) }}
+
+
+
+{{#  if(d.goodsList.length === 0){ }}
+    <tr>
+    	<td colspan="15">没有数据</td>
+    </tr>
+{{#  } }} 

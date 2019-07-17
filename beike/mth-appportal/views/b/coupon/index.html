@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <title>优惠券</title>
+    <style type="text/css">
+        #coupon {
+            width:100%;
+        }
+        .coupon {
+            max-width:10rem;
+            margin:0 auto;
+            position: relative;
+        }
+        .timeTitle {
+            height:0.7rem;
+            width:10rem;
+            line-height:0.7rem;
+            position: absolute;
+            top:4.6rem;
+            font-size:0.35rem;
+            text-align: center;
+            color:gainsboro;
+            font-weight:700;
+        }
+        .coupon img{
+            width:10rem;
+            margin:0 auto;
+        }
+        #five_btn, #ten_btn,#query {
+            position:absolute;
+            width:3rem;
+            height:2.4rem;
+            top:5.4rem;
+            left:1.5rem;
+            opacity: 0;
+        }
+        #ten_btn {
+            left:5.5rem;
+        }
+        #query {
+            width:1.1rem;
+            height:0.6rem;
+            top:0.27rem;
+            left:8.6rem;
+        }
+
+        .caution {
+            height:1.75rem;
+            min-width: 3rem;
+            max-width: 7rem;
+            border: .025rem solid block;
+            background-color: gray;
+            text-align: center;
+            line-height: 1.75rem;
+            font-family: "PingFangHK-Regular";
+            font-size: .4rem;
+            position: absolute;
+            border-radius: .15rem;
+            top: 7.5rem;
+            opacity: 0.8;
+            margin:auto;
+            left:0;
+            right:0;
+        }
+
+        .active {
+            display: none;
+        }
+    </style>
+</head>
+
+<body v-on:click="">
+    <div id="coupon">
+        <div class = "coupon">
+            <div class="timeTitle">购物返红包时间：5月17-20日，每天8:00-22:00</div>
+            <img src="/image/cashcoupon/coupon.jpg" alt="">
+            <button id="query" v-on:click="querySee"></button>
+            <button id="five_btn" v-on:click="getCashCoupon('5')"></button>
+            <button id="ten_btn"  v-on:click="getCashCoupon('10')"></button>
+            <div class="caution" v-bind:class="{active:cue}">
+                    {{successful == true ? "领取成功":failmes}}
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    function RndNum(){
+          //生成20位的随机数字
+             var num = '';
+            var num_list = "0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ";
+             for(i= 0;i<13;i++){
+                 num += num_list.substr(Math.floor(Math.random() * 62), 1);
+             }
+             return num;
+        }
+
+    const vm = new Vue({
+        el: "#coupon",
+        data: {
+            cue:true,
+            successful:false,
+            failmes:"",
+           requestParams:JSON.parse('<%-JSON.stringify(requestParams)%>'),
+        },
+        methods: {
+            querySee: function () {
+                    console.log(this.requestParams.account);
+               window.location.href=this.requestParams.pageHost+'/cmpay/lyh/detail?account='+this.requestParams.account;
+            },
+            getCashCoupon: function (value) {
+                const self = this;
+                var cashCouponCode = RndNum();
+                $.ajax({
+                    type: 'POST',
+                    url: '/cmpay/lyh/save',
+                    data: {
+                            mobile:this.requestParams.account,
+                            cashCouponCode:cashCouponCode,
+                            cashcouponValue:value
+                    },
+                    success: function (data) {
+                        var res = JSON.parse(data)
+                        if (res.rsp_code == "succ") {
+                            self.cue = false;
+                            self.successful = true;
+                        } else {
+                            self.cue = false;
+                            self.successful = false;
+                            self.failmes = res.error_msg
+                        }
+                        setTimeout(function () {
+                            self.cue = true
+                        }, 1500)
+                    }
+                });
+
+            }
+        }
+    })
+
+
+
+</script>
+
+</html>

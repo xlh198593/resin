@@ -1,0 +1,25 @@
+.upload_img{
+	width:100px;
+	float:left;
+	margin-right:20px;
+}
+.upload_img .img{
+	height:100px;
+	overflow:hidden;
+	border:1px solid #e5e5e5;
+}
+.upload_img .txt{
+	height:20px;
+	line-height:20px;
+	overflow:hidden;
+	margin-top:5px;
+	text-align:center;
+}
+.menu_title{
+	height:40px;
+	line-height:40px;
+	background:#FDF1F7;
+	text-indent:20px;
+	overflow:hidden;
+	margin-bottom:10px;
+}

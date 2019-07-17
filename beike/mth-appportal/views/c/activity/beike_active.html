@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<% include ../../commonHead.html %>
+	<title>会员狂欢节</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="/css/beike_activde_style.css" />
+</head>
+
+
+<body>
+	<div class="beike_active_con">
+		<img src="https://app-static.huigujia.cn/communityDocs/nodepic/68_activity.jpg" width="100%">
+		<div class="beike_active">
+            <a href="javascript:void(0);"    class="good1" style="left:14%;top:4.9%;"></a>
+            <a href="javascript:void(0);"    class="good1" style="right:14%;top:4.9%;"></a>
+
+
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2196')" class="good2" style="top:8.2%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2899')" class="good2" style="top:11.4%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2687')" class="good2" style="top:14.8%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2738')" class="good2" style="top:18.3%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2911')" class="good2" style="top:21.6%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2687')" class="good2" style="top:25%;"></a>
+
+
+
+
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('199')" class="good2" style="height:3.6%;top:30%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2905')" class="good2" style="height:3.6%;top:33.6%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2830')" class="good2" style="height:3.6%;top:37.3%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2853')" class="good2" style="height:3.6%;top:41.2%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2908')" class="good2" style="height:3.6%;top:44.9%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2804')" class="good2" style="height:3.6%;top:48.6%;"></a>
+
+
+
+
+
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2916')" class="good3" style="top:54.6%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('637')" class="good3" style="top:57.9%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2640')" class="good3" style="top:61.1%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2526')" class="good3" style="top:64.3%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2086')" class="good3" style="top:67.7%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2291')" class="good3" style="top:70.9%;"></a>
+
+
+
+
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2535')" class="good4" style="top:76.3%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2621')" class="good4" style="top:80%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2601')" class="good4" style="top:83.6%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2430')" class="good4" style="top:87.4%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2607')" class="good4" style="top:91.1%;"></a>
+            <a href="javascript:void(0);"  onclick="gotoshopdetail('2416')" class="good4" style="top:94.9%;"></a>
+
+
+        </div>
+
+
+	</div>
+	<script type="text/javascript">
+		function gotosumit(method, obj) {
+			if (window.jsObj) {  // Android
+				// 传递分享数据
+				if (window.jsObj[method]) {
+					window.jsObj[method](JSON.stringify(obj));
+				}
+			} else {    // IOS
+				setupWebViewJavascriptBridge(function (bridge) {
+					// 传递分享数据
+					bridge.callHandler(method, obj);
+				});
+			}
+		}
+		function gotosumit_s(method, obj) {
+			if (window.jsObj) {  // Android
+				// 传递分享数据
+				if (window.jsObj[method]) {
+					window.jsObj[method](obj);
+				}
+			} else {    // IOS
+				setupWebViewJavascriptBridge(function (bridge) {
+					// 传递分享数据
+					bridge.callHandler(method, obj);
+				});
+			}
+		}
+		//
+		// function toNewHtml() {
+		// 	gotosumit_s("gotonewhtml", "https://app.beeke.vip/openapi/h5/c/cjactivit_b?")
+		// }
+		function gotoshopdetail(goods_id) {
+			gotosumit("gotoshopdetail", { "goods_id": goods_id })
+		}
+		function gotoorderdetail() {
+			var obj = {};
+			obj.memberlevel = 399;
+			gotosumit("gotoorderdetail", obj);
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>出售中的商品</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" href="../layui/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" type="text/css" href="../css/merchandise_control.css">
+ 
+</head>
+<body>
+  <div class="merchandise_warehouse">
+      <span class="layui-breadcrumb">
+          <a href="./merchandise_control.html">商品管理</a>
+          <a><cite>出售中的商品</cite></a>
+      </span>
+      <div class="choose_con">
+          <form class="layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                    <label class="layui-form-label">商品标题：</label>
+                    <div class="layui-input-inline">
+                      <input type="tel" name="goodtitle" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">商品编码：</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="goodnumber"  autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">推荐商品：</label>
+                    <div class="layui-input-inline">
+                      <select name="quiz">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">参与活动：</label>
+                    <div class="layui-input-inline">
+                      <select name="quiz">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-inline">
+                      <select name="quiz">
+                        <option value="0">请选择</option>
+                        <option value="1">待审核</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">已拒绝</option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-inline" style="width:536px;" >
+                    <label class="layui-form-label" style="width:106px;">最新编辑时间：</label>
+                    <div class="layui-input-inline">
+                      <input type="text" class="layui-input" id="test16" placeholder="开始 到 结束" style="width:360px;">
+                    </div>
+                  </div>
+                  <div class="layui-inline">
+                        <ul class="select_date">
+                           <li class="on">今天</li>
+                           <li>昨天</li>
+                           <li>近7天</li>
+                           <li>近30天</li>
+                        </ul>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">清空筛选条件</button>
+                </div>
+              </div>
+          </form>
+      </div>
+
+     <div class="warehouse_goods_con">
+          <h1>出售中的商品</h1>
+          <div style="overflow:auto;">
+            <div class="layui-form" style="width:2500px;">
+                <table class="layui-table merchandise_warehouse_table">
+                  <colgroup>
+                      <col>
+                      <col width="100">
+                      <col width="100">
+                      <col width="100">
+                      <col width="330">
+                      <col width="330">
+                      <col width="210">
+                      <col width="150">
+                      <col width="100">
+                      <col width="250">
+                      <col width="180">
+                      <col width="150">
+                      <col width="100">
+                      <col width="100">
+                      <col width="50">
+                      <col width="80">
+                      <col width="80">
+                      <col width="150">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                        <th>商品主图</th>
+                        <th>商品标题</th>
+                        <th>商品副标题</th>
+                        <th>商品编码</th>
+                        <th>套餐规格</th>
+                        <th>贝壳券有效期</th>
+                        <th>使用时段</th>
+                        <th>使用规则</th>
+                        <th>发票信息</th>
+                        <th>其它事项</th>
+                        <th>商家服务</th>
+                        <th>最新编辑时间</th>
+                        <th>原价(元)</th>
+                        <th>超级会员价(元)</th>
+                        <th>抵扣贝壳(个)</th>
+                        <th>参与活动</th>
+                        <th>状态</th>
+                        <th>备注/操作</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+               
+                  </tbody>
+                </table>
+            </div>
+          </div>
+          <div id="test1"></div>
+      </div>
+  </div>
+  
+  <script src="../layui/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../js/common/common.js"></script>
+  <script type="text/javascript" src="../js/common/url.js"></script>
+  <script src="../js/merchandise_control/merchandise_sell.js"></script>
+</body>
+</html>

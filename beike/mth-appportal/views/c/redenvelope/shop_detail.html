@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <link rel="stylesheet" href="/css/red/shop_detail.css?v20180310">
+    <title>商品详情</title>
+</head>
+
+<body>
+<div id="app">
+<div class="banner">
+    <div id="slider" class="swipe">
+        <div class="swipe-wrap">
+            <% for(var i in picUrlArr) { %>
+                <div>
+                    <img src="<%=picUrlArr[i] %>" />
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <nav>
+        <ul id="position">
+            <% for(var i in picUrlArr) { %>
+                <% if(i == 0) { %>
+                <li class="on"></li>
+                <% } else { %>
+                <li></li>
+                <% } %>
+            <% } %>
+        </ul>
+    </nav>
+</div>
+<div class="shop_detail">
+    <div class="shop_title"><%-item_name%></div>
+    <div class="fu_title"><%-desc1%></div>
+    <div class="price">
+        <div class="yprice">原价:￥<%-market_price%></div>
+        <div class="memberprice">会员价:￥<%-vip_price%>+<%-beike_price%>贝壳</div>
+    </div>
+    <div class="free">快递:免邮费</div>
+</div>
+<a class="bottom" v-on:click="gotobuy()" href="javascript: void(0);">立即购买</a>
+
+
+
+
+
+
+</body>
+<script type="text/javascript">
+var buyData = {
+    beike_price:"<%-beike_price%>",
+    vip_price:"<%-vip_price%>",
+    market_price:"<%-market_price%>",
+    pic_info_url:"<%-pic_info_url%>",
+    item_name:"<%-item_name%>",
+    desc1:"<%-desc1%>",
+    item_store_id:"<%-item_store_id%>",
+	store_id:"<%-store_id%>", 
+}
+   
+   var vue = new Vue({
+       el:"#app",
+       data:{},
+       methods:{
+          gotobuy:function() {
+              console.log(buyData)
+            if(window.jsObj) {
+                    window.jsObj.showSelectDialog(JSON.stringify(buyData));
+              } else {
+                setupWebViewJavascriptBridge(function(bridge) {
+                  bridge.callHandler('showSelectDialog', buyData);
+               });
+          }
+
+       }
+     }
+       
+   })
+   M.initSwipe();
+</script>
+</html>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdMemberAssetLogDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdMemberAssetLog">
+        <id column="log_id" jdbcType="VARCHAR" property="logId"/>
+        <result column="asset_id" jdbcType="VARCHAR" property="assetId"/>
+        <result column="member_type_key" jdbcType="VARCHAR" property="memberTypeKey"/>
+        <result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="pre_balance" jdbcType="DECIMAL" property="preBalance"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="balance" jdbcType="DECIMAL" property="balance"/>
+        <result column="tracked_date" jdbcType="TIMESTAMP" property="trackedDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    log_id, asset_id, member_type_key, member_id, category, pre_balance, amount, balance, 
+    tracked_date, remark
+  </sql>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.finance.street.entity.FdMemberAssetLog"
+            useGeneratedKeys="true" keyProperty="logId">
+        insert into fd_member_asset_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="assetId != null">
+                asset_id,
+            </if>
+            <if test="memberTypeKey != null">
+                member_type_key,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="preBalance != null">
+                pre_balance,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="balance != null">
+                balance,
+            </if>
+            <if test="trackedDate != null">
+                tracked_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="assetId != null">
+                #{assetId,jdbcType=VARCHAR},
+            </if>
+            <if test="memberTypeKey != null">
+                #{memberTypeKey,jdbcType=VARCHAR},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="preBalance != null">
+                #{preBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="balance != null">
+                #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="trackedDate != null">
+                #{trackedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdTransactionsResultDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdTransactionsResult">
+        <id column="transaction_id" jdbcType="BIGINT" property="transactionId"/>
+        <result column="transaction_no" jdbcType="VARCHAR" property="transactionNo"/>
+        <result column="data_source" jdbcType="VARCHAR" property="dataSource"/>
+        <result column="trade_type_key" jdbcType="VARCHAR" property="tradeTypeKey"/>
+        <result column="order_type_key" jdbcType="VARCHAR" property="orderTypeKey"/>
+        <result column="payment_way_key" jdbcType="VARCHAR" property="paymentWayKey"/>
+        <result column="transaction_date" jdbcType="TIMESTAMP" property="transactionDate"/>
+        <result column="detail" jdbcType="VARCHAR" property="detail"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo"/>
+        <result column="out_trade_body" jdbcType="VARCHAR" property="outTradeBody"/>
+        <result column="transaction_body" jdbcType="VARCHAR" property="transactionBody"/>
+        <result column="buyer_member_type" jdbcType="VARCHAR" property="buyerMemberType"/>
+        <result column="buyer_id" jdbcType="VARCHAR" property="buyerId"/>
+        <result column="buyer_name" jdbcType="VARCHAR" property="buyerName"/>
+        <result column="buyer_contact" jdbcType="VARCHAR" property="buyerContact"/>
+        <result column="buyer_account_no" jdbcType="VARCHAR" property="buyerAccountNo"/>
+        <result column="buyer_account_name" jdbcType="VARCHAR" property="buyerAccountName"/>
+        <result column="seller_member_type" jdbcType="VARCHAR" property="sellerMemberType"/>
+        <result column="seller_id" jdbcType="VARCHAR" property="sellerId"/>
+        <result column="seller_name" jdbcType="VARCHAR" property="sellerName"/>
+        <result column="seller_contact" jdbcType="VARCHAR" property="sellerContact"/>
+        <result column="seller_account_no" jdbcType="VARCHAR" property="sellerAccountNo"/>
+        <result column="seller_account_name" jdbcType="VARCHAR" property="sellerAccountName"/>
+        <result column="transaction_status" jdbcType="VARCHAR" property="transactionStatus"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="closed_date" jdbcType="DATE" property="closedDate"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="external_number" jdbcType="VARCHAR" property="externalNumber"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    transaction_id, transaction_no, data_source, trade_type_key, order_type_key, payment_way_key, 
+    transaction_date, detail, amount, out_trade_no, out_trade_body, transaction_body, 
+    buyer_member_type, buyer_id, buyer_name, buyer_contact, buyer_account_no, buyer_account_name, 
+    seller_member_type, seller_id, seller_name, seller_contact, seller_account_no, seller_account_name, 
+    transaction_status, created_date, modified_date, closed_date, remark, external_number
+  </sql>
+
+    <select id="selectByTransactionNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_transactions_result
+        where transaction_no = #{transactionNo,jdbcType=VARCHAR} limit 0,1 for update
+    </select>
+
+    <select id="selectByOutTradeNoAndPayWay" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_transactions_result
+        where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+        <if test="payWay != null">
+            and payment_way_key = #{payWay,jdbcType=VARCHAR}
+        </if>
+        <if test="transactionStatus != null">
+            and transaction_status = #{transactionStatus,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_transactions_result
+        <where>
+            <if test="outTradeNo != null">
+                and out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="tradeTypeKey != null">
+                and trade_type_key = #{tradeTypeKey,jdbcType=VARCHAR}
+            </if>
+            <if test="orderTypeKey != null">
+                and order_type_key = #{orderTypeKey,jdbcType=VARCHAR}
+            </if>
+            <if test="payWayKey != null">
+                and payment_way_key = #{payWayKey,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionStatus != null">
+                and transaction_status = #{transactionStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDateBegin != null">
+                and created_date &gt; #{createdDateBegin,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdDateEnd != null">
+                and created_date &lt; #{createdDateEnd,jdbcType=TIMESTAMP}
+            </if>
+            <if test="transactionDateBegin != null">
+                and transaction_date &gt; #{transactionDateBegin,jdbcType=TIMESTAMP}
+            </if>
+            <if test="transactionDateEnd != null">
+                and transaction_date &lt; #{transactionDateEnd,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.finance.street.entity.FdTransactionsResult"
+            useGeneratedKeys="true" keyProperty="transactionId">
+        insert into fd_transactions_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="transactionNo != null">
+                transaction_no,
+            </if>
+            <if test="dataSource != null">
+                data_source,
+            </if>
+            <if test="tradeTypeKey != null">
+                trade_type_key,
+            </if>
+            <if test="orderTypeKey != null">
+                order_type_key,
+            </if>
+            <if test="paymentWayKey != null">
+                payment_way_key,
+            </if>
+            <if test="transactionDate != null">
+                transaction_date,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="outTradeBody != null">
+                out_trade_body,
+            </if>
+            <if test="transactionBody != null">
+                transaction_body,
+            </if>
+            <if test="buyerMemberType != null">
+                buyer_member_type,
+            </if>
+            <if test="buyerId != null">
+                buyer_id,
+            </if>
+            <if test="buyerName != null">
+                buyer_name,
+            </if>
+            <if test="buyerContact != null">
+                buyer_contact,
+            </if>
+            <if test="buyerAccountNo != null">
+                buyer_account_no,
+            </if>
+            <if test="buyerAccountName != null">
+                buyer_account_name,
+            </if>
+            <if test="sellerMemberType != null">
+                seller_member_type,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="sellerName != null">
+                seller_name,
+            </if>
+            <if test="sellerContact != null">
+                seller_contact,
+            </if>
+            <if test="sellerAccountNo != null">
+                seller_account_no,
+            </if>
+            <if test="sellerAccountName != null">
+                seller_account_name,
+            </if>
+            <if test="transactionStatus != null">
+                transaction_status,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="modifiedDate != null">
+                modified_date,
+            </if>
+            <if test="closedDate != null">
+                closed_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="externalNumber != null">
+                external_number,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="transactionNo != null">
+                #{transactionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dataSource != null">
+                #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeTypeKey != null">
+                #{tradeTypeKey,jdbcType=VARCHAR},
+            </if>
+            <if test="orderTypeKey != null">
+                #{orderTypeKey,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentWayKey != null">
+                #{paymentWayKey,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionDate != null">
+                #{transactionDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeBody != null">
+                #{outTradeBody,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionBody != null">
+                #{transactionBody,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerMemberType != null">
+                #{buyerMemberType,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerName != null">
+                #{buyerName,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerContact != null">
+                #{buyerContact,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerAccountNo != null">
+                #{buyerAccountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerAccountName != null">
+                #{buyerAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerMemberType != null">
+                #{sellerMemberType,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerName != null">
+                #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerContact != null">
+                #{sellerContact,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerAccountNo != null">
+                #{sellerAccountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerAccountName != null">
+                #{sellerAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionStatus != null">
+                #{transactionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closedDate != null">
+                #{closedDate,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="externalNumber != null">
+                #{externalNumber,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.finance.street.entity.FdTransactionsResult">
+        update fd_transactions_result
+        <set>
+            <if test="transactionNo != null">
+                transaction_no = #{transactionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dataSource != null">
+                data_source = #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeTypeKey != null">
+                trade_type_key = #{tradeTypeKey,jdbcType=VARCHAR},
+            </if>
+            <if test="orderTypeKey != null">
+                order_type_key = #{orderTypeKey,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentWayKey != null">
+                payment_way_key = #{paymentWayKey,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionDate != null">
+                transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeBody != null">
+                out_trade_body = #{outTradeBody,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionBody != null">
+                transaction_body = #{transactionBody,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerMemberType != null">
+                buyer_member_type = #{buyerMemberType,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                buyer_id = #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerName != null">
+                buyer_name = #{buyerName,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerContact != null">
+                buyer_contact = #{buyerContact,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerAccountNo != null">
+                buyer_account_no = #{buyerAccountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerAccountName != null">
+                buyer_account_name = #{buyerAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerMemberType != null">
+                seller_member_type = #{sellerMemberType,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerName != null">
+                seller_name = #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerContact != null">
+                seller_contact = #{sellerContact,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerAccountNo != null">
+                seller_account_no = #{sellerAccountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerAccountName != null">
+                seller_account_name = #{sellerAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionStatus != null">
+                transaction_status = #{transactionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closedDate != null">
+                closed_date = #{closedDate,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="externalNumber != null">
+                external_number = #{externalNumber,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where transaction_id = #{transactionId,jdbcType=BIGINT}
+        <if test="oldStatus != null">
+            and transaction_status = #{oldStatus,jdbcType=VARCHAR}
+        </if>
+    </update>
+
+</mapper>

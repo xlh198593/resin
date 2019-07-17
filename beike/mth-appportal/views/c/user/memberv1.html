@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>会员中心</title>
+        <link rel="stylesheet" href="/css/payback/user_memeber1.css?v20181129">
+        <style>
+            #app {
+    width: 10rem;
+    overflow: auto;
+    /* overflow: hidden; */
+    height:17.133333rem;
+    margin:0 auto;
+    /* position: relative; */
+}
+         .usercontain .head_title {
+             height:1.413333rem;
+             margin-top:.253333rem;
+             position: relative;
+         }
+         .head_title img {
+             margin-top:.093333rem;
+             position:absolute;
+            
+         }
+         .usercontain .headimg {
+            height:1.173333rem;
+             width:1.173333rem;
+             margin-left:0.2rem;
+         }
+         .user_content {
+           position: absolute;
+           left:1.653333rem;
+           height:1.413333rem;
+           width:3rem;
+           color:#AB6B07;
+         }
+         .user_name {
+             height:.386667rem;
+             width:3rem;
+         }
+         .head_title .year_icon {
+             height:.32rem;
+             width:.32rem;
+             display:inline-block;
+             /* float:left; */
+             /* margin-top:.45rem;
+             margin-left:.173333rem; */
+             background: url("/image/newmember/yearicon.png");
+             background-size: 100% 100%;
+          }
+          .username_tilte {
+              font-size:.386667rem;
+              height:.386667rem;
+          }
+          .usernmae_user {
+              float:left;
+              font-weight: 600;
+          }
+          .year_icon {
+              float:left;
+              margin-top:0.05rem;
+              margin-left:0.2rem;
+          }
+          .user_content_endtime {
+              height:.253333rem;
+              font-size:.253333rem;
+              margin-top:.12rem;
+          }
+          .goto_remew {
+              line-height:.4rem;
+              width:1.866667rem;
+              border-radius: .186667rem;
+              background-color: #AB6B07;
+              color:#FFFFFF;
+              text-align: center;
+              margin-top:.253333rem;
+          }
+          .head_title .remew {
+            position: absolute;
+            height:.933333rem;
+            width:2.666667rem;
+            border-top-left-radius: 0.4777775rem;
+            border-bottom-left-radius: 0.4777775rem;
+            right:0;
+            top:.173333rem;
+            color:#AB6B07;
+            background:rgba(0,0,0,0.1);
+           }
+           .remew_icon {
+               height:.52rem;
+               width:.44rem;
+               display: inline-block;
+               position: absolute;
+               left:.2rem;
+               top:.213333rem;
+               background: url("/image/newmember/money.png");
+               background-size: 100% 100%;
+           }
+           .head_title .remew_titile {
+               display: inline-block;
+               position:absolute;
+               left:.76rem;
+               top:.34rem;
+           }
+           .sign_in {
+               height:2.4rem;
+               width:9.466667rem;
+               margin:0 auto;
+               margin-top:.4rem;
+               background-color: #F2DAA2;
+               border-radius: .133333rem;
+           }
+           .sign_in_every {
+               height:.84rem;
+           }
+         .px {
+            width:9.466667rem;
+            height:1px;
+            background:rgba(198,178,124,1);
+            box-shadow:0px 1px 2px 0px rgba(251,244,226,1);
+         }
+         .sign_in_every .left,.sign_in_every .right {
+             line-height:.84rem;
+             font-size:.4rem;
+             float:left;
+             margin-left:.2rem;
+             color:#AB6B07;
+         }
+         .sign_in_every .right {
+             float:right;
+             margin-right:.2rem;
+             color:#333333;
+         }
+         .sign_in_content {
+             height:1.546667rem;
+             position: relative;
+             /* border:1px solid #F2DAA2; */
+         }
+         .sign_in_have,.sign_id_get {
+             height:.36rem;
+             font-size:.373333rem;
+             color:#333333;
+             margin-top:.28rem;
+             margin-left:0.2rem;
+         }
+        .gotosignin,.gotosignin_no {
+            height:.666667rem;
+            line-height: .666667rem;
+            width:2.4rem;
+            text-align: center;
+            position: absolute;
+            top:.4rem;
+            right:.4rem;
+            border-radius: .333333rem;
+            font-size:.4rem;
+            color:#FFFFFF;
+            background-color: #AB6B07;
+        }
+        .gotosignin_no {
+            background-color: #FEF1C5;
+            color:#AB6B07;
+            top:.4rem;
+            right:.4rem;
+
+        }
+        .sign_in_right {
+            display: block;
+            height:.32rem;
+            width:.186667rem;
+            margin-left:0.1rem;
+            float:right;
+            margin-top:0.27rem;
+            background: url("/image/newmember/sign_in_right.png");
+            background-size: 100% 100%;
+        }
+        .singIn {
+            height:9rem;
+            width:10rem;
+            position:fixed;
+            top:3rem;
+            background: url("/image/newmember/sign111.png");
+            background-size: 100% 100%;
+            z-index:3;
+        }
+        .singIn_bgc {
+            height: 20rem;
+            width: 10rem;
+            opacity: 0.7;
+            top:0;
+            position: fixed;
+            background-color: black;
+            z-index: 1;
+        }
+        .singIn_send {
+            height:.64rem;
+            width:10rem;
+             font-size:.666667rem;
+             text-align: center;
+             margin-top:.266667rem;
+             margin-top:9.266667rem;
+        }
+        .singIn_btn {
+            height:1.266667rem;
+            line-height:1.266667rem;
+            width:6.84rem;
+            margin:0 auto;
+            margin-top:0.5rem;
+            text-align: center;
+            font-size:.48rem;
+            background-color: #E81B7F;
+            color:#FFFFFF;
+            border-radius: .2rem;
+        }
+        .singIn_closebtn {
+            height:.52rem;
+            width:0.52rem;
+            margin:0 auto;
+            margin-top:.633333rem;
+            border-radius: 0.26rem;
+            background: url("/image/newmember/singIn_close.png");
+            background-size: 100% 100%;
+        }
+        .singIn_tishi {
+            /* height:1.5rem; */
+            width:7rem;
+            position:fixed;
+            top:8rem;
+            left:1.5rem;
+            background-color: #333333;
+            opacity: 0.7;
+            border-radius: .2rem;
+            font-size:0.45rem;
+            color:#FFFFFF;
+            line-height:0.7rem;
+            text-align: center;
+            padding:0.2rem 0.2rem;
+        }
+        .endSingIn_tishi {
+            height:4.666667rem;
+            width:6.666667rem;
+            position:fixed;
+            top:7.186667rem;
+            left:1.666667rem;
+            z-index:2;
+            background-color: #FFFFFF;
+            padding:0 0.2rem;
+            border-radius: .2rem;
+        }
+        .endSingIn_title {
+            height:1.186667rem;
+            line-height:1.186667rem;
+            text-align: center;
+            font-size:.426667rem;
+            color:#E81B7F;
+            border-bottom:2px solid #E81B7F;
+           
+        }
+        .endSingIn_content {
+            height:1.013333rem;
+            width:6.5rem;
+            line-height:.58rem;
+            font-size:.373333rem;
+            color:#333333;
+            margin:0 auto;
+            margin-top:.613333rem;
+            text-align: center;
+        }
+        .endSingIn_close {
+            height:.413333rem;
+            width:1.213333rem;
+            color:#E81B7F;
+            font-size:.326667rem;
+            text-align: center;
+            margin:0 auto;
+              }
+        .endSingIn_kx {
+            height:1px;
+            margin-top:.746667rem;
+            background-color: #D8D8D8;
+            margin-bottom:.333333rem;
+        }
+        .usercontain .usermessage {
+            margin-top:0.24rem;
+        }
+        .cjtitle {
+            height:1.6rem;
+            line-height:1.6rem;
+            font-size:0.4rem;
+            text-align: center;
+            color:#D8D8D8;
+        }
+        [v-cloak] {
+           display: none;
+          }
+        </style>
+        <script type="text/javascript" src="/js/third-part/md5.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <% if(login_status == '0') {%>
+            <div class="nologin">
+                <div class="title">超级会员</div>
+                <div class="headcontain">
+                    <div class="header">
+                        <img src="/image/newmember/headimg.png" alt="">
+                    </div>
+                    <div class="message">
+                        <div class="loginstatus">未登录</div>
+                        <div class="logintishi">登录后可享受svip特权</div>
+                    </div>
+                    <div class="loginbtn" @click="gotologin()">立即登录</div>
+
+                </div>
+            </div>
+            <div class="memberlegal">
+                <div class="membertitle"></div>
+                <div class="huiyuanquanyi">
+                            <div class="sigle">
+                                <div class="super common" @click="gotoqy('8')">
+                                    <div class="icon supericon1"></div>
+                                    <div class="explain">超级会员日</div>
+                                    <div class="explainfu">专属购物节</div>
+                                </div>
+                                <div class="remendermember common" @click="gotoqy('4')">
+                                    <div class="icon remendermembericon1"></div>
+                                    <div class="explain">推荐会员奖励</div>
+                                    <div class="explainfu">更高奖励</div>
+                                </div>
+                                <div class="zanding common" @click="gotoqy('2')">
+                                    <div class="icon shengriliquanicon1"></div>
+                                    <div class="explain">生日礼包</div>
+                                    <div class="explainfu">不一样的礼物</div>
+                                </div>
+                                <div class="zanding common" @click="gotoqy('3')">
+                                    <div class="icon mianyouicon1"></div>
+                                    <div class="explain">免邮券</div>
+                                    <div class="explainfu">免邮更优惠</div>
+                                </div>
+                                <div class="placeanorder common" @click="gotoqy('1')">
+                                    <div class="icon placeanordericon1"></div>
+                                    <div class="explain">赠送礼券</div>
+                                    <div class="explainfu">价值399元</div>
+                                </div>
+                                <div class="sendbeike common" @click="gotoqy('5')">
+                                    <div class="icon sendbeike11"></div>
+                                    <div class="explain">赠送贝壳</div>
+                                    <div class="explainfu">价值1314元</div>
+                                </div>
+
+                                <div class="honorable common" @click="gotoqy('6')">
+                                    <div class="icon honorableicon1"></div>
+                                    <div class="explain">尊贵标识</div>
+                                    <div class="explainfu">贵族名片</div>
+
+                                </div>
+                                <div class="zanding monthq common" @click="gotoqy('7')">
+                                    <div class="icon meiriliquanicon1"></div>
+                                    <div class="explain">每月优惠券</div>
+                                    <div class="explainfu">超值优惠券</div>
+
+                                </div>
+
+
+                            </div>
+                </div>
+                <div class="bgc" v-if="bgc"></div>
+            </div>
+            <%} else if(login_status == '1' && member == '1') {%>
+                <div class="usercontain">
+                    <div class="cjtitle">超级会员</div>
+                    <div class="usermessage">
+                        <div class="head_title">
+                                <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" class="headimg" />
+                                <div class="user_content">
+                                        <div class="username_tilte"><span class="usernmae_user"><%=nick_name%></span><span class="year_icon"></span></div>
+                                        <div class="user_content_endtime"><%=end_time%>到期</div>
+                                        <div class="goto_remew" @click="gotoorderdetail()">立即续费</div>
+                                        
+                                </div>
+                                <div class="remew">
+                                    <span class="remew_icon" src="/image/newmember/maishoujingxuan.png"></span>
+                                    <span class="remew_titile"  @click="gotorealize('yqhydlq')">邀请得奖励</span>
+                                </div>
+                        </div>
+                        <div class="progressendtime">
+                            <div class="left">
+                                <% if(level == "1") {%>
+                                    <div class="leftnode leftnode1"></div>
+                                    <div class='progress' ref="progress">
+                                        <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                    </div>
+                                    <div class='rightnode rightnode2'></div>
+                                    <%} else if(level == "7") {%>
+                                        <div class="leftnode leftnode6"></div>
+                                        <div class='progress' ref="progress">
+                                            <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                        </div>
+                                        <div class='rightnode rightnode7'></div>
+                                        <%}else{%>
+                                            <div class="leftnode leftnode<%=level%>"></div>
+                                            <div class='progress' ref="progress">
+                                                <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                            </div>
+                                            <div class='rightnode rightnode<%=level+1%>'></div>
+                                            <%}%>
+                                            <div class="growth_value" v-bind:style="{'margin-left':marginLeft}">{{growth_value}}</div>
+                                        
+                            </div>
+                            <div class="endtime" @click="gotogrowthvalue()">
+                                查看成长值>
+                            </div>
+                            
+                            
+
+                        </div>
+                        <div class="rend">
+                            <div class="title">
+                                <div>已为您节省</div>
+                                <div @click="gotoliquan()">礼券</div>
+                                <div @click="gotoliquan()">免邮券</div>
+                            </div>
+                            <div class="detail">
+                                <div>
+                                    <%-beike_credit?beike_credit:0%>元</div>
+                                <div>
+                                    <%-youhui?youhui:0%>张</div>
+                                <div>
+                                    <%-mianyou?mianyou:0%>张</div>
+                            </div>
+                        </div>
+                        <div class="downpic downpic<%=level%>"></div>
+                       
+                    </div>
+                   
+
+                </div>
+
+                <div class="downcontain">
+
+                    <div class="downsilder">
+                        <div class="ellipse"></div>
+                        <div class="invio">
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/maishoujingxuan.png" alt="">
+                                <div>正品保障</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/chaozhiyouhui.png" alt="">
+                                <div>超值优惠</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/jisufahuo.png" alt="">
+                                <div>急速发货</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/fanyong.png" alt="">
+                                <div>超高奖励</div>
+                            </div>
+                        </div>
+
+                        <% } else {%>
+                            <div class="nologin">
+                                <div class="title">超级会员</div>
+                                <div class="headcontain">
+                                    <div class="headerout">
+                                        <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" />
+                                    </div>
+                                    <div class="message">
+                                        <div class="loginstatus">
+                                            <%-nick_name%>
+                                        </div>
+                                        <div class="logintishi1">您还没有成为超级会员</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memberlegal">
+                                <div class="membertitle"></div>
+                                <div class="huiyuanquanyi">
+                                    <div class="sigle">
+                                        <div class="super common" @click="gotoqy('8')">
+                                            <div class="icon supericon1"></div>
+                                            <div class="explain">超级会员日</div>
+                                            <div class="explainfu">专属购物节</div>
+                                        </div>
+                                        <div class="remendermember common" @click="gotoqy('4')">
+                                            <div class="icon remendermembericon1"></div>
+                                            <div class="explain">推荐会员奖励</div>
+                                            <div class="explainfu">更高奖励</div>
+                                        </div>
+                                        <div class="zanding common" @click="gotoqy('2')">
+                                            <div class="icon shengriliquanicon1"></div>
+                                            <div class="explain">生日礼包</div>
+                                            <div class="explainfu">不一样的礼物</div>
+                                        </div>
+                                        <div class="zanding common" @click="gotoqy('3')">
+                                            <div class="icon mianyouicon1"></div>
+                                            <div class="explain">免邮券</div>
+                                            <div class="explainfu">免邮更优惠</div>
+                                        </div>
+                                        <div class="placeanorder common" @click="gotoqy('1')">
+                                            <div class="icon placeanordericon1"></div>
+                                            <div class="explain">赠送礼券</div>
+                                            <div class="explainfu">价值399元</div>
+                                        </div>
+                                        <div class="sendbeike common" @click="gotoqy('5')">
+                                            <div class="icon sendbeike11"></div>
+                                            <div class="explain">赠送贝壳</div>
+                                            <div class="explainfu">价值1314元</div>
+                                        </div>
+
+                                        <div class="honorable common" @click="gotoqy('6')">
+                                            <div class="icon honorableicon1"></div>
+                                            <div class="explain">尊贵标识</div>
+                                            <div class="explainfu">贵族名片</div>
+
+                                        </div>
+                                        <div class="zanding monthq common" @click="gotoqy('7')">
+                                            <div class="icon meiriliquanicon1"></div>
+                                            <div class="explain">每月优惠券</div>
+                                            <div class="explainfu">超值优惠券</div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <%}%>
+                                    <%if(login_status == '1' && member == '1') {%>
+                                        <%if(is_closedBeta == "N" || have_next == "N") {%>
+                                        
+                                        <%} else {%>
+                                            <div class="sign_in">
+                                                <div class="sign_in_every">
+                                                    <div class="left">签到得礼券</div>
+                                                    <div class="right" @click="gotocalender()">签到日历<span class="sign_in_right"></span></div>
+                                                </div>
+                                                <div class="px"></div>
+                                                <div class="sign_in_content">
+                                                    <div class="sign_in_have" v-if="need_signIn != 0">还签到{{need_signIn}}次</div>
+                                                    <div class="sign_in_have" v-else>您已达到本轮签到要求</div>
+                                                    <div class="sign_id_get" v-if="need_signIn != 0">即可获得399元礼券一张</div>
+                                                    <div class="sign_id_get" v-else>已解锁一张礼券</div>
+                                                    <div class='gotosignin' v-if="is_signIn !='Y'" @click="goto_singIn()">立即签到</div>
+                                                    <div class='gotosignin_no' v-else @click="goto_singIn()">今日已签</div>
+                                                    <!-- <div class='gotosignin_no'><span v-if="is_signIn =='Y'">今日已签</span> <span v-else>今日未签</span> </div> -->
+                                                </div>
+                                            </div>
+                                        <%}%>
+                                        <div class="SVIP_title"></div>
+                                        <div class="singIn_tishi" v-if="singIn_tishi">{{sinInTiShi}}</div>   
+                                        <div class="huiyuanquanyi">
+                                            <div class="sigle">
+                                                <div class="super common" @click="gotoqy('8')">
+                                                    <div class="icon supericon"></div>
+                                                    <div class="explain2">超级会员日</div>
+                                                    <div class="explainfu">专属购物节</div>
+                                                </div>
+                                                <div class="remendermember common" @click="gotoqy('4')">
+                                                    <div class="icon remendermembericon"></div>
+                                                    <div class="explain2">推荐会员奖励</div>
+                                                    <div class="explainfu">更高奖励</div>
+                                                </div>
+                                                <div class="zanding common" @click="gotoqy('2')">
+                                                    <div class="icon shengriliquanicon"></div>
+                                                    <div class="explain2">生日礼包</div>
+                                                    <div class="explainfu">不一样的礼物</div>
+                                                </div>
+                                                <div class="zanding common" @click="gotoqy('3')">
+                                                    <div class="icon mianyouicon"></div>
+                                                    <div class="explain2">免邮券</div>
+                                                    <div class="explainfu">免邮更优惠</div>
+                                                </div>
+                                                <div class="placeanorder common" @click="gotoqy('1')">
+                                                    <div class="icon placeanordericon"></div>
+                                                    <div class="explain2">赠送礼券</div>
+                                                    <div class="explainfu">价值399元</div>
+                                                </div>
+                                                <div class="sendbeike common" @click="gotoqy('5')">
+                                                    <div class="icon sendbeike1"></div>
+                                                    <div class="explain2">赠送贝壳</div>
+                                                    <div class="explainfu">价值1314元</div>
+                                                </div>
+
+                                                <div class="honorable common" @click="gotoqy('6')">
+                                                    <div class="icon honorableicon"></div>
+                                                    <div class="explain2">尊贵标识</div>
+                                                    <div class="explainfu">贵族名片</div>
+
+                                                </div>
+                                                <div class="zanding monthq common" @click="gotoqy('7')">
+                                                    <div class="icon meiriliquanicon"></div>
+                                                    <div class="explain2">每月优惠券</div>
+                                                    <div class="explainfu">超值优惠券</div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="gotorecharge public" @click="gotorealize('yqhydlq')">分享会员,最低可得120元红包></div>
+                                        <%}else{%>
+                                            <div class="recharge_select">
+                                                <div class="contain">
+                                                    <div class="recharge_select_title">SVIP年度会员</div>
+                                                    <div class="recharge_select_detail">
+                                                        <div class="left">
+                                                            <span class="little">￥</span>
+                                                            <span>399</span>
+                                                            <span class="little">/</span>
+                                                            <span class="little">年</span>
+                                                        </div>
+                                                        <div class="right">
+                                                            <%if(login_status == '1' && member == '0') {%>
+                                                            <div class="up2">送399元礼券1314个贝壳</div>
+                                                            <div class="down1">预计为您节省2120.00元</div>
+                                                            <%}else{%>
+                                                            <div class="up1">超值会员超值价</div>
+                                                            <div class="down1">送399元礼券1314个贝壳</div>
+                                                            <%}%>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                   <div class="gotorecharge2" @click="gotoorderdetail()">立即开通,尊享特权 ></div>
+
+                                                </div>
+                                            </div>
+                                            <%}%>
+
+
+                                                            <% if (login_status == '1') {%>
+                                                                <div class="singIn_bgc" v-if="signIn == '1'"></div>
+                                                                <div class="singIn" v-cloak v-if="signIn == '1'">
+                                                                    <div class="singIn"></div>
+                                                                    <div class="singIn_send" style="color:#FFFFFF"> 获得399礼券一张</div>
+                                                                    <div class="singIn_btn" @click="activateNow()">立即激活</div>
+                                                                    <div class="singIn_closebtn" @click="singInclose()"></div>
+                                                                </div>
+                                                                <div class="singIn_bgc" v-if="endSingIn_tishi"></div>
+                                                                <div class="endSingIn_tishi" v-cloak v-if="endSingIn_tishi">
+                                                                    <div class="endSingIn_title">温馨提示</div>
+                                                                    <div class="endSingIn_content">您当前签到周期内，已成功领取礼包。
+                                                                        继续签到，不会计入下次签到的周期。</div>
+                                                                    <div class="endSingIn_kx"></div>  
+                                                                     <div class="endSingIn_close" @click="endSingInClose()">知道了</div>
+                                                                </div>
+                                                                
+                                                               
+
+
+                                                                <%} else {%>
+                                                                    <div class="backgroundblack" v-if="alert_login != '0'">
+                                                                        <div class="alert1">
+                                                                            <div class="up">
+                                                                                <div class="logintips">提示</div>
+                                                                                <div class="agreetit">由于您还未登录账号</div>
+                                                                                <div class="agreetit1">请登录后再进行此项操作</div>
+                                                                                <div class="know" @click="gotologin()">登录</div>
+                                                                            </div>
+                                                                            <div class="notloginclose" v-on:click="changeclosestatus('')"></div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <%}%>
+                            </div>
+                    </div>
+                    
+                </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                singIn_tishi:false,
+                paymoney: '399',
+                member_id: "<%-member_id%>",
+                pointdown: false,
+                signIn:"0",
+                bgc: false,
+                need_signIn:"<%=need_signIn%>",
+                sinInTiShi:"",
+                singStates:"今日未签",
+                password: "",
+                alert_login: "<%-login_status%>",
+                marginLeft: 60,
+                level: "<%-level%>",
+                is_signIn:"<%-is_signIn%>",
+                endSingIn_tishi:false,
+                width: 0,
+                growth_value: "<%-growth_value%>",
+            }
+        },
+        computed: {
+            paymoney: function () {
+                return this.month ? 68 : (this.quarter ? 168 : (this.year ? 398 : 8));
+            }
+        },
+        methods: {
+            gotocalender:function() {
+                gotosumit("gotocalender",{})
+            },
+            endSingInClose:function() {
+               this.endSingIn_tishi = false;
+            },
+            activateNow:function() {
+                this.signIn = "0";
+                this.singIn_tishi = true;
+                this.sinInTiShi ="激活成功,可在'我的-礼券'查看";
+            },
+            gotoliquan:function() {
+                gotosumit("gotoliquan",{})
+            },
+            goto_singIn:function() {
+                var self = this;
+            $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/signin',
+                    data: {
+                        member_coupons_id:"<%=member_coupons_id%>",
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                           self.singIn_tishi = true;
+                           self.sinInTiShi = data.error_msg
+                        } else {
+                            if(data.data.signInDay ==25) {
+                                self.signIn = "1";
+                                self.need_signIn--;
+                                self.is_signIn = "Y";
+                            } else if(data.data.signInDay > 25) {
+                                self.endSingIn_tishi = true;
+                                self.is_signIn = "Y";
+                            } else {
+                                self.need_signIn--;
+                                self.singIn_tishi = true;
+                                self.is_signIn = "Y";
+                                self.sinInTiShi="您已签到成功，离399礼券更近一步"
+                            }
+                           
+                        }
+                    }
+                });
+            },
+            singInclose:function() {
+                 this.signIn = 0;
+            },
+            gotorealize:function(type) {
+                gotosumit("torealize1",{type:type})
+            },
+
+            changeclosestatus: function () {
+                    this.alert_login = '0';
+                    this.bgc = false;
+            },
+            gotoqy: function (type) {
+                gotosumit('goromemberqy', { type: type });
+            },
+            gotologin: function () {
+                gotosumit("login", {});
+            },
+            gotogrowthvalue: function () {
+                gotosumit("gotogrowthvalue", {});
+            },
+            gotoorderdetail: function () {
+                if (this.alert_login == 0) return this.alert_login = 1;
+                var memberlevel = this.paymoney;
+                var obj = {};
+                obj.memberlevel = 399;
+                gotosumit("gotoorderdetail", obj);
+            }
+        },
+        watch: {
+            sinInTiShi:function(current) {
+                var self = this;
+                if(current != "") {
+                   setTimeout(function() {
+                       self.sinInTiShi = "";
+                       self.singIn_tishi = false;
+                   },1500);
+                }
+            }
+        },
+        mounted: function () {
+            <%if (login_status == '1' && member == '1') {%>
+                var progresswidth = this.$refs.progress.clientWidth;
+                var width = 0;
+                switch (this.level) {
+                    case "1":
+                        width = this.growth_value / 400 * progresswidth;
+                        break;
+                    case "2":
+                        width = (this.growth_value - 400) / (1000 - 400) * progresswidth;
+                        break;
+                    case "3":
+                        width = (this.growth_value - 1000) / (2000 - 1000) * progresswidth;
+                        break;
+                    case "4":
+                        width = (this.growth_value - 2000) / (5000 - 2000) * progresswidth;
+                        break;
+                    case "5":
+                        width = (this.growth_value - 5000) / (10000 - 5000) * progresswidth;
+                        break;
+                    case "6":
+                        width = (this.growth_value - 10000) / (20000 - 10000) * progresswidth;
+                        break;
+                    case "7":
+                        width = this.growth_value / 20000 * progresswidth;
+                        break;
+                }
+                var self = this;
+                var WD = 0;
+                var timer = setInterval(function () {
+                    if (
+                        (self.level == '2' && self.growth_value == "400") ||
+                        (self.level == '3' && self.growth_value == "1000") ||
+                        (self.level == '4' && self.growth_value == "2000") ||
+                        (self.level == '5' && self.growth_value == "5000") ||
+                        (self.level == '6' && self.growth_value == "10000") ||
+                        (self.level == '7' && self.growth_value == "20000") ||
+                        (self.level == '1' && self.growth_value == "0")) {
+                        self.width += WD + "px";
+                        clearInterval(timer);
+                        return;
+                    }
+                    if (WD > width) {
+                        WD += 20;
+                        self.width += WD + "px";
+                        self.marginLeft += WD+25+"px";
+                        clearInterval(timer);
+                    } else {
+                        WD += 20;
+                        self.width = WD+ "px";
+                        self.marginLeft = WD+25+"px";
+
+                    }
+
+                }, 40)
+                    <%}%>
+          
+        }
+    })
+        <% if (login_status == '1' && member == '1') {%>
+            var _sroll = document.querySelector('.downsilder');
+            var scrollheight = $(".downcontain").offset().top;
+            var outscroll = document.querySelector('.downcontain');
+            var _star = 0;
+            _sroll.addEventListener('touchstart', function (event) {
+                var _touch = event.touches[0];
+                _star = _touch.pageY;
+            }, false);
+            //获取滑动的距离，添加一个触摸滑动的监听事件
+            _sroll.addEventListener('touchmove', function (event) {
+                //获取手指数组中的第一个（可以用targetTouches）
+
+                var _touch = event.touches[0], height;
+                if (_touch.pageY - _star > 70) {
+                    _sroll.style.top = 70 + 'px';
+                } else if (_touch.pageY - _star < 0) {
+                    _sroll.style.top = 0 + 'px';
+                } else {
+                    _sroll.style.top = _touch.pageY - _star + 'px';
+                }
+
+            }, false);
+            //添加屏幕触摸接触结束的事件
+            _sroll.addEventListener('touchend', function (event) {
+                _star = 0;
+                var time = setInterval(function () {
+                    _sroll.style.top = _star + "px";
+                    clearInterval(time);
+                }, 2);
+            }, false);
+
+  <%}%>
+
+
+
+</script>
+
+</html>

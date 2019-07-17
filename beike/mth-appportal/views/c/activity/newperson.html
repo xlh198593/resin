@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../commonHead.html %>
+    <title>新人专属</title>
+    <style>
+        .head {
+            width:10rem;
+            height:7.96rem;
+            background: url("/image/activity/newperson/head.png");
+            background-size: 100% 100%;
+        }
+        .select-one {
+            height:.866667rem;
+            width:8.4rem;
+            margin:0 auto;
+            background: url("/image/activity/newperson/middle.png");
+            background-size: 100% 100%;
+            margin-top:-1px;
+        }
+        .bottom {
+            height:11.893334rem;
+            width:10rem;
+            background: url("/image/activity/newperson/downwx.png");
+            background-size: 100% 100%;
+        }
+        .select {
+            height:1.933333rem;
+            width:7.706667rem;
+            margin-left:1.146667rem;
+            margin-top:.466667rem;
+        }
+        .select .left {
+            height:1.933333rem;
+            width:3.266667rem;
+            border:1px solid black;
+            float:left;
+            background: url("/image/activity/newperson/ysselect.png");
+            background-size: 100% 100%;
+        }
+        .select .left-no {
+            height:1.933333rem;
+            width:3.266667rem;
+            border:1px solid black;
+            float:left;
+            background: url("/image/activity/newperson/ynselect.png");
+            background-size: 100% 100%;
+        }
+        .select .right {
+            height:1.933333rem;
+            width:3.266667rem;
+            border:1px solid black;
+            float:right;
+            background: url("/image/activity/newperson/bnselect.png");
+            background-size: 100% 100%;
+        }
+        .select .right-no {
+            height:1.933333rem;
+            width:3.266667rem;
+            border:1px solid black;
+            float:right;
+            background: url("/image/activity/newperson/bselect.png");
+            background-size: 100% 100%;
+        }
+        .mobile {
+            height:1.066667rem;
+            width:6.44rem;
+            margin-left:1.693333rem;
+            margin-top:.8rem;
+            font-size:.4rem;
+            font-family:MFLiHei_Noncommercial-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:30px;
+            opacity:0.5;
+            border:2px solid rgba(255,255,255,1);
+            border-radius:10px; 
+            background-color: transparent;
+        }
+        .verification {
+            height:1.066669rem;
+            width:6.57rem;
+            margin-left:1.693333rem;
+            border:1px solid red;
+            margin-top:40px;
+            margin-bottom:1.2rem;
+        }
+        .verification-mobile {
+            height:1.066667rem;
+            width:3.85rem;
+            float:left;
+            font-size:.4rem;
+            font-family:MFLiHei_Noncommercial-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:30px;
+            opacity:0.5;
+            border:2px solid rgba(255,255,255,1);
+            background-color: transparent;
+            border-top-left-radius:10px; 
+            border-bottom-left-radius:10px; 
+        }
+        .getver {
+            height:1.1rem;
+            width:2.48rem;
+            border:2px solid #FFD800;
+            background-color: #FFD800;
+            font-size:.32rem;
+            font-family:MFLiHei_Noncommercial-Regular;
+            font-weight:400;
+            color:rgba(0,0,0,1);
+            line-height:1.066667rem;
+            float:left;
+            text-align: center;
+            /* background: url("/image/activity/newperson/freeget.png");
+            background-size: 100% 100%; */
+        }
+        .freeget {
+            height:1.466667rem;
+            width:5.92rem;
+            margin:0 auto;
+             background: url("/image/activity/newperson/freeget.png");
+            background-size: 100% 100%;
+        }
+        .download,.nonewperson {
+            position: fixed;
+            height:8.586667rem;
+            width:7.466667rem;
+            top:3.786667rem;
+            left:5rem;
+            margin-left:-3.7333335rem;
+            z-index:2;
+            background:rgba(255,255,255,1);
+            border-radius:10px;
+        }
+        .bgc {
+            height:20rem;
+            width:10rem;
+            opacity:0.7;
+            position:absolute;
+            background-color: black;
+            z-index:1;
+        }
+        .img {
+            height:3.466667rem;
+            width:3.733335rem;
+            margin-top:1.346667rem;
+            position: absolute;
+            left:3.733335rem;
+            margin-left:-1.7333335rem;
+            border:1px solid red;
+        }
+        .downloadapp {
+            height:.426667rem;
+            font-size:.426667rem;
+            text-align: center;
+            margin-top:5.106667rem;
+            color:#000000;
+            font-weight: 500;
+        }
+        .downloadappfu {
+            height:.386667rem;
+            font-size:.386667rem;
+            text-align: center;
+            margin-top:.24rem;
+            color:#8F8F8F;
+            font-weight: 500;
+            margin-bottom:.493333rem;
+        }
+        .getbtn {
+            width:5.333333rem;
+            height:.96rem;
+            margin:0 auto;
+            background:linear-gradient(90deg,rgba(74,145,250,1),rgba(100,161,255,1));
+            border-radius:36px;
+            color:#FFFFFF;
+            font-size:.426667rem;
+            text-align: center;
+            line-height: .96rem;
+        }
+        .close {
+            height:.386667rem;
+            width:.386667rem;
+            float:right;
+            margin-right:.266667rem;
+            margin-top:.266667rem;
+            background: url("/image/newmember/close.png");
+            background-size: 100% 100%;
+        }
+        .person {
+            height:3.386667rem;
+            width:2.426667rem;
+            border:1px solid red;
+            position: absolute;
+            left:3.733335rem;
+            margin-left:-1.2133335rem;
+            margin-top:.48rem;
+        }
+        .ts-title {
+            height:.426667rem;
+            font-size:.373333rem;
+            text-align: center;
+            margin-top:4.56rem;
+            color:#333333;
+            font-weight: 500;
+        }
+        .ts-futitle {
+            height:.386667rem;
+            font-size:.373333rem;
+            text-align: center;
+            margin-top:.24rem;
+            color:#333333;
+            font-weight: 500;
+            margin-bottom:.92rem;
+        }
+        .iknow {
+            width:5.333333rem;
+            height:.96rem;
+            margin:0 auto;
+            background:linear-gradient(90deg,rgba(74,145,250,1),rgba(100,161,255,1));
+            border-radius:36px;
+            color:#FFFFFF;
+            font-size:.426667rem;
+            text-align: center;
+            line-height: .96rem;
+        }
+       
+       
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <div class="bgc" v-if="download ||newperson"></div>
+        <div class="head"></div>
+        <div class="download" v-if="download">
+            <div class="close"></div>
+            <div class="img"></div>
+            <div class="downloadapp">下载app</div>
+            <div class="downloadappfu">立即下载app,领取优惠券</div>
+            <div class="getbtn">立即下载</div>
+        </div>
+        <div class="nonewperson" v-if="newperson">
+            <div class="person"></div>
+            <div class="ts-title">很抱歉</div>
+            <div class="ts-futitle">您不是新用户不能享受此优惠</div>
+            <div class="iknow">知道了</div>
+        </div>
+        
+        <div class="bottom">
+            <div class="select-one"></div>
+            <div class="select">
+                <div class="left" v-if="yselect" @click="selecty()"></div> 
+                <div class="left-no" v-else @click="selecty()"></div> 
+                <div class="right-no" v-if="bselect" @click="selectb()"></div>
+                <div class="right" v-else @click="selectb()"></div>
+               
+            </div>
+            <input type="text" class="mobile" placeholder="请输入手机号">
+            <div class="verification">
+                <input type="text" class="verification-mobile" placeholder="请输入验证码" >
+                <div class="getver">获取验证码</div>
+            </div>
+            <div class="freeget"></div>
+        </div>
+
+        
+      
+      </div>
+  
+  </body>
+  <script>
+      var app = new Vue({
+             el: '#app',
+             data:function(){
+                return {
+                 download:false,
+                 newperson:false,
+                 yselect:true,
+                 bselect:false,
+               };
+            },
+            methods:{
+                selecty:function() {
+                  this.yselect = true;
+                  this.bselect = false;
+                },
+                selectb:function() {
+                  this.bselect = true;
+                  this.yselect = false;
+                }
+
+             },
+            mounted:function(){
+
+           }
+  });
+  
+  </script>
+</html>

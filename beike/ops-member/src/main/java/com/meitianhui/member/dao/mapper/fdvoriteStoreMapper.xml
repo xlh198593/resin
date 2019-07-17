@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.member.dao.FavoriteStoreDao">
+
+	<insert id="insertMDFavoriteStore" parameterType="MDFavoriteStore">
+		INSERT INTO
+		md_favorite_store
+		(
+		consumer_id
+		,stores_id
+		,is_llm_stores
+		,created_date
+		,remark
+		)
+		VALUES (
+		#{consumer_id}
+		,#{stores_id}
+		,#{is_llm_stores}
+		,#{created_date}
+		,#{remark}
+		)
+	</insert>
+	
+	<insert id="insertBingStoreLog" parameterType="MDFavoriteStoreLog">
+		INSERT INTO
+		md_favorite_store_log
+		(
+		consumer_id
+		,consumer_mobile
+		,stores_id
+		,stores_mobile
+		,operator
+		,remark
+		,create_date
+		)
+		VALUES (
+		#{consumer_id}
+		,#{consumer_mobile}
+		,#{stores_id}
+		,#{stores_mobile}
+		,#{operator}
+		,#{remark}
+		,NOW()
+		)
+	</insert>
+	
+	
+	<select id="selectBingStoreLogListPage" parameterType="Map"
+		resultType="Map">
+       <![CDATA[ SELECT 
+           fsl.id,
+	       fsl.consumer_id,
+	       fsl.consumer_mobile,
+	       fsl.stores_id,
+	       fsl.stores_mobile,
+	       fsl.operator,
+	       fsl.remark,
+           DATE_FORMAT(fsl.create_date,'%Y-%m-%d %H:%i') AS create_date
+        ]]>
+        FROM md_favorite_store_log fsl where 1=1 
+            <if test="consumer_mobile_search != null and consumer_mobile_search != ''">
+               AND fsl.consumer_mobile=#{consumer_mobile_search}
+            </if>
+            <if test="store_mobile_search != null and store_mobile_search != ''">
+               AND fsl.stores_mobile =#{store_mobile_search}
+            </if>
+            <if test="start_time != null and start_time != ''">
+              <![CDATA[ AND fsl.create_date >=#{start_time} ]]>
+            </if>
+            ORDER BY fsl.create_date DESC
+	</select>
+	
+	
+	<select id="selectMDFavoriteStore" parameterType="Map" resultType="MDFavoriteStore">
+		<![CDATA[
+			SELECT
+				fs.consumer_id
+				,fs.stores_id
+				,fs.is_llm_stores
+			FROM
+				md_favorite_store fs
+		]]>
+		<where>
+			<if test="stores_id_in != null">
+				AND a.stores_id in
+				<foreach item="item" index="index" collection="stores_id_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="consumer_id != null and consumer_id != ''">
+				AND fs.consumer_id=#{consumer_id}
+			</if>
+			<if test="stores_id != null and stores_id != ''">
+				AND fs.stores_id=#{stores_id}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectMDFavoriteStoreList" parameterType="Map"
+		resultType="Map">
+		<![CDATA[
+			SELECT
+				s.stores_id
+				,s.stores_no
+				,s.stores_name
+				,s.desc1
+				,s.area_id
+				,s.address
+				,s.longitude
+				,s.latitude
+				,s.neighbor_pic_path
+				,s.new_facade_pic_path
+				,fs.is_llm_stores
+			FROM
+				md_favorite_store fs inner join md_stores s on fs.stores_id = s.stores_id
+		]]>
+		<where>
+			s.business_status_key &lt;&gt; 'TDJD_04'
+			<if test="consumer_id != null and consumer_id != ''">
+				AND fs.consumer_id=#{consumer_id}
+			</if>
+			<if test="stores_id != null and stores_id != ''">
+				AND fs.stores_id=#{stores_id}
+			</if>
+			<if test="is_llm_stores != null and is_llm_stores != ''">
+				AND fs.is_llm_stores=#{is_llm_stores}
+			</if>
+		</where>
+		ORDER BY fs.created_date DESC
+	</select>
+	
+	<select id="selectMDFavoriteStoreListPage" parameterType="Map"
+		resultType="Map">
+            SELECT 
+            <![CDATA[
+              mfs.consumer_id,
+              mfs.stores_id, 
+              ms.stores_name,
+              ms.contact_person AS store_person,
+              ms.contact_tel AS store_mobile,
+              mc.mobile AS consumer_mobile, 
+              CASE mfs.is_llm_stores WHEN 'Y' THEN '会员' ELSE '意向会员' END AS favorite_status ,
+              ms.address AS store_address,
+              DATE_FORMAT(mfs.created_date,'%Y-%m-%d %H:%i') AS created_date 
+            ]]>
+            FROM md_favorite_store mfs, md_stores ms ,md_consumer mc
+            WHERE mfs.stores_id=ms.stores_id AND mfs.consumer_id=mc.consumer_id 
+            <if test="consumer_mobile != null and consumer_mobile != ''">
+               AND mc.mobile=#{consumer_mobile}
+            </if>
+            <if test="store_mobile != null and store_mobile != ''">
+               AND ms.contact_tel =#{store_mobile}
+            </if>
+            ORDER BY mfs.created_date DESC
+	</select>
+	
+
+	<delete id="deleteMDFavoriteStore" parameterType="Map">
+		DELETE FROM
+		md_favorite_store WHERE consumer_id=#{consumer_id}
+		<if test="stores_id_in != null">
+			AND stores_id in
+			<foreach item="item" index="index" collection="stores_id_in"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="stores_id != null and stores_id != ''">
+			AND stores_id=#{stores_id}
+		</if>
+		<!-- 消费者解绑门店,需要满足绑定时间大于30个工作日 -->
+		AND <![CDATA[DATEDIFF(NOW(),created_date)>30]]> 
+	</delete>
+
+	<update id="updateMDFavoriteStore" parameterType="Map">
+		UPDATE md_favorite_store SET
+		<trim suffixOverrides=",">
+			is_llm_stores = #{is_llm_stores},
+			<if test="created_date != null">
+				created_date = #{created_date},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</trim>
+		<where>
+			<if test="consumer_id != null and consumer_id != ''">
+				AND consumer_id = #{consumer_id}
+			</if>
+			<if test="stores_id != null and stores_id != ''">
+				AND stores_id = #{stores_id}
+			</if>
+			<if test="time != null and time != ''">
+				<!-- 消费者解绑门店,需要满足绑定时间大于30个工作日 -->
+				AND DATEDIFF(NOW(),created_date)>30
+			</if>
+		</where>
+	</update>
+
+	<!-- 查询消费者是否有默认门店 -->
+	<select id="selectMDFavoriteStoreByIsLlmStores" parameterType="Map" resultType="Map">
+		<![CDATA[
+			SELECT
+				fs.consumer_id
+				,fs.stores_id
+				,fs.is_llm_stores
+			FROM
+				md_favorite_store fs
+		]]>
+		<where>
+			AND fs.is_llm_stores = 'Y'
+			<if test="consumer_id != null and consumer_id != ''">
+				AND fs.consumer_id=#{consumer_id}
+			</if>
+		</where>
+	</select>
+
+</mapper>

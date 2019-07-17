@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.goods.dao.PsGoodsActivityDao">
+
+	<sql id="Base_Column_List">
+		goods_activity_id,
+		activity_type, 
+		goods_id, 
+		goods_title,
+		market_price,
+		goods_price, 
+		goods_hongbao, 
+		goods_beike, 
+		pic_info, 
+		order_no,
+		start_date, 
+		end_date, 
+		is_finished, 
+		created_date, 
+		remark
+	</sql>
+
+
+	<select id="selectPsGoodsActivity" parameterType="Map"
+		resultType="com.meitianhui.goods.entity.PsGoodsActivity">
+		select
+		<include refid="Base_Column_List" />
+		FROM ps_goods_activity 
+		<where>
+			1=1
+			<if test="activity_type != null and activity_type != ''">
+				and activity_type =#{activity_type}
+			</if>
+			<if test="is_finished != null and is_finished != ''">
+				and is_finished =#{is_finished}
+			</if>
+			<if test="goods_id != null and goods_id != ''">
+				and goods_id =#{goods_id}
+			</if>
+			<if test="goods_title != null and goods_title != ''">
+				and goods_title =#{goods_title}
+			</if>
+			<if test="activity_type_in != null and activity_type_in.size()>0">
+				AND activity_type in
+				
+				<foreach item="item" index="index" collection="activity_type_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="goods_id_in != null and goods_id_in.size()>0">
+				AND goods_id in
+				<foreach item="item" index="index" collection="goods_code_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY order_no ASC
+	</select>
+
+	<select id="findPsGoodsActivity" parameterType="Map"
+		resultType="Map">
+		select
+			p.goods_id,
+			p.activity_type,
+			p.pic_info,
+			p.order_no,
+			b.sale_qty
+		FROM ps_goods_activity p left join beike_mall_goods b on p.goods_id = b.goods_id
+		<where>
+			(p.end_date >= now() OR p.end_date is NULL)
+			<if test="activity_type != null and activity_type != ''">
+				and p.activity_type =#{activity_type}
+			</if>
+			<if test="is_finished != null and is_finished != ''">
+				and p.is_finished =#{is_finished}
+			</if>
+			<if test="goods_id != null and goods_id != ''">
+				and p.goods_id =#{goods_id}
+			</if>
+			<if test="goods_title != null and goods_title != ''">
+				and p.goods_title =#{goods_title}
+			</if>
+			<if test="activity_type_in != null and activity_type_in.size()>0">
+				AND p.activity_type in
+				
+				<foreach item="item" index="index" collection="activity_type_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="goods_id_in != null and goods_id_in.size()>0">
+				AND p.goods_id in
+				<foreach item="item" index="index" collection="goods_code_in"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY order_no ASC
+	</select>
+
+	<select id="selectBkcqProductsByGoodsId" resultType="map">
+		select p.goods_id, p.goods_code, p.title, p.desc1, p.service_level
+				, p.pic_info, p.pic_detail_info, p.specification
+				, p.market_price, p.sale_price, p.vip_price, p.beike_credit, p.settled_price
+				, p.supplier_id, p.min_buy_qty, p.max_buy_qty, p.delivery_area
+				, p.payment_way, b.store, b.sku_id
+		from gddb.bkcq_products p
+			LEFT JOIN gddb.bkcq_sku_stock b on p.goods_id = b.goods_id
+		WHERE p.goods_id = #{goods_id}
+		and p.supplier_type = 'store'
+		and now() BETWEEN p.activity_start_time and p.ativity_end_time
+		and p.is_deleted = 0
+		and p.status = 'on_shelf'
+		order by p.modified_date desc
+		limit 3
+	</select>
+
+
+	<select id="findAllGoodsBySupplierId" resultType="map">
+		select p.goods_id, p.goods_code, p.title, p.desc1
+			, p.pic_info, p.pic_detail_info, p.service_level
+			, p.market_price, p.sale_price, p.vip_price, p.beike_credit, p.settled_price
+			, p.supplier_id, b.store
+		from gddb.bkcq_products p
+			LEFT JOIN gddb.bkcq_products_stock b on p.goods_id = b.goods_id
+		WHERE p.supplier_id = #{supplier_id}
+			and p.is_deleted = 0
+			and p.supplier_type = 'store'
+			and now() BETWEEN p.activity_start_time and p.ativity_end_time
+			and p.status = 'on_shelf'
+		order by p.modified_date desc
+	</select>
+
+
+
+
+	<select id="findActivityGoodsBySupplierId" resultType="map">
+		SELECT p.goods_id, p.goods_code, p.title, p.desc1, p.pic_info, p.service_level
+		, p.market_price, p.sale_price, p.vip_price, p.beike_credit, p.settled_price
+		, p.shipping_fee, p.supplier_id, p.min_buy_qty, p.max_buy_qty, p.delivery_area
+		, p.payment_way, b.store
+		FROM gddb.bkcq_products p
+			LEFT JOIN gddb.bkcq_products_stock b on p.goods_id = b.goods_id
+		WHERE
+			p.label in (11, 12)
+			and p.supplier_type = 'store'
+			and now() BETWEEN p.activity_start_time and p.ativity_end_time
+			and p.supplier_id = #{supplier_id}
+			and p.is_deleted = 0
+			and p.status = 'on_shelf'
+		order by p.modified_date desc
+		limit 5
+	</select>
+
+
+	<select id="findActivityGoodsBySupplierId02" resultType="map">
+		SELECT p.goods_id, p.goods_code, p.title, p.desc1, p.pic_info, p.service_level
+		, p.market_price, p.sale_price, p.vip_price, p.beike_credit, p.settled_price
+		, p.shipping_fee, p.supplier_id, p.min_buy_qty, p.max_buy_qty, p.delivery_area
+		, p.payment_way, b.store
+		FROM gddb.bkcq_products p
+		LEFT JOIN gddb.bkcq_products_stock b on p.goods_id = b.goods_id
+		WHERE
+		p.label in (11, 12)
+		and p.supplier_type = 'store'
+		and now() BETWEEN p.activity_start_time and p.ativity_end_time
+		and p.supplier_id = #{supplier_id}
+		and p.is_deleted = 0
+		and p.status = 'on_shelf'
+		order by p.modified_date desc
+	</select>
+
+
+	<select id="findHDMS05GoodsBySupplierId" resultType="map">
+		select p.goods_id, p.goods_title, p.supplier_id
+			, p.market_price, p.sale_fee sale_price, p.goods_price vip_price, p.goods_beike beike_credit, p.settled_fee settled_price
+			, p.goods_beike, p.pic_info
+			, p.is_finished, b.store
+		from gddb.ps_goods_activity p
+			LEFT JOIN gddb.bkcq_products_stock b on p.goods_id = b.goods_id
+		WHERE p.supplier_id = #{supplier_id}
+		and p.activity_type = 'HDMS_05'
+		and now() BETWEEN p.start_date and p.end_date
+		and p.is_finished = 'N'
+		order by p.start_date desc
+		limit 5
+	</select>
+
+	<select id="selectBkcqActivityProductsList" resultType="map">
+		select * from gddb.ps_goods_activity
+		WHERE supplier_id = #{supplier_id}
+		and activity_type = 'HDMS_05'
+		and now() BETWEEN start_date and end_date
+		and is_finished = 'N'
+		order by start_date desc
+		limit 3
+	</select>
+
+
+
+	<select id="selectDetailGoods" resultType="map">
+		select * from gddb.bkcq_products
+		WHERE supplier_id = #{supplier_id}
+		and supplier_type = 'store'
+		and is_deleted = 0
+		and (status = 'normal' or status = 'on_shelf')
+		order by modified_date desc
+		limit 5
+	</select>
+
+
+	<select id="selectGoodsSku" resultType="map">
+		select * from gddb.bkcq_sku
+		WHERE
+		goods_id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by modified_time desc
+	</select>
+
+
+</mapper>
+

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>商品详情</title>
+        <link rel="stylesheet" type="text/css" href="/css/payback/ziying-detail.css?v20180602">
+        <style>
+          .sale_price {
+              float:left;
+            }
+            .selled {
+                float:right;
+                margin-right:0.2rem;
+            }
+            .openUpMember {
+                width:10rem;
+                height:1.333333rem;
+                margin:0 auto;
+            }
+            .openUpMember .left {
+                width:7.733333rem;
+                height:1.333333rem;
+                float:left;
+                background:rgba(242,217,161,0.2);
+            }
+            .openUpMember .right {
+                width:2.266667rem;
+                height:1.333333rem;
+                float:right;
+                background:rgba(242,217,161,1);
+            }
+            .openUpMember .cjmember {
+                height:.4rem;
+                line-height:.4rem;
+                margin-left:.28rem;
+                text-align: center;
+                width:1.5rem;
+                color:#FFFFFF;
+                background-color: #AB6B07;
+                border-radius: .2rem;
+                margin-top:.186667rem;
+                margin-bottom:.146667rem;
+            }
+            .openUpMember .memberprice {
+                height:.386667rem;
+                font-size:.386667rem;
+                color:#333333;
+                margin-left:0.28rem;
+                width:5rem;
+                font-weight: 600;
+            }
+            .openUpMember .ljkt {
+                width:.68rem;
+                line-height:.373333rem;
+                font-size:0.3rem;
+                float:left;
+                margin-left:.546667rem;
+                margin-top:.293333rem;
+                color:#000000;
+                font-weight: 600;
+            }
+            .openUpMember .right_arrows {
+                /* width:.1rem; */
+                height:.6rem;
+                font-size:.6rem;
+                float:left;
+                margin-top:.35rem;
+                margin-left:.15rem;
+            }
+            .postage .fee {
+                line-height: 1.066667rem; 
+                font-size:.4rem;
+                width:1rem;
+                float:left;
+            }
+            .postage,.property {
+                height:1.066667rem;
+                width:10rem;
+                margin:0 auto;
+            }
+            .postage .left, .property .left {
+                line-height: 1.066667rem;
+                width:1rem;
+                margin-left:.266667rem;
+                font-size:.4rem;
+                float:left;
+                color:#333333;
+            }
+            .property .left {
+                width:3rem;
+            }
+            .postage .right {
+                line-height: 1.066667rem;
+                float:right;
+                margin-right:.266667rem;
+                font-size:.293333rem;
+
+            }
+            .property .right {
+                height:.373333rem;
+                width:.3rem;
+                float:right;
+                margin-top:.333333rem;
+                margin-right:.266667rem;
+                background:url("/image/payback/hide.png");
+                background-size: 100% 100%;
+            }
+            .property_content {
+                width:10rem;
+                position: fixed;
+                bottom:1.333333rem;
+                background:rgba(255,255,255,1);
+                border-radius:.266667rem .266667rem 0px 0px;
+                z-index:2;
+                margin:0 auto;
+            }
+            .property_close {
+                height:.386667rem;
+                width:.386667rem;
+                position:absolute;
+                right:.4rem;
+                top:.4rem;
+                background:url("/image/newmember/close.png");
+                background-size: 100% 100%;
+            }
+            .z_property,.f_property {
+                height:.413333rem;
+                width:5rem;
+                margin-top:.866667rem;
+                margin-left:.4rem;
+                font-size:.426667rem;
+                color:#010101;
+                font-weight: 600;
+            }
+            .f_property {
+                margin-top:.466667rem;
+            }
+            .z_value,.f_value {
+                width:10rem;
+            }
+            .z_value span,.f_value span {
+                height:.72rem;
+                line-height:.72rem;
+                padding:0 .64rem;
+                display: inline-block;
+                /* float:left; */
+                margin-top:.386667rem;
+                margin-left:.386667rem;
+                font-weight: 500;
+                border-radius: .36rem;
+            }
+            .propertyshow {
+                display: block;
+            }
+            .propertyhide {
+                display: none;
+            }
+            .zselect {
+                background-color: #F45687;
+                color:#FFFFFF;
+            }
+            .znoselect {
+                background-color: #EEEEEE;
+                color:#000000;
+            }
+            .fselect {
+                background-color: #F45687;
+                color:#FFFFFF;
+            }
+            .fnoselect {
+                background-color: #EEEEEE;
+                color:#000000;
+            }
+            .member {
+               height:.533333rem;
+               width:10rem;
+               margin-top:.653333rem;
+               margin-bottom:.946667rem;
+            }
+            .member .left {
+                line-height:.533333rem;
+                font-size:.413333rem;
+                margin-left:.266667rem;
+                float:left;
+                color:#010101;
+                font-weight: 600;
+            }
+            .member .right {
+                height:.533333rem;
+                float:right;
+                margin-right:0.2rem;
+            }
+            .member .right div {
+                float:left;
+                /* display: inline-block; */
+            }
+            .member .reduce,.member .add {
+                width:.533333rem;
+                height:.533333rem;
+                border-radius: 50%;
+            }
+            .reducen {
+                background:url("/image/payback/reduce.png");
+                background-size: 100% 100%;
+            }
+            .reducey {
+                background:url("/image/payback/reduce1.png");
+                background-size: 100% 100%;
+            }
+            .addy {
+                background:url("/image/payback/add.png");
+                background-size: 100% 100%; 
+            }
+            .addn {
+                background:url("/image/payback/add1.png");
+                background-size: 100% 100%; 
+            }
+            .member .text {
+                width:.946667rem;
+                line-height: .533333rem;
+                text-align: center;
+            }
+            .zdc {
+                width:100%;
+                height:100%;
+                display: none;
+            }
+            .bgc {
+                display: block;
+                background:rgba(0,0,0,0.4);
+                position: fixed;
+                top:0;
+            }
+            .property_show {
+                height:.3rem;
+                width:.373333rem;
+                float:right;
+                margin-top:.5rem;
+                margin-right:.266667rem;
+                background:url("/image/payback/show.png");
+                background-size: 100% 100%;
+            }
+            .stock {
+                height:.386667rem;
+                margin-left:0.2rem;
+                margin-top:.68rem;
+                margin-bottom:.546667rem;
+            }
+            .stock .left {
+                float:left;
+                line-height:.386667rem;
+                font-size:.386667rem;
+                color:#333333;
+                font-weight: 500;
+            }
+            .stock .right {
+                line-height:.386667rem;
+                width:1.8rem;
+                border-radius: .1933335rem;
+                background-color: #EEEEEE;
+                float:right;
+                margin-right:.293333rem;
+                text-align: center;
+                font-size:.3rem;
+            }
+            .skutishi {
+                width:3.5rem;
+                height:0.9rem;
+                line-height:0.9rem;
+                font-size:0.35rem;
+                bottom:4rem;
+                margin-left:3.25rem;
+                display: none;
+                position: fixed;
+                background-color:rgba(0,0,0,0.4);
+                color:white;
+                text-align: center;
+                border-radius: 0.45rem;
+                z-index:3;
+            }
+            .skutishishow {
+                display: block;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div id="slider" class="swipe">
+            <div class="swipe-wrap">
+                <% for(var i in goods.picUrlArr) { %>
+                    <div>
+                        <img src="<%=goods.picUrlArr[i] %>" />
+                    </div>
+
+
+                    <% } %>
+            </div>
+        </div>
+        <nav>
+            <ul id="position">
+                <% for(var i in goods.picUrlArr) { %>
+                    <% if(i == 0) { %>
+                        <li class="on"></li>
+                        <% } else { %>
+                            <li></li>
+                            <% } %>
+                                <% } %>
+            </ul>
+        </nav>
+    </div>
+    <div class="cnt-box">
+        <div class="tit">
+            <div class='first_title'>
+                <p class='title'>
+                    <%=goods.title %>
+                </p>
+            </div>
+            <div class="sec_title">
+                <%=goods.desc1 %>
+            </div>
+
+        </div>
+        <div class="box"></div>
+        <!-- 这个是后面改版里面添加主属性和副属性因为后台新增了一个接口 新接口和旧接口返回的数据价格不一样2018年4月23 -->
+        <!-- 有些商品是没有副属性的  如果没有副属性则数据结构不一样-->
+        <% if (rules != undefined && rules[0].fValue) {%>
+            <div class="price-box">
+                <div class="final-price"> 
+                    <%if(is_vip == "Y"){%>
+                        <span class="sale_price">非会员价:￥<%=rules[0].fValue[0].sale_price.toFixed(2) %></span> 
+                    <%}else{%>
+                        <span class="sale_price">非会员价:<%=rules[0].fValue[0].sale_price.toFixed(2) %></span> 
+                    <%}%>
+                        <span class="selled">已售<%=goods.fake_sales_volume%></span>
+                </div>
+                <%if(rules[0].fValue[0].beike_credit == 0){%>
+                    <div class="final-price1">
+                            <span class="vippic"></span>
+                            <span class='vip_price'>￥
+                                <%=rules[0].fValue[0].vip_price %>
+                            </span>
+                        </div>
+                    <%}else{%>
+                        <div class="final-price1">
+                                <span class="vippic"></span>
+                                <span class='vip_price'>￥
+                                    <%=rules[0].fValue[0].vip_price %>
+                                </span>
+                                <span>+</span>
+                                <span class='beike_credit'>
+                                    <%=rules[0].fValue[0].beike_credit %>
+                                </span>贝壳</span>
+                            </div>
+                    <%}%>
+            </div>
+            <% } else {%>
+                <div class="price-box">
+                        <div class="final-price"> 
+                            <span class="sale_price">非会员价:￥<%=rules[0].sale_price.toFixed(2) %></span> 
+                            <span class="selled">已售<%=goods.fake_sales_volume%></span>
+                        </div>
+                        <div class="final-price1">
+                                <%if(rules[0].beike_credit == 0){%>
+                                    <div class="final-price1">
+                                            <span class="vippic"></span>
+                                            <span class='vip_price'>￥
+                                                    <%=rules[0].vip_price %>
+                                            </span>
+                                        </div>
+                                    <%}else{%>
+                                        <div class="final-price1">
+                                                <span class="vippic"></span>
+                                                <span class='vip_price'>￥
+                                                        <%=rules[0].vip_price %>
+                                                </span>
+                                                <span>+</span>
+                                                <span class='beike_credit'>
+                                                        <%=rules[0].beike_credit %>
+                                                </span>贝壳</span>
+                                            </div>
+                                    <%}%>
+                        </div>
+                    </div>
+             <% } %>
+                        
+    </div>
+    <div class="openUpMember">
+         <div class="left">
+             <div class="cjmember">超级会员</div>
+             <%if(rules.fValue){%>
+                <%if(rules[0].fValue[0].beike_credit == 0){%>
+                    <div class="memberprice">超级会员价￥<%=rules[0].fValue[0].vip_price %></div>
+                <%}else{%>
+                    <div class="memberprice">超级会员价￥<%=rules[0].fValue[0].vip_price %>+<%=rules[0].fValue[0].beike_credit %>贝壳</div>
+                <%}%>
+                
+             <%}else{%>
+                <%if(rules[0].beike_credit == 0){%>
+                    <div class="memberprice">超级会员价￥<%=rules[0].vip_price %></div>
+                <%}else{%>
+                    <div class="memberprice">超级会员价￥<%=rules[0].vip_price %>+<%=rules[0].beike_credit %>贝壳</div>
+                <%}%>
+                
+             <%}%> 
+             
+         </div>
+         <div class="right" onclick="gotoMemberOrder()">
+             <div class="ljkt">立即开通</div>
+             <div class="right_arrows">></div>
+         </div>
+    </div>
+    <div class="box"></div>
+    <div class="skutishi">请选择全部属性</div>
+    <div class="postage">
+        <div class="left">邮费</div>
+        <div class="fee">￥<%=goods.shipping_fee%></div>
+        <div class="right">满<%=goods.shipping_fee_line%>免邮费</div>  
+        </div>
+    <div class="box"></div>
+    <div class="property"  onclick="show()">
+        <div class="left">选择规格属性</div>
+        <div class="right property_right"></div>
+    </div>
+    <div class="box"></div>
+    <div class="property_content propertyhide" id="property_content">
+        <div class="property_close" onclick="show('close')"></div>
+        <div class="z_property"><%=rules[0].prop_zname%></div>
+        <div class="z_value">
+            <% for (let i = 0 ;i < rules.length;i++) {%>
+                <%if(rules.length == 1 && (rules[0].fValue == undefined || rules[0].fValue.length == 1)) {%>
+                    <%if(i == 0) {%>
+                        <%if(rules[i].stock != 0) {%>
+                            <span class="z_data zselect" data-index=<%=i%> onclick="changeselect(event,'zvalue')"><%=rules[i].attr_zvalue%></span> 
+                        <%}else{%>
+                            <span class="z_data znoselect" data-index=<%=i%>><%=rules[i].attr_zvalue%></span> 
+                        <%}%>
+                        
+                    <%} else {%>
+                        <span class="z_data znoselect" data-index=<%=i%> onclick="changeselect(event,'zvalue')"><%=rules[i].attr_zvalue%></span>
+                    <%}%>
+                <%} else {%>
+                    <%if(i == 0) {%>
+                        <%if(rules[i].stock != 0) {%>
+                            <span class="z_data znoselect" data-index=<%=i%> onclick="changeselect(event,'zvalue')"><%=rules[i].attr_zvalue%></span> 
+                        <%}else{%>
+                            <span class="z_data znoselect" data-index=<%=i%>><%=rules[i].attr_zvalue%></span> 
+                        <%}%>
+                        
+                    <%} else {%>
+                        <span class="z_data znoselect" data-index=<%=i%> onclick="changeselect(event,'zvalue')"><%=rules[i].attr_zvalue%></span>
+                    <%}%>
+                <%}%>
+                
+            <%}%>
+        </div>
+        <%if(rules[0].fValue) {%>
+            <div class="f_property"><%=rules[0].fValue[0].prop_fname%></div>
+            <div class="f_value">
+                    <% for (let i = 0 ;i < rules[0].fValue.length;i++) {%>
+                        <%if(rules[0].fValue.length == 1 && rules.length ==1) {%>
+                            <%if(i == 0) {%>
+                                <%if(rules[0].fValue[i].stock == "0") {%>
+                                    <span class="f_data fnoselect" data-index=<%=i%>><%=rules[0].fValue[i].attr_fvalue%></span> 
+                                <%}else{%>
+                                    <span class="f_data fselect" data-index=<%=i%> onclick="changeselect(event,'fvalue')"><%=rules[0].fValue[i].attr_fvalue%></span> 
+                                <%}%>
+                                
+                            <%} else {%>
+                                <%if(rules[0].fValue[i].stock == "0") {%>
+                                    <span class="f_data fnoselect" data-index=<%=i%>><%=rules[0].fValue[i].attr_fvalue%></span>
+                                <%}else{%>
+                                    <span class="f_data fnoselect" data-index=<%=i%> onclick="changeselect(event,'fvalue')"><%=rules[0].fValue[i].attr_fvalue%></span>
+                                <%}%>
+                               
+                            <%}%>
+                        <%} else {%>
+                            <%if(i == 0) {%>
+                                <%if(rules[0].fValue[i].stock == "0") {%>
+                                    <span class="f_data fnoselect" data-index=<%=i%>><%=rules[0].fValue[i].attr_fvalue%></span> 
+                                <%}else{%>
+                                    <span class="f_data fnoselect" data-index=<%=i%> onclick="changeselect(event,'fvalue')"><%=rules[0].fValue[i].attr_fvalue%></span> 
+                                <%}%>
+                                
+                            <%} else {%>
+                                <%if(rules[0].fValue[i].stock == "0") {%>
+                                    <span class="f_data fnoselect" data-index=<%=i%>><%=rules[0].fValue[i].attr_fvalue%></span>
+                                <%}else{%>
+                                    <span class="f_data fnoselect" data-index=<%=i%> onclick="changeselect(event,'fvalue')"><%=rules[0].fValue[i].attr_fvalue%></span>
+                                <%}%>
+                               
+                            <%}%>
+                        <%}%>
+                        
+                    <%}%>
+            </div>
+        <%}else {%>
+            <div class="f_property"></div>
+            <div class="f_value"></div>
+        <%}%>
+       
+        <div class="member">
+            <div class="left">数量</div>
+            <div class="right">
+               <div class="reduce reducen" onclick="addOrReduce('reduce')"></div>
+               <div class="text">1</div>
+               <div class="add addy" onclick="addOrReduce('add')"></div>
+            </div>
+        </div>
+        <div class="stock">
+            <%if(rules[0].fValue) {%>
+                    <%if(rules[0].fValue.length == 1) {%>
+                        <%if(rules[0].fValue[0].beike_credit == 0) {%>
+                            <div class="left vip_price11">价格:&nbsp;<%=rules[0].fValue[0].vip_price %></div>
+                        <%}else{%>
+                            <div class="left vip_price11">价格:&nbsp;<%=rules[0].fValue[0].vip_price %>+<%=rules[0].fValue[0].beike_credit %>贝壳</div>
+                        <%}%>
+                        <div class="right stock1">库存<%=rules[0].fValue[0].stock %>件</div>
+                    <%} else {%>
+                        <div class="left vip_price11"></div>
+                        <div class="right stock1"></div>
+                    <%}%>
+                    
+            <%}else{%>
+                <%if(rules.length == 1) {%>
+                    <%if(rules[0].beike_credit == 0) {%>
+                        <div class="left vip_price11">价格:&nbsp;<%=rules[0].vip_price %></div>
+                    <%}else{%>
+                        <div class="left vip_price11">价格:&nbsp;<%=rules[0].vip_price %>+<%=rules[0].beike_credit %>贝壳</div>
+                    <%}%>
+                    <div class="right stock1">库存<%=rules[0].stock %>件</div>
+                <%} else {%>
+                    <div class="left vip_price11"></div>
+                    <div class="right stock1"></div>
+                <%}%>
+               
+                
+            <%}%>
+            
+        </div>
+    </div>
+    <div class="zdc" onclick="show('close')"></div>
+    <% if(goods.picDetailArr && goods.picDetailArr.length > 0) { %>
+        <div class="detail-wrap">
+            <div class="shopdetailtitle">
+                <div class="title_detail">
+                   图文详情
+                    <!-- <span class="downarrow" id="downarrow"></span> -->
+                </div>
+            </div>
+            <div id="detailcontain" data-show="true">
+                <% for(var i=0; i<goods.picDetailArr.length; i++) { %>
+                    <%if(goods.picDetailArr[i].title){%>
+                        <p class="detail-desc">
+                            <%=goods.picDetailArr[i].title%>
+                        </p>
+                        <%}%>
+                            <div>
+                                <img src="<%=goods.picDetailArr[i].url %>" />
+                            </div>
+                            <% } %>
+            </div>
+        </div>
+        <% } %>
+        
+
+            <!-- 根据库存判断是不是可以购买 -->
+
+            <div class="footer-bar">
+                <% if(requestParams.type == "h5") {%>
+                    <a href="javascript: void(0);" class="btn detail_btn" id="getNow">立即下载</a>
+                    <%} else {%>
+                        <% if(rules != undefined && rules[0].fValue && rules[0].fValue[0].stock > 0) { %>
+                            <a href="javascript: void(0);" class="btn detail_btn" id="getNow">立即购买</a>
+                            <% } else if(rules != undefined && !rules[0].fValue && rules[0].stock > 0) { %>
+                                <a href="javascript: void(0);" class="btn detail_btn" id="getNow">立即购买</a>
+
+                                <% }else { %>
+                                    <a href="javascript: void(0);" class="btn disable" id="">库存不足</a>
+                                    <% } %>
+                                        <%}%>
+
+            </div>
+</body>
+<script type="text/javascript">
+    var isCollecting = false;
+    var isUpgrading = false;
+    var isGetting = false;
+    var isSku = false;
+    var isSku_num = 0;
+    var member_id = '<%=requestParams.mi%>';
+    var bind = '<%=requestParams.bind%>';
+    var goodsData = {
+        goods_code: '<%=goods.goods_code %>',//商品的图片地址
+        shipping_fee:'<%=goods.shipping_fee %>',
+        title: '<%=goods.title %>',
+        pic_info_url: '<%=goods.picUrlArr[0] %>',
+        <%if(rules[0].fValue) {%>
+            attr_zvalue :'<%=rules[0].attr_zvalue %>',
+            fValue :'<%=rules[0].fValue[0].attr_fvalue %>',
+            salePrice :'<%=rules[0].fValue[0].sale_price %>',
+            vipPrice:'<%=rules[0].fValue[0].vip_price %>',
+            sku_id :'<%=rules[0].fValue[0].sku_id %>',
+            beikeCredit:'<%=rules[0].fValue[0].beike_credit %>',
+            totalQty:'<%=rules[0].fValue[0].stock %>',
+        <%}else {%>
+            attr_zvalue :'<%=rules[0].attr_zvalue %>',
+            fValue :'<%=rules[0].attr_fvalue %>',
+            salePrice :'<%=rules[0].sale_price %>',
+            vipPrice:'<%=rules[0].vip_price %>',
+            sku_id :'<%=rules[0].sku_id %>',
+            beikeCredit:'<%=rules[0].beike_credit %>',
+            totalQty:'<%=rules[0].stock %>',
+        <%}%>
+        
+    };
+    var chatData = {
+        // 聊天id
+        chat_id: 'llmcustomerserviceagent',
+        // 聊天界面标题
+        title: '官方客服',
+        // 客服头像
+        head_pic_path: 'https://oss-img.meitianhui.com/communityDocs/kefu.jpg',
+        // 当前商品id
+        goods_id: '<%=goods.goods_id %>',
+        // 聊天来源
+        from: 'llm'
+    };
+
+    //分享需要得数据
+    var shareData = {
+        title: '<%=goods.title %>',
+        desc: '<%=goods.desc1 ? goods.desc1.replace(/\r\n/g," ").replace(/\n/g, " ") : "" %>',
+        imgPath: '<%=goods.picUrlArr ? goods.picUrlArr[0] : "" %>',
+    };
+
+    var checkResult = {};
+    $(function () {
+        M.initSwipe();
+        function h5share() {
+            return shareData;
+        }
+        //根据得到的数据判断库存是否大于0决定下面的显示按钮 是立即领取还是库存不足
+        function changebtn(saleQty) {
+            if (saleQty > 0) {
+                $(".detail_btn").attr("id", "getNow");
+                $(".detail_btn").html("立即购买");
+            } else {
+                $(".detail_btn").attr("id", "");
+                $(".detail_btn").html("库存不足");
+            }
+        }
+
+        $('.footer-bar').on('click', '#getNow', function () {
+            //5秒内只能点击一次领取
+            if(isSku == false && isSku_num == 0) {
+            show();
+            isSku_num++;
+            return;
+           } else {
+              <%if(rules.length != 1 ) {%>
+                 <%if(rules[0].fValue){%>
+                    if($(".zselect")[0] == undefined || $(".fselect")[0] == undefined) {
+                        if(isSku == false) {
+                            show();
+                        } else {
+                            $(".skutishi").addClass("skutishishow");
+                            setTimeout(function(){
+                                  $(".skutishi").removeClass("skutishishow") 
+                            }, 1000);
+                        }
+                       return;
+                    }
+                <%} else {%>
+                    if($(".zselect")[0] == undefined) {
+                        if(isSku == false) {
+                            show()
+                        } else {
+                            $(".skutishi").addClass("skutishishow");
+                            setTimeout(function(){
+                               $(".skutishi").removeClass("skutishishow") 
+                            }, 1000);
+                        }
+                        return;
+                    }
+                <%}%>
+              <%} else {%>
+                <%if(rules[0].fValue == undefined ){%>
+                    if($(".zselect")[0] == undefined ) {
+                        if(isSku == false) {
+                            show()
+                        } else {
+                            $(".skutishi").addClass("skutishishow");
+                            setTimeout(function(){
+                               $(".skutishi").removeClass("skutishishow") 
+                             }, 1000);
+                        }
+                        return;
+                    }
+                   
+                <%} else {%>
+                    if($(".zselect")[0] == undefined || $(".fselect")[0] == undefined) {
+                        if(isSku == false) {
+                            show()
+                        } else {
+                            $(".skutishi").addClass("skutishishow");
+                            setTimeout(function(){
+                               $(".skutishi").removeClass("skutishishow") 
+                             }, 1000);
+                        }
+                        return;
+                    }
+                <%}%>
+
+              <%}%>
+            }
+            show("close");
+           
+            if (isGetting) return;
+
+            isGetting = true;
+            setTimeout(function () {
+                isGetting = false;
+            }, 5000);
+            gotosumit("showSelectDialog", goodsData)
+        });
+    });
+    function show(type) {
+        isSku_num++;
+        if(type == "close") {
+            $('#property_content').addClass("propertyhide");
+            $(".zdc").removeClass("bgc");
+            $(".property_right").removeClass("property_show");
+            $(".property_right").addClass("right");
+            goodsData.buyNumber = $(".text").html();
+            isSku = false;
+        } else {
+            $('#property_content').removeClass("propertyhide")
+            $('#property_content').addClass("propertyshow");
+            $(".zdc").addClass("bgc");
+            $(".property_right").removeClass("right");
+            $(".property_right").addClass("property_show");
+            isSku = true;
+        }
+        
+    }
+    function addOrReduce(type) {
+        let value = $('.text').html();
+         if(type == 'reduce') {
+            if(value <= 2) {
+                $('.reduce').addClass("reducen");
+                $('.reduce').removeClass("reducey");
+                $(".add").addClass("addy");
+                $(".add").removeClass("addn");
+                $('.text').html(1);
+                return;  
+             }
+             $(".add").addClass("addy");
+             $(".add").removeClass("addn");
+             $('.text').html($('.text').html()-1);
+         } else if(type == "add") {
+             if(parseInt($('.text').html())+1 >= goodsData.totalQty || parseInt($('.text').html())+1 >= 5 ) {
+                 $(".add").addClass("addn");
+                 $(".add").removeClass("addy");
+                 $('.reduce').addClass("reducey");
+                 $('.reduce').removeClass("reducen");
+                 if(goodsData.totalQty > parseInt($('.text').html())+1) {
+                    $('.text').html(5);
+                 } else {
+                    $('.text').html(goodsData.totalQty);
+                 }
+                
+                 return;
+             }
+            $('.text').html(parseInt($('.text').html())+1);
+            $('.reduce').addClass("reducey");
+            $('.reduce').removeClass("reducen");
+         } else {
+             if(goodsData.totalQty == '1') {
+                $('.reduce').addClass("reducen");
+                $('.reduce').removeClass("reducey");
+                $(".add").addClass("addn");
+                $(".add").removeClass("addy");   
+             } else {
+                $('.reduce').addClass("reducen");
+                $('.reduce').removeClass("reducey");
+                $(".add").addClass("addy");
+                $(".add").removeClass("addn");  
+                $('.text').html(1); 
+             }
+         }
+    }
+    function changeselect(e,type) {
+        if(e.target.className.split(" ").indexOf('znoselect') >= 0) {
+            changestatus('zselect',"znoselect");
+            e.target.setAttribute("class","z-data zselect");
+        } else if(e.target.className.split(" ").indexOf("zselect") >= 0) {
+            e.target.setAttribute("class","znoselect");
+        } else if(e.target.className.split(" ").indexOf('fnoselect') >= 0) {
+            changestatus('fselect',"fnoselect");
+            e.target.setAttribute("class","f-data fselect");
+        } else if(e.target.className.split(" ").indexOf("fselect") >= 0) {
+            e.target.setAttribute("class","fnoselect");
+        }
+        var target = e.target;
+       if(type == "zvalue") {
+        // changestatus("z_data","zselect","znoselect",target);
+        let html=fValueRender();
+        $(".f_value").html(html);
+       }else {
+        // changestatus("f_data","fselect","fnoselect",target);
+       }
+       changeShopMess();
+    //    addOrReduce();
+    }
+
+    function changestatus(classname,noselectclass) {
+         let classnameE = $("."+classname);
+        for(let i = 0; i < classnameE.length;i++) {
+            classnameE[i].setAttribute("class",noselectclass);
+        }
+        // target.setAttribute("class",classname+" "+selectclass);
+    }
+
+    function fValueRender() {
+        let html="",zindex = $(".zselect")[0].dataset.index;
+        <%for(let i = 0;i < rules.length;i++) {%>
+           <%if(rules[i].fValue){%>
+            <%for(let j=0; j<rules[i].fValue.length;j++) {%>
+                if(zindex == "<%=i%>") {
+                   if("<%=j%>" == 0) {
+                       if("<%=rules[i].fValue[j].stock%>" == '0') {
+                        html+=`<span class="f_data fnoselect" data-index=<%=j%>><%=rules[i].fValue[j].attr_fvalue%></span>`;
+                       } else {
+                        html+=`<span class="f_data fselect" data-index=<%=j%> onclick="changeselect(event,'fvalue')"><%=rules[i].fValue[j].attr_fvalue%></span>`;
+                       }
+                   
+                   } else {
+                      if("<%=rules[i].fValue[j].stock%>" == '0') {
+                        html+=`<span class="f_data fnoselect" data-index=<%=j%>><%=rules[i].fValue[j].attr_fvalue%></span>`
+                      }else {
+                        html+=`<span class="f_data fnoselect" data-index=<%=j%> onclick="changeselect(event,'fvalue')"><%=rules[i].fValue[j].attr_fvalue%></span>`
+                      }
+                   
+                   }
+                }
+            <%}%>
+           <%}else{%>
+
+           <%}%>
+          
+        <%}%>
+        return html;
+    }
+
+    function changeShopMess() {
+        let findex, zindex = $(".zselect")[0].dataset.index;
+        if($(".fselect")[0] != undefined) {
+            findex = $(".fselect")[0].dataset.index 
+        }
+       
+        <%for(let i = 0; i < rules.length;i++) {%>
+            <%if(rules[i].fValue){%>
+                <%for(j=0; j<rules[i].fValue.length;j++){%>
+                if("<%=i%>" == zindex && "<%=j%>" == findex) {
+                    goodsData.attr_zvalue = "<%=rules[i].attr_zvalue%>";
+                    goodsData.fValue ="<%=rules[i].fValue[j].attr_fvalue%>";
+                    goodsData.salePrice="<%=rules[i].fValue[j].sale_price%>";
+                    goodsData.vipPrice="<%=rules[i].fValue[j].vip_price%>";
+                    goodsData.sku_id ="<%=rules[i].fValue[j].sku_id%>";
+                    goodsData.beikeCredit="<%=rules[i].fValue[j].beike_credit%>";
+                    goodsData.totalQty="<%=rules[i].fValue[j].stock%>";
+                }
+               
+            <%}%>
+            <%}else{%>
+               if("<%=i%>" == zindex) {
+                   goodsData.attr_zvalue = "<%=rules[i].attr_zvalue%>";
+                   goodsData.fValue ="<%=rules[i].attr_fvalue%>";
+                   goodsData.salePrice="<%=rules[i].sale_price%>";
+                   goodsData.vipPrice="<%=rules[i].vip_price%>";
+                   goodsData.sku_id ="<%=rules[i].sku_id%>";
+                   goodsData.beikeCredit="<%=rules[i].beike_credit%>";
+                   goodsData.totalQty="<%=rules[i].stock%>";
+                }
+            <%}%>
+            
+        <%}%>
+        $(".memberprice").html("超级会员价￥"+goodsData.vipPrice+"+"+goodsData.beikeCredit+"贝壳");
+        $(".vip_price11").html("价格:&nbsp;"+goodsData.vipPrice+"+"+goodsData.beikeCredit+"贝壳");
+        $(".stock1").html("库存"+goodsData.totalQty+"件");
+        $(".sale_price").html("￥"+goodsData.salePrice+".00");
+        $(".vip_price").html("￥"+goodsData.vipPrice);
+        $(".beike_credit").html(goodsData.beikeCredit);
+       
+        
+        
+    }
+
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    function gotoMemberOrder() {
+        gotosumit("gotoMemberOrder",{});
+    }
+    //原生调用h5方法
+    (function h5share() {
+        gotosumit("h5share",shareData);
+    })();
+    //分享
+    $("#detail_share").on("click", function () {
+        gotosumit("share", shareData)
+
+    });
+    // 调Native方法聊天
+    function callNativeToChat() {
+        if (window.jsObj) {
+            window.jsObj.chatWithCustomerServiceAgent(JSON.stringify(chatData));
+        } else {
+            setupWebViewJavascriptBridge(function (bridge) {
+                bridge.callHandler('chatWithCustomerServiceAgent', chatData);
+            });
+        }
+    }
+
+    // 添加收藏
+    function collectGoods() {
+        if (!isCollecting) {
+            $.ajax({
+                type: 'POST',
+                url: '/openapi/h5/c/collectGoods',
+                data: {
+                    favorites_type: 'llm',
+                    member_id: '<%=requestParams.mi%>',
+                    goods_id: '<%=goods.goods_id%>',
+                },
+                beforeSend: function () {
+                    isCollecting = true;
+                },
+                success: function (data) {
+                    if (typeof data == 'string') data = JSON.parse(data);
+                    if (data.rsp_code == 'succ') {
+                        M.Toast.succ('已添加至心愿单');
+                    }
+                },
+                complete: function () {
+                    setTimeout(function () {
+                        isCollecting = false;
+                    }, 3000);
+                }
+            });
+        }
+    }
+    // 阻止默认事件
+    function preventDefault(e) {
+        e.preventDefault();
+        return;
+    }
+</script>
+
+</html>

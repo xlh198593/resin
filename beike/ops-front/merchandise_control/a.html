@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	  <link rel="stylesheet" href="../layui/layui/css/layui.css"  media="all">
+</head>
+<body>
+
+	<span class="layui-breadcrumb">
+			<a href="/">首页</a>
+			<a href="/demo/">演示</a>
+			<a><cite>导航元素</cite></a>
+	</span>
+  <div class="box">
+	 
+	 <div class="layui-inline">
+      <label class="layui-form-label">请选择范围</label>
+      <div class="layui-input-inline">
+        <input type="text" class="layui-input" id="test1" placeholder="开始 到 结束">
+      </div>
+    </div>
+   <div class="layui-inline">
+      <label class="layui-form-label">请选择范围</label>
+      <div class="layui-input-inline">
+        <input type="text" class="layui-input" id="test16" placeholder="开始 到 结束">
+      </div>
+    </div>
+  </div>
+  <script src="../layui/layui/layui.js" charset="utf-8"></script>
+  <script>
+
+layui.use(['laydate'], function(){
+ var laydate = layui.laydate;
+  
+
+ 
+  //执行一个laypage实例
+ laydate.render({
+    elem: '#test1'
+    ,type: 'datetime'
+    ,range: '到'
+    ,format: 'yyyy年M月d日H时m分s秒'
+  });
+
+  laydate.render({
+    elem: '#test16'
+    ,type: 'datetime'
+    ,range: '到'
+    ,format: 'yyyy年M月d日H时m分s秒'
+  });
+});
+</script>
+</body>
+</html>

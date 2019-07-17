@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>新人专属</title>
+        <style>
+            .head {
+                width: 10rem;
+                height: 7.96rem;
+                background: url("/image/activity/newperson/upwx.png");
+                background-size: 100% 100%;
+            }
+
+            .select-one {
+                height: .866667rem;
+                width: 8.4rem;
+                margin: 0 auto;
+                background: url("/image/activity/newperson/middle.png");
+                background-size: 100% 100%;
+                margin-top: -1px;
+            }
+
+            .bottom {
+                height: 12.493333rem;
+                width: 10rem;
+                background: url("/image/activity/newperson/downwx.png");
+                background-size: 100% 100%;
+            }
+
+            .select {
+                height: 1.933333rem;
+                width: 7.706667rem;
+                margin-left: 1.146667rem;
+                margin-top: .466667rem;
+            }
+
+            .select .left {
+                height: 1.933333rem;
+                width: 3.266667rem;
+                float: left;
+                background: url("/image/activity/newperson/sme.png");
+                background-size: 100% 100%;
+            }
+
+            .select .left-no {
+                height: 1.933333rem;
+                width: 3.266667rem;
+                float: left;
+                background: url("/image/activity/newperson/nme.png");
+                background-size: 100% 100%;
+            }
+
+            .select .right {
+                height: 1.933333rem;
+                width: 3.266667rem;
+                float: right;
+                background: url("/image/activity/newperson/nmy.png");
+                background-size: 100% 100%;
+            }
+
+            .select .right-no {
+                height: 1.933333rem;
+                width: 3.266667rem;
+                float: right;
+                background: url("/image/activity/newperson/smy.png");
+                background-size: 100% 100%;
+            }
+
+            .mobile,
+            .password {
+                height: .8rem;
+                width: 6.173333rem;
+                margin-left: 1.693333rem;
+                margin-top: .8rem;
+                font-size: .4rem;
+                font-family: MFLiHei_Noncommercial-Regular;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 1);
+                line-height: .8rem;
+                opacity: 0.5;
+                border: 1px solid rgba(255, 255, 255, 1);
+                border-radius: 10px;
+                background-color: transparent;
+                padding-left: .266667rem;
+            }
+
+            .password {
+                margin-top: 0;
+
+            }
+
+            .verification {
+                height: .8rem;
+                width: 6.6rem;
+                margin-left: 1.693333rem;
+                margin-top: .4rem;
+                margin-bottom: .4rem;
+                border: 1px solid rgba(255, 255, 255, 1);
+                background-color: transparent;
+                border-radius: 10px;
+                overflow: hidden;
+                opacity: 0.5;
+            }
+
+            .verification-mobile {
+                height: .8rem;
+                width: 3.6rem;
+                float: left;
+                font-size: .4rem;
+                font-family: MFLiHei_Noncommercial-Regular;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 1);
+                line-height: .7rem;
+                opacity: 0.5;
+                background-color: transparent;
+                padding-left: .266667rem;
+                border: none;
+            }
+
+            .getver {
+                height:.8rem;
+                width: 2.48rem;
+                background-color: #FFD800;
+                font-size: .32rem;
+                font-family: MFLiHei_Noncommercial-Regular;
+                font-weight: 400;
+                color: rgba(0, 0, 0, 1);
+                line-height: .8rem;
+                float: right;
+                text-align: center;
+                /* border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px; */
+            }
+
+            .freeget {
+                height: 1.093333rem;
+                width: 4.4rem;
+                margin: 0 auto;
+                background: url("/image/activity/newperson/rbtn.png");
+                background-size: 100% 100%;
+            }
+
+            .download,
+            .nonewperson {
+                position: fixed;
+                height: 8.586667rem;
+                width: 7.466667rem;
+                top: 3.786667rem;
+                left: 5rem;
+                margin-left: -3.7333335rem;
+                z-index: 2;
+                background: rgba(255, 255, 255, 1);
+                border-radius: 10px;
+            }
+
+            .bgc {
+                height: 20rem;
+                width: 10rem;
+                opacity: 0.7;
+                position: absolute;
+                background-color: black;
+                z-index: 1;
+            }
+
+            .img {
+                height: 3.466667rem;
+                width: 3.733335rem;
+                margin-top: 1.1rem;
+                position: absolute;
+                left: 3.733335rem;
+                margin-left: -1.8666675rem;
+                background: url("/image/activity/newperson/huojian.png");
+                background-size: 100% 100%;
+            }
+
+            .downloadapp {
+                height: .426667rem;
+                font-size: .426667rem;
+                text-align: center;
+                margin-top: 4.9rem;
+                color: #000000;
+                font-weight: 500;
+            }
+
+            .downloadappfu {
+                height: .386667rem;
+                font-size: .386667rem;
+                text-align: center;
+                margin-top: .24rem;
+                color: #8F8F8F;
+                font-weight: 500;
+            }
+            .downloadappfu1 {
+                height: 0.6rem;
+                line-height:0.6rem;
+                font-size: .386667rem;
+                text-align: center;
+                margin-top: .24rem;
+                color: #8F8F8F;
+                font-weight: 500;
+                padding-left:0.2rem;
+            }
+
+            .getbtn {
+                width: 5.333333rem;
+                height: .96rem;
+                margin: 0 auto;
+                background: linear-gradient(90deg, rgba(74, 145, 250, 1), rgba(100, 161, 255, 1));
+                border-radius: 36px;
+                color: #FFFFFF;
+                font-size: .426667rem;
+                text-align: center;
+                line-height: .96rem;
+                margin-top:.493333rem;
+            }
+
+            .close {
+                height: .386667rem;
+                width: .386667rem;
+                float: right;
+                margin-right: .266667rem;
+                margin-top: .266667rem;
+                background: url("/image/newmember/close.png");
+                background-size: 100% 100%;
+            }
+
+            .person {
+                height: 3.386667rem;
+                width: 2.426667rem;
+                position: absolute;
+                left: 3.733335rem;
+                margin-left: -1.2133335rem;
+                margin-top: .48rem;
+                background: url("/image/activity/newperson/person.png");
+                background-size: 100% 100%;
+            }
+
+            .ts-title {
+                height: .426667rem;
+                font-size: .373333rem;
+                text-align: center;
+                margin-top: 4.56rem;
+                color: #333333;
+                font-weight: 500;
+            }
+
+            .ts-futitle {
+                height: .386667rem;
+                font-size: .373333rem;
+                text-align: center;
+                margin-top: .24rem;
+                color: #333333;
+                font-weight: 500;
+                margin-bottom: .92rem;
+            }
+
+            .iknow {
+                width: 5.333333rem;
+                height: .96rem;
+                margin: 0 auto;
+                background: linear-gradient(90deg, rgba(74, 145, 250, 1), rgba(100, 161, 255, 1));
+                border-radius: 36px;
+                color: #FFFFFF;
+                font-size: .426667rem;
+                text-align: center;
+                line-height: .96rem;
+            }
+
+            .tishi {
+                height: .32rem;
+                color: black;
+                font-size: .32rem;
+                text-align: center;
+                margin-top: .226667rem;
+                margin-bottom: .226667rem;
+            }
+        </style>
+        <script type="text/javascript" src="/js/third-part/md5.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="bgc" v-if="download ||newperson"></div>
+        <div class="head"></div>
+        <div class="download" v-if="download">
+            <div class="close" @click="close()"></div>
+            <div class="img"></div>
+            <div class="downloadapp">下载app</div>
+            <div class="downloadappfu">领取成功</div>
+            <%if(isiOS == "0") {%>
+                <div class="downloadappfu">请下载app,领取优惠券</div>
+                <div class="getbtn" @click="downloadapp()">立即下载</div>
+            <%}else{%>
+                <div class="downloadappfu1">请到小米、华为、OPPO应用商店下载贝壳传奇App，体验更多精彩！</div>
+            <%}%>
+           
+        </div>
+        <div class="nonewperson" v-if="newperson">
+            <div class="person"></div>
+            <div class="ts-title">很抱歉</div>
+            <div class="ts-futitle">您不是新用户不能享受此优惠</div>
+            <div class="iknow" @click="know()">知道了</div>
+        </div>
+
+        <div class="bottom">
+            <div class="select-one"></div>
+            <div class="select">
+                <div class="left" v-if="yselect" @click="selecty()"></div>
+                <div class="left-no" v-else @click="selecty()"></div>
+                <div class="right-no" v-if="bselect" @click="selectb()"></div>
+                <div class="right" v-else @click="selectb()"></div>
+
+            </div>
+            <input type="text" class="mobile"  @blur="bulr('mobile')" maxlength="11" @focus="focus()" placeholder="请输入手机号" v-model="mobile">
+            <div class="verification">
+                <input type="text" class="verification-mobile" maxlength="4"  @blur="bulr('yzm')" @focus="focus()" v-model="yzm" placeholder="请输入验证码">
+                <div class="getver"  v-if="miao">{{miaozhi}}s</div>
+                <div class="getver" v-else @click="getyzm()">获取验证码</div>
+            </div>
+            <input type="password" class="password" maxlength="20"  @blur="bulr('pwd')" v-model="pwd" @focus="focus()" placeholder="请输入密码">
+            <div class="tishi">{{tishi}}</div>
+            <div class="freeget" @click="gotologinorregister()"></div>
+        </div>
+
+
+
+    </div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                camputer: "<%-isiOS%>",
+                member_id: "<%-member_id%>",
+                download: false,
+                newperson: false,
+                miao: false,
+                miaozhi: 60,
+                yselect: true,
+                bselect: false,
+                mobile: "",
+                yzm: "",
+                pwd: "",
+                tishi: ""
+            };
+        },
+        watch:{
+            tishi:function(current) {
+                let self = this;
+               if(current != "") {
+                   setTimeout(() => {
+                     self.tishi = "";
+                   },1500)
+               }
+            },
+            miaozhi:function(current) {
+                if(current == "0") {
+                    this.miaozhi = 60;
+                }
+            }
+        },
+        methods: {
+            selecty: function () {
+                this.yselect = true;
+                this.bselect = false;
+            },
+            yzmethods:function(type) {
+                let pwdreg=/^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/;
+                let yzmreg=/^[0-9]{4}$/;
+                let mobilereg=/^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+                if(this.mobile == "" || !mobilereg.test(this.mobile)) {
+                    if(this.mobile == "") {
+                        return this.tishi = "手机号不能为空"
+                    } else {
+                        return  this.tishi ="手机号不符合规则";
+                    }
+                } else if(this.yzm == "" || !yzmreg.test(this.yzm)) {
+                    if(this.yzm == "") {
+                        return this.tishi ="验证码不能为空";
+                    } else {
+                        return this.tishi ="验证码与手机号不匹配";
+                    }
+                } else {
+                    if(this.pwd == "" || !pwdreg.test(this.pwd)) {
+                        if(this.pwd == "") {
+                            return this.tishi = "密码不能为空";
+                        } else {
+                            return this.tishi = "密码不符合规则";
+                        }
+                    }
+                }
+                if(type == "goto") {
+                    this.gotologin();
+                }
+            },
+            bulr: function (type) {
+               this.yzmethods();
+            },
+            focus:function() {
+                this.yzmethods();
+            },
+            selectb: function () {
+                this.bselect = true;
+                this.yselect = false;
+            },
+            close: function () {
+                this.download = false;
+            },
+            know: function () {
+                this.newperson = false;
+            },
+            downloadapp: function () {
+                if (this.camputer == "0") {
+                    window.location.href = "https://itunes.apple.com/cn/app/%E8%B4%9D%E5%A3%B3%E4%BC%A0%E5%A5%87/id1431647984?mt=8&uo=4"
+                } else {
+                    // window.location.href = "https://mps-static.huigujia.cn/apps/bkcq/bkcq-lastast-release.apk?mp.wexin.qq.com"
+                    window.location.href = "<%=appBaseName%>/openapi/h5/c/activity/download"
+                }
+            },
+            gotologin:function() {
+                let self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/login',
+                    data: {
+                        password: hex_md5("wangzhonghulian" + self.pwd),
+                        mobile: self.mobile,
+                        type: 'lq',
+                        request_info: "h5",
+                        check_code: self.yzm,
+                        member_id: this.member_id,
+                        lq_02: this.bselect ? "lq_02" : null,
+                        lq_03: this.yselect ? "lq_03" : null,
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                            self.tishi = data.error_msg
+                        } else {
+                            if (data.data.regist) {
+                                self.download = true;
+                                self.newperson = false;
+                            } else {
+                                self.newperson = true;
+                            }
+                        }
+                    }
+                });
+            },
+
+            getyzm: function () {
+                if (this.mobile == "") {
+                    return this.tishi = "手机号不能为空";
+                }
+                let myreg=/^1([38]\d|5[0-35-9]|7[3678])|9[89]\d{8}$/;
+                if(!myreg.test(this.mobile)) {
+                    this.tishi ="手机号不符合规则";
+                    return;
+                }
+                let self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/send_sms_code_lyh',
+                    data: {
+                        sms_source: 'llm',
+                        mobile: self.mobile,
+                        check_code: self.yzm,
+                        type: 'h5'
+                    },
+                    success: function (data) {
+                        if (data.rsp_code == "fail") {
+                            self.tishi = data.error_msg
+                        } else {
+                            self.miao = true;
+                            let time = setInterval(() => {
+                                self.miaozhi -= 1;
+                                if (self.miaozhi == 0) {
+                                    self.miao = false;
+                                    clearInterval(time);
+                                }
+                            }, 1000)
+                        }
+                    }
+                });
+            },
+            gotologinorregister: function () {
+                this.yzmethods('goto');
+            },
+
+        },
+        mounted:function() {
+
+        }
+           
+    });
+
+</script>
+
+</html>

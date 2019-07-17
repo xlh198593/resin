@@ -1,0 +1,38 @@
+.mercantile_agent_detail_content{
+	padding:1.2rem;
+}
+.infor_list{
+	background:#fff;
+	overflow:hidden;
+	padding:1rem;
+}
+.infor_list > li{
+	overflow:hidden;
+}
+.infor_list > li .title{
+	display:block;
+	width:29%;
+	height:4.1rem;
+	line-height:4.1rem;
+	float:left;
+	font-size:1.7rem;
+	overflow:hidden;
+	color:#333;
+	font-weight:bold;
+}
+.infor_list > li .txt{
+	width:67%;
+    font-size:1.6rem;
+	float:left;
+	padding:0.9rem 0;
+	margin-left:0.5rem;
+	overflow:hidden;
+	color:#666;
+	font-weight:bold;
+}
+.infor_list > li .txt img{
+	position:relative;
+	left:0;
+	top:-0.8rem;
+ 
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html data-dpr="1">
+  <head>
+    <% include ../../commonHead.html %>
+    <title>充值记录</title>
+    <style>
+        html,body {
+            width:10rem;
+            height:100%;
+        }
+        .goods-item-signal {
+            width:10rem;
+        }
+        .header {
+          height:2rem;
+          width:10rem;
+          background-color: #FF7256;
+        }
+
+        .goods-item-signal li {
+            height:1rem;
+            width:10rem;
+            border-bottom:2px solid gainsboro;
+           
+        }
+        .goods-item-signal .time {
+          float: left;
+            width:4.6rem;
+            height:1rem;
+            line-height: 1.5rem;
+            text-align: center;
+            font-size:0.4rem;
+        }
+        .goods-item-signal .stament {
+            float: left;
+            width:2.5rem;
+            height:1rem;
+            line-height: 1.5rem;
+            text-align: center;
+            font-size:0.4rem;
+        }
+
+        .goods-item-signal .total {
+            float: left;
+            width:2.5rem;
+            height:1rem;
+            line-height: 1.5rem;
+            text-align: center;
+            font-size:0.4rem;
+        }
+
+        
+    
+    </style>
+  </head>
+  <body>
+     <div id="app">
+        <div class="header"></div>
+        <ul class="goods-item-signal">
+          <recharge-item-signal v-for="(goods,index) in goodsList" v-bind:goods="goods" v-bind:key="goods.id" v-bind:index="index"></recharge-item-signal>
+        <!-- <div v-show="nothing" class="no-record">
+          <img src="/image/common/no-record.png" />
+          <p>暂无相关商品</p> -->
+      </div>
+      <!-- <div v-show="isLoading" class="loading">正在加载</div>
+      <div v-show="!hasMore && !nothing && page.page_no > 1" class="loading">没有更多啦~</div> -->
+  </ul>
+</div>
+<script type="text/x-template" id="recharge-item-signal-template">
+    <li class="goods" >
+         <div class="time">{{goods.created_date}}</div>
+         <div class="stament">{{goods.payment_way_key == 'ZFFS_02' ? "微信" :"支付宝"}}</div>
+         <div class="total">{{goods.amount}}</div>
+    </li>
+  </script>
+<script type="text/javascript">
+Vue.config.devtools = true;
+// 注册
+Vue.component('recharge-item-signal', {
+  // 声明 props
+  props: ['goods'],
+  template: '#recharge-item-signal-template'
+});
+
+var app = new Vue({
+  el: '#app',
+  data: function(){
+    return {
+      goodsList: [],
+      total_page:-1, //总页数 初始化为0
+      page: {
+          page_no: 1,
+          page_size: 20
+      },
+      nothing: false,
+      isLoading: false,
+      hasMore: true,
+      memberId:'<%-member_id%>',
+      user_token:'<%-user_token%>',
+      sign:'<%-sign%>'
+    };
+  },
+  methods:{
+     //列表滚动刷新
+    loadGoods:function(label){
+      var self = this;
+      console.log(self)
+      $.ajax({
+          type: 'POST',
+          url: '/openapi/member/rechargelist',
+          data: {
+            //   params: JSON.stringify({label}),
+              page: JSON.stringify(self.page),
+              member_id:self.memberId,
+              user_token:self.user_token,
+              sign:self.sign
+          },
+          beforeSend: function() {
+            console.log('self.total_page:',self.total_page);
+            console.log('self.page.page_no:',self.page.page_no);
+            if(self.total_page < self.page.page_no && self.page.page_no>1){
+              return false;
+            }
+              self.isLoading = true;
+              self.nothing = false;
+              self.page.page_no++;
+          },
+          success: function(data) {
+              self.goodsList = data;
+              // var jsonData = (typeof data == 'string' ? JSON.parse(data) : data) || [];
+              // self.goodsList.push.apply(self.goodsList, jsonData.goodsList);
+              // console.log(self.goodsList)
+              // self.total_page = jsonData.page.total_page;
+              // if(self.goodsList.length == 0) {
+              //     self.nothing = true;
+              // }
+              // if(jsonData.page.total_page == self.page.page_no
+              //     || jsonData.goodsList.length == 0) {
+              //     self.hasMore = false;
+              //     return;
+              // }
+              // self.page.page_no++;
+          },
+          complete: function() {
+              self.isLoading = false;
+          }
+      });
+
+    }
+  },
+  mounted: function() {
+    new AutoLoader().load({scrollToTop: true}, this.loadGoods);
+  }
+})
+</script>
+  </body>
+</html>

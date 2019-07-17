@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.infrastructure.dao.UserWechatDao">
+	<resultMap  id="userWechatMap" type="com.meitianhui.infrastructure.entity.UserWechat">
+		<id column="user_wechat_id" property="userWechatId" jdbcType="VARCHAR"/>
+		<result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+		<result column="open_id" property="openId" jdbcType="VARCHAR"/>
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+		<result column="sex" property="sex" jdbcType="INTEGER"/>
+		<result column="city" property="city" jdbcType="VARCHAR"/>
+		<result column="province" property="province" jdbcType="VARCHAR"/>
+		<result column="country" property="country" jdbcType="VARCHAR"/>
+		<result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR"/>
+		<result column="unionid" property="unionId" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getUserWechat" resultMap="userWechatMap"  parameterType="java.util.Map">
+		SELECT
+			user_wechat_id,
+			mobile,
+			open_id,
+			nick_name,
+			sex,
+			city,
+			province,
+			country,
+			head_img_url,
+			unionid,
+			create_time,
+			STATUS,
+			remark 
+		FROM
+			id_user_wechat
+		<where>
+			<if test="openId !=null">
+				open_id=#{openId,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile !=null">
+				and mobile=#{mobile,jdbcType=VARCHAR}
+			</if>
+		</where>
+			
+	</select>
+	
+	<insert id="insert" parameterType="com.meitianhui.infrastructure.entity.UserWechat">
+		insert into id_user_wechat(user_wechat_id,mobile,open_id,nick_name,sex,city,province,country,head_img_url,unionid,create_time,STATUS,remark)
+			   values(#{userWechatId},#{mobile},#{openId},#{nickName},#{sex},#{city},#{province},#{country},#{headImgUrl},#{unionId},#{createTime},
+			   			#{status},#{remark})
+	
+	</insert>
+
+</mapper>

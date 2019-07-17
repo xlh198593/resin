@@ -1,0 +1,31 @@
+*{margin:0;padding:0;}
+input{outline:none;}
+ul{list-style:none;}
+img{border:0;}
+a{text-decoration:none;}
+html,body{font-family:"Microsoft YaHei"; font-size:14px; color:#333;min-width:1920px;overflow-x:hidden;overflow-y:auto;}
+
+
+.choose_con{
+    overflow:hidden;
+	margin:20px 0;
+}
+.choose_con .select_date{
+	overflow:hidden;
+	float:left;
+}
+.choose_con .select_date > li{
+	width:60px;
+	height:25px;
+	line-height:25px;
+	border:1px solid #ddd;
+	text-align:center;
+	float:left;
+	margin:0 10px;
+	cursor:pointer;
+}
+.choose_con .select_date > li.on{
+	background:#c7912b;
+	color:#fff;
+	border-color:#c7912b;
+}

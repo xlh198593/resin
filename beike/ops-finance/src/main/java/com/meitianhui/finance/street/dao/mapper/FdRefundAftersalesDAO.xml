@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdRefundAftersalesDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdRefundAftersales">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="refunds_no" jdbcType="VARCHAR" property="refundsNo"/>
+        <result column="transaction_no" jdbcType="VARCHAR" property="transactionNo"/>
+        <result column="refunds_type" jdbcType="VARCHAR" property="refundsType"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="refunds_reason" jdbcType="VARCHAR" property="refundsReason"/>
+        <result column="total_price" jdbcType="DECIMAL" property="totalPrice"/>
+        <result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+        <result column="shop_id" jdbcType="VARCHAR" property="shopId"/>
+        <result column="tid" jdbcType="VARCHAR" property="tid"/>
+        <result column="oid" jdbcType="VARCHAR" property="oid"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, refunds_no, transaction_no, refunds_type, `status`, refunds_reason, total_price, 
+     member_id, shop_id,tid, oid,created_time, modified_time
+  </sql>
+
+    <select id="selectByRefundsNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fd_refund_aftersales
+        where refunds_no = #{refundsNo,jdbcType=VARCHAR} limit 0,1 for update
+    </select>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.finance.street.entity.FdRefundAftersales"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into fd_refund_aftersales
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="refundsNo != null">
+                refunds_no,
+            </if>
+            <if test="transactionNo != null">
+                transaction_no,
+            </if>
+            <if test="refundsType != null">
+                refunds_type,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="refundsReason != null">
+                refunds_reason,
+            </if>
+            <if test="totalPrice != null">
+                total_price,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="oid != null">
+                oid,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="refundsNo != null">
+                #{refundsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionNo != null">
+                #{transactionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundsType != null">
+                #{refundsType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="refundsReason != null">
+                #{refundsReason,jdbcType=VARCHAR},
+            </if>
+            <if test="totalPrice != null">
+                #{totalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="oid != null">
+                #{oid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.meitianhui.finance.street.entity.FdRefundAftersales">
+        update fd_refund_aftersales
+        <set>
+            <if test="refundsNo != null">
+                refunds_no = #{refundsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionNo != null">
+                transaction_no = #{transactionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundsType != null">
+                refunds_type = #{refundsType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="refundsReason != null">
+                refunds_reason = #{refundsReason,jdbcType=VARCHAR},
+            </if>
+            <if test="totalPrice != null">
+                total_price = #{totalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                tid = #{tid,jdbcType=VARCHAR},
+            </if>
+            <if test="oid != null">
+                oid = #{oid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+        <if test="status != null">
+            and `status` &lt;&gt; 'succ',
+        </if>
+    </update>
+
+</mapper>

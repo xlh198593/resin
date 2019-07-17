@@ -1,0 +1,268 @@
+<form class="layui-form" action="" style="margin-top:25px;">
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">状态:</label>
+	      <div class="layui-input-inline">
+	      	{{# if (d.goodVerifyInfo.status == 'delete') { }}
+                <input type="tel" name="phone" disabled="disabled"  class="layui-input status_val" value="已删除">
+            {{# } else if (d.goodVerifyInfo.status == 'off_shelf') { }}
+                <input type="tel" name="phone" disabled="disabled"  class="layui-input status_val" value="已下架">
+            {{# } else if ( d.goodVerifyInfo.status == 'on_shelf') { }}
+                <input type="tel" name="phone" disabled="disabled"  class="layui-input status_val" value="已上架">
+            {{# } else if (d.goodVerifyInfo.status == 'normal') { }}
+                <input type="tel" name="phone" disabled="disabled"  class="layui-input status_val" value="待上架">
+            {{# } }}
+
+	      </div>
+	    </div>
+    </div>
+
+    {{# if (d.goodDetailData.status == 'delete') { }}
+        <div class="layui-form-item">
+		    <label class="layui-form-label">删除原因:</label>
+		    <div class="layui-input-block" style="width:580px;">
+		        <textarea name="title" disabled="disabled" class="layui-input false_textarea">
+		            {{d.goodVerifyInfo.remark || '删除原因没填写'}}
+		        </textarea>
+		    </div>
+        </div>
+    {{# } }}
+
+
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">操作时间:</label>
+	      <div class="layui-input-inline">
+	        <input type="tel" name="phone" disabled="disabled"  class="layui-input" value="{{d.goodVerifyInfo.created_date}}">
+	      </div>
+	    </div>
+    </div>
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">所属商户:</label>
+	      <div class="layui-input-inline">
+	        <input type="tel" name="phone" disabled="disabled" class="layui-input" value="{{d.goodVerifyInfo.stores_name}}">
+	      </div>
+	    </div>
+    </div>
+    <div class="layui-form-item">
+	    <label class="layui-form-label">商品标题:</label>
+	    <div class="layui-input-block" style="width:580px;">
+	      <input type="text" name="title" disabled="disabled" class="layui-input" value="{{d.goodDetailData.title}}">
+	    </div>
+	</div>
+    <div class="layui-form-item">
+	    <label class="layui-form-label">副标题:</label>
+	    <div class="layui-input-block" style="width:580px;">
+	      <input type="text" name="title" disabled="disabled" class="layui-input" value="{{ d.goodDetailData.desc1}}">
+	    </div>
+    </div>
+
+    <div class="layui-form-item">
+	    <label class="layui-form-label">商品主图:</label>
+	    <div class="layui-input-block" style="width:60%;overflow:hidden;">
+	    	{{# layui.each(d.goodDetailData.pic_info, function (i, imgurl) { }}
+	    		<div class="upload_img">
+					<div class="img show_big_img">
+						<img src="{{d.imgUrl + '/' + imgurl }}" width="100" height="100">
+					</div>
+					{{# if (i == 0) { }}
+					    <p class="txt">封面图</p>
+					{{# } else { }}
+
+					{{# } }}
+			    </div>
+	    	{{# }) }}
+	    </div>
+	</div>
+
+ 
+	<div class="layui-form-item">
+	    <label class="layui-form-label">套餐内容:</label>
+	    <div class="layui-input-block" style="width:90%;border:1px solid #e5e5e5;padding:10px;">
+	        <p class="menu_title">提示：一级类目如：锅底；二级类目如：鸳鸯锅、清汤锅、红油锅。</p>
+	        {{# layui.each(d.goodDetailData.specification, function (index, goodItem) { }}
+		        <div class="layui-input-block" style="margin-left:0;">
+		            <div class="layui-form-item">
+					    <div class="layui-inline">
+					      <div class="layui-input-inline">
+					        <input type="tel" name="phone" disabled="disabled"  class="layui-input" value="{{goodItem.class_name}}" style="border-color:#c7912b;">
+					      </div>
+					    </div>
+					</div>
+		        	<div class="layui-form-item">
+		        		{{# layui.each(goodItem.data, function (i, good) { }}
+		        		   <div class="layui-inline">
+						      <div class="layui-input-inline">
+						        <input type="tel" name="phone" disabled="disabled"  class="layui-input" value="{{good.name}}">
+						      </div>
+						    </div>
+		        		{{# }) }}
+					  
+					</div>
+		        </div>
+	        {{# }) }}
+	    </div>
+	</div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">规格信息:</label>
+        <div class="layui-input-block" style="width:90%;border:1px solid #e5e5e5;padding:10px;">
+	    	<table class="layui-table make_tab" style="width:820px;">
+				<colgroup>
+				    <col width="210">
+				    <col width="210">
+				    <col>
+				    <col>
+				</colgroup>
+				<thead>
+				    <tr>
+						<th>一级类目</th>
+						<th>二级类目</th>
+						<th>数量(份)</th>
+						<th>单价(元)</th>
+				    </tr> 
+				</thead>
+
+				<tbody>
+					{{# layui.each(d.goodDetailData.specification, function (index, goodItem) { }}
+					    {{# layui.each(goodItem.data, function (i, good) { }}
+					      	<tr>
+					      		{{# if (i == 0) { }}
+					      			<td rowspan="{{goodItem.data.length}}">{{ goodItem.class_name}}</td>
+					      		{{# } else { }}
+					      			<td style="display:none;">{{ goodItem.class_name}}</td>
+					      		{{# } }}
+							 
+								<td>{{ good.name }}</td>
+								<td>{{ good.num}}</td>
+								<td>{{ good.money}}</td>
+							</tr>
+					    {{# }) }}
+					{{# }) }}
+				</tbody>
+			</table>
+     	</div>
+    </div>
+
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">总库存:</label>
+	      <div class="layui-input-inline">
+	        <input type="tel" name="phone"  disabled="disabled" class="layui-input" style="width:80%;float:left;" value="{{d.goodDetailData.stock_qty}}"> <span style="line-height:38px;margin-left:5px;">份</span>
+	      </div>
+	    </div>
+    </div>
+
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	        <label class="layui-form-label">参与活动:</label>
+	        <div class="layui-input-inline">
+                {{# if (d.goodDetailData.label != '0') { }}
+                    <input type="tel" name="phone" disabled="disabled" class="layui-input" value="{{d.goodDetailData.label_promotion}}">
+                {{# } else { }}
+                    <input type="tel" name="phone" disabled="disabled" class="layui-input" value="否">
+                {{# } }}
+	        </div>
+	    </div>
+    </div>
+
+    <div class="layui-form-item">
+	    <label class="layui-form-label">商品价格:</label>
+	    <div class="layui-input-block">
+	        <div class="layui-inline">
+		        <label class="layui-form-label" style="width:85px;">原价(门店价):</label>
+		        <div class="layui-input-inline">
+		            <input type="tel" name="phone"  disabled="disabled" class="layui-input" style="width:70%;float:left;" value="{{d.goodDetailData.sale_price}}"> <span style="line-height:38px;margin-left:5px;">元</span>
+		        </div>
+		    </div>
+	    </div>
+	    <div class="layui-input-block">
+	        <div class="layui-inline">
+		        <label class="layui-form-label" style="">超级会员价:</label>
+		        <div class="layui-input-inline">
+		            <input type="tel" name="phone"  disabled="disabled" class="layui-input" style="width:70%;float:left;" value="{{d.goodDetailData.vip_price}}">
+		            <span style="line-height:38px;margin-left:5px;">元</span>
+                    <span style="line-height:38px;margin-left:5px;">+</span>
+                   
+		        </div>
+		        <div class="layui-input-inline">
+		        	<input type="tel" name="phone"  disabled="disabled" class="layui-input" style="width:70%;float:left;" value="{{d.goodDetailData.beike_credit}}">
+		            <span style="line-height:38px;margin-left:5px;">个贝壳</span>
+		        </div>
+		    </div>
+	    </div>
+    </div>
+
+    <div class="layui-form-item">
+	    <label class="layui-form-label">购买须知:</label>
+	    <div class="layui-input-block" style="margin-bottom:10px;">
+	    	<label class="layui-form-label">有效期：</label>
+	        <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="{{d.goodDetailData.ativity_time}}">
+	    </div>
+	    <div class="layui-input-block" style="margin-bottom:10px;">
+	    	<label class="layui-form-label">使用时间：</label>
+	        <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="{{d.goodDetailData.perchase_notice.use_time}}">
+	    </div>
+	    <div class="layui-input-block" style="margin-bottom:10px;">
+	    	<label class="layui-form-label">使用规则：</label>
+	    	{{# if (d.goodDetailData.perchase_notice.max_count == '-1') { }}
+	    	    <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="不限使用张数">
+	    	{{# } else if (d.goodDetailData.perchase_notice.max_count == '1') { }}
+	    	    <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="最多可以用一张">
+	    	{{# } else if (d.goodDetailData.perchase_notice.max_count == '2') { }}
+	    	    <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="最多可用两张">
+	    	{{# } else if (d.goodDetailData.perchase_notice.max_count == '3') { }}
+	    	    <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value=" 最多可用三种">
+	    	{{# } }}  
+	    </div>
+
+	    <div class="layui-input-block" style="margin-bottom:10px;">
+	    	<label class="layui-form-label">发票信息：</label>
+	    	{{# if (d.goodDetailData.perchase_notice.is_offer_invoice == '0') { }}
+                <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="不提供发票">
+
+	    	{{# } else if (d.goodDetailData.perchase_notice.is_offer_invoice == '1') { }}
+	    	    <input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="可提供发票">
+	    	{{# } }}
+	    </div>
+
+
+	    {{# layui.each(JSON.parse(d.goodDetailData.perchase_notice.rest_remark), function (i, remark) { }}
+	        <div class="layui-input-block" style="margin-bottom:10px;">
+	        	{{# if (i == 0) { }}
+		    	    <label class="layui-form-label">其它事项：</label>
+		    	{{# } else { }}
+		    	    <label class="layui-form-label"></label>
+		    	{{# } }}
+		    	<input type="text" name="title" disabled="disabled" class="layui-input" style="width:330px;" value="{{remark}}">
+	        </div>
+	    {{# }) }}
+    </div>
+
+    <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">商家服务:</label>
+	        {{# layui.each(d.goodDetailData.service_level, function (index, service) {  }}
+		        <div class="layui-input-inline">
+			        <input type="tel" name="phone" disabled="disabled" class="layui-input"  value="{{service}}">
+			    </div>
+	        {{# }) }}
+	    </div>
+    </div>
+
+    <div class="layui-form-item">
+		<div class="layui-input-block">
+		    {{# if (d.goodVerifyInfo.status == "on_shelf") { }}
+				<input type="button" class="layui-btn sub_btn1" value="下架">
+		    {{# } else if (d.goodVerifyInfo.status == "off_shelf" || d.goodVerifyInfo.status == 'normal') { }}
+		 
+
+				<input type="button" class="layui-btn sub_btn1" value="上架">
+				<input type="button" class="layui-btn layui-btn-primary sub_btn2" value="删除">
+		    {{# } }}
+		      
+    	</div>
+	</div>
+</form>

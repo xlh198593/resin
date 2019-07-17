@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <title>会员中心</title>
+    <link rel="stylesheet" href="/css/payback/user_memberv2.css?v20181129">
+    <style>
+        .recommend_shop {
+            height: 4.533333rem;
+            width: 9.48rem;
+            margin: .266667rem auto 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .recommend_shop img {
+            display: inline-block;
+            height: 4.533333rem;
+            width: 4.533333rem;
+            /* border:1px solid red; */
+        }
+
+        /* .recommend_shop  {
+                height:2.48rem;
+                width:4.453333rem;
+                
+            } */
+
+        /* .left_left {
+               width:2.893333rem;
+               height:1.96rem;
+               float:left;
+               overflow: hidden;
+           }
+           .right_right {
+               width:1.253333rem;
+               height:1.546667rem;
+               float:left;
+               border:1px solid red;
+               margin-top:0.1rem;
+           } */
+        .day_have {
+            width: 120%;
+            height: .3rem;
+            font-size: .28rem;
+            margin-left: 0.1rem;
+            margin-top: -2.3rem;
+            color: red;
+        }
+
+        .day_have span {
+            display: inline-block;
+            height: .266667rem;
+            width: .266667rem;
+            border: 1px solid red;
+            font-size: .213333rem;
+            color: white;
+            background-color: red;
+            border-radius: .133333rem;
+            text-align: center;
+            line-height: .266667rem;
+            margin-left: 0.1rem;
+        }
+
+        .advertising-bg {
+            background: #494949;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 20;
+            filter: alpha(opacity=60);
+            opacity: 0.7 !important;
+        }
+
+        .advertising-img {
+            position: fixed;
+            display: block;
+            z-index: 50 !important;
+            width: 6.533333rem;
+            height: 10rem;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            margin-top: -5rem;
+            /*--高度的一半--*/
+            margin-left: -3.27rem;
+            /*--宽度的一半--*/
+        }
+
+        .advertising-img img {
+            width: 6.533333rem;
+            height: 10.493333rem;
+            -moz-border-radius: .2rem;
+            -webkit-border-radius: .2rem;
+        }
+
+        .advertising-url {
+            width: 6.533333rem;
+            height: 9.493333rem;
+            margin-top: .2rem;
+        }
+
+        .advertising-close {
+            height: .7rem;
+            width: .7rem;
+            margin-left: 5.7rem;
+            border: 1px solid white;
+            background: url('/image/newmember/cuowu.png') no-repeat;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            -moz-border-radius: .7rem;
+            -webkit-border-radius: .7rem;
+        }
+
+        .focus {
+            width: 9.493333rem;
+            height: 3.293333rem;
+            margin: .186667rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .focus .hd {
+            width: 9.493333rem;
+            height: 11px;
+            position: absolute;
+            z-index: 1;
+            bottom: 5px;
+            text-align: center;
+        }
+
+        .focus .hd ul {
+            display: inline-block;
+            height: 5px;
+            padding: 3px 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            font-size: 0;
+            vertical-align: top;
+        }
+
+        .focus .hd ul li {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: #8C8C8C;
+            margin: 0 5px;
+            vertical-align: top;
+            overflow: hidden;
+        }
+
+        .focus .hd ul .on {
+            background: #FE6C9C;
+        }
+
+        .focus .bd {
+            position: relative;
+            z-index: 0;
+        }
+
+        .focus .bd li img {
+            width: 9.493333rem;
+            height: 3.293333rem;
+            /* background: url(images/loading.gif) center center no-repeat; */
+        }
+
+        .focus .bd li a {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            /* 取消链接高亮 */
+        }
+        .focus li{
+            position: absolute;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app" v-bind:class="{app:iphonex,app1:!iphonex}">
+        <!-- 广告弹框背景遮罩层 -->
+        <div class="advertising-bg" v-if="advertising_bg"></div>
+        <div class="advertising-img" v-if="advertising_img">
+            <div class="advertising-close" @click="closeadv()"></div>
+            <div class="advertising-url" id="imageId-box">
+                <img :src="gg_imgsrc" id="imageId" />
+            </div>
+        </div>
+        <% if(login_status == '0') {%>
+        <div v-bind:class="{nologin1:iphonex,nologin:!iphonex}">
+            <div class="title1" v-if="iphonex">超级会员</div>
+            <div class="title" v-else>超级会员</div>
+            <div class="headcontain">
+                <div class="header">
+                    <img src="/image/newmember/headimg.png" alt="">
+                </div>
+                <div class="message">
+                    <div class="loginstatus">未登录</div>
+                    <div class="logintishi">登录后可享受svip特权</div>
+                </div>
+                <div class="loginbtn" @click="gotologin()">登录</div>
+
+            </div>
+        </div>
+        <div class="memberlegal">
+            <div class="membertitle">会员特权</div>
+            <div class="huiyuanquanyi">
+                <div class="sigle">
+                    <div class="super common" @click="gotoqy('8')">
+                        <div class="icon supericon1"></div>
+                        <div class="explain">超级会员日</div>
+                        <div class="explainfu">专属购物节</div>
+                    </div>
+                    <div class="remendermember common" @click="gotoqy('4')">
+                        <div class="icon remendermembericon1"></div>
+                        <div class="explain">邀请得奖励</div>
+                        <div class="explainfu">更高奖励好礼</div>
+                    </div>
+                    <div class="zanding common" @click="gotoqy('2')">
+                        <div class="icon shengriliquanicon1"></div>
+                        <div class="explain">生日礼包</div>
+                        <div class="explainfu">不一样的礼物</div>
+                    </div>
+                    <div class="zanding common" @click="gotoqy('3')">
+                        <div class="icon mianyouicon1"></div>
+                        <div class="explain">免邮券</div>
+                        <div class="explainfu">免邮更优惠</div>
+                    </div>
+                    <div class="placeanorder common" @click="gotoqy('1')">
+                        <div class="icon placeanordericon1"></div>
+                        <div class="explain">赠送礼券</div>
+                        <div class="explainfu">价值399元</div>
+                    </div>
+                    <div class="sendbeike common" @click="gotoqy('5')">
+                        <div class="icon sendbeike11"></div>
+                        <div class="explain">赠送贝壳</div>
+                        <div class="explainfu">价值1314元</div>
+                    </div>
+
+                    <div class="honorable common" @click="gotoqy('6')">
+                        <div class="icon honorableicon1"></div>
+                        <div class="explain">尊贵标识</div>
+                        <div class="explainfu">贵族名片</div>
+
+                    </div>
+                    <div class="zanding monthq common" @click="gotoqy('7')">
+                        <div class="icon meiriliquanicon1"></div>
+                        <div class="explain">每月优惠</div>
+                        <div class="explainfu">超值优惠券</div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="bgc" v-if="bgc"></div>
+        </div>
+        <%} else if(login_status == '1' && member == '1') {%>
+        <div class="usercontain">
+            <div class="cjheg">
+                <div class="cjtitle1" v-if="iphonex">超级会员</div>
+                <div class="cjtitle" v-else>超级会员</div>
+                <div class="yahy"  @click="gotorealize('yqhydlq')">
+                    <div class="yahyimg"><img src="/image/newmember/qyhya.png" /></div>
+                    <div class="yahywz">邀请会员</div>
+                </div>
+            </div>
+            <div class="usermessage">
+                <div class="head_title">
+                    <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" class="headimg" />
+                    <div class="user_content">
+                        <div class="username_tilte"><span class="usernmae_user"><%=nick_name%></span><span
+                                class="year_icon"></span></div>
+                        <div class="user_content_endtime"><%=end_time%>到期</div>
+                        <!-- <div class="goto_remew" @click="gotoorderdetail()">立即续费</div> -->
+
+                    </div>
+                    <div class="remew">
+                        <span class="remew_titile" @click="gotoorderdetail()">立即续费</span>
+                    </div>
+                </div>
+                <div class="whilebgc"></div>
+                <div class="progressendtime">
+                    <div class="left">
+                        <% if(level == "1") {%>
+                        <div class="leftnode leftnode1"></div>
+                        <div class='progress' ref="progress">
+                            <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                        </div>
+                        <div class='rightnode rightnode2'></div>
+                        <%} else if(level == "7") {%>
+                        <div class="leftnode leftnode6"></div>
+                        <div class='progress' ref="progress">
+                            <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                        </div>
+                        <div class='rightnode rightnode7'></div>
+                        <%}else{%>
+                        <div class="leftnode leftnode<%=level%>"></div>
+                        <div class='progress' ref="progress">
+                            <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                        </div>
+                        <div class='rightnode rightnode<%=level+1%>'></div>
+                        <%}%>
+                                            <div class="growth_value" v-bind:style="{'margin-left':marginLeft}">{{growth_value}}</div>
+                                        
+                            </div>
+                            <div class="endtime" @click="gotogrowthvalue()">
+                                查看成长值>
+                            </div>
+                            
+                            
+
+                        </div>
+                        <div class="rend">
+                            <div class="title">
+                                <div>已为您节省(元)</div>
+                                <div @click="gotoliquan()">礼券(张)</div>
+                                <div @click="gotoliquan()">免邮券(张)</div>
+                            </div>
+                            <div class="detail">
+                                <div>
+                                    <%-beike_credit?beike_credit:0%>.00
+                    </div>
+                    <div>
+                        <%-youhui?youhui:0%></div>
+                    <div>
+                        <%-mianyou?mianyou:0%></div>
+                </div>
+            </div>
+            <div class="downpic downpic<%=level%>"></div>
+
+        </div>
+
+
+    </div>
+
+    <div class="downcontain">
+
+        <div class="downsilder">
+            <!-- <div class="ellipse"></div> -->
+            <div class="invio">
+                <div class="invio_sigle" @click="gotoqy('1')">
+                    <img src="/image/newmember/zslqa.png" alt="">
+                    <div>赠送礼券</div>
+                    <div class="wzx">价值4788元</div>
+                </div>
+                <div class="invio_sigle" @click="gotoqy('5')">
+                    <img src="/image/newmember/zsbka.png" alt="">
+                    <div>赠送贝壳</div>
+                    <div class="wzx">当钱花</div>
+                </div>
+                <div class="invio_sigle" @click="gotoqy('4')">
+                    <img src="/image/newmember/3@2x.png" alt="">
+                    <div>推荐会员返现</div>
+                    <div class="wzx">120元/人</div>
+                </div>
+                <div class="invio_sigle" @click="gotoqy('6')">
+                    <img src="/image/newmember/zgsfa.png" alt="">
+                    <div>尊贵标识</div>
+                    <div class="wzx">贵族名片</div>
+                </div>
+            </div>
+
+            <% } else {%>
+            <div class="nologin" v-bind:class="{nologin1:iphonex,nologin:!iphonex}">
+                <div class="title1" v-if="iphonex">超级会员</div>
+                <div class="title" v-else>超级会员</div>
+                <div class="headcontain">
+                    <div class="headerout">
+                        <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" />
+                    </div>
+                    <div class="message">
+                        <div class="loginstatus">
+                            <%-nick_name%>
+                        </div>
+                        <div class="logintishi1">您还没有成为超级会员</div>
+                    </div>
+                </div>
+            </div>
+            <div class="memberlegal">
+                <div class="membertitle">会员特权</div>
+                <div class="huiyuanquanyi">
+                    <div class="sigle">
+                        <div class="super common" @click="gotoqy('8')">
+                            <div class="icon supericon1"></div>
+                            <div class="explain">超级会员日</div>
+                            <div class="explainfu">专属购物节</div>
+                        </div>
+                        <div class="remendermember common" @click="gotoqy('4')">
+                            <div class="icon remendermembericon1"></div>
+                            <div class="explain">邀请得奖励</div>
+                            <div class="explainfu">更高奖励好礼</div>
+                        </div>
+                        <div class="zanding common" @click="gotoqy('2')">
+                            <div class="icon shengriliquanicon1"></div>
+                            <div class="explain">生日礼包</div>
+                            <div class="explainfu">不一样的礼物</div>
+                        </div>
+                        <div class="zanding common" @click="gotoqy('3')">
+                            <div class="icon mianyouicon1"></div>
+                            <div class="explain">免邮券</div>
+                            <div class="explainfu">免邮更优惠</div>
+                        </div>
+                        <div class="placeanorder common" @click="gotoqy('1')">
+                            <div class="icon placeanordericon1"></div>
+                            <div class="explain">赠送礼券</div>
+                            <div class="explainfu">价值399元</div>
+                        </div>
+                        <div class="sendbeike common" @click="gotoqy('5')">
+                            <div class="icon sendbeike11"></div>
+                            <div class="explain">赠送贝壳</div>
+                            <div class="explainfu">价值1314元</div>
+                        </div>
+
+                        <div class="honorable common" @click="gotoqy('6')">
+                            <div class="icon honorableicon1"></div>
+                            <div class="explain">尊贵标识</div>
+                            <div class="explainfu">贵族名片</div>
+
+                        </div>
+                        <div class="zanding monthq common" @click="gotoqy('7')">
+                            <div class="icon meiriliquanicon1"></div>
+                            <div class="explain">每月优惠</div>
+                            <div class="explainfu">超值优惠券</div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <%}%>
+                                    <%if(login_status == '1' && member == '1') {%>
+
+                <div class="sign_in">
+                    <div class="sign_in_every">
+                        <div class="left">签到得礼券</div>
+                        <div class="right" @click="gotocalender()">签到日历<span class="sign_in_right"></span></div>
+                    </div>
+                    <div class="px"></div>
+                    <div class="sign_in_content">
+                        <%if(is_activate == "N"){%>
+                        <div class="sign_in_have" v-if="need_signIn != 0">还需签到<span
+                                style='color:#AB6B07'>{{need_signIn}}</span>次</div>
+                        <div class="sign_in_have" v-else>您已达到本轮签到要求</div>
+                        <div class="sign_id_get" v-if="need_signIn != 0">即可获得<span style='color:#AB6B07'>399</span>元礼券一张
+                        </div>
+                        <div class="sign_id_get" v-else>已解锁一张礼券</div>
+                        <%}else{%>
+                        <div class="sign_in_have">您已达到本轮激活要求</div>
+                        <div class="sign_in_have">已解锁一张礼券</div>
+                        <%}%>
+                                                    
+                                                    <%if(have_next == "N"){%>
+                        <div class='gotosignin' v-if="is_signIn !='Y'" @click="goto_singIn11()">立即签到</div>
+                        <%}else{%>
+                        <div class='gotosignin' v-if="is_signIn !='Y'" @click="goto_singIn()">立即签到</div>
+                        <%}%>
+                                                    
+                                                    <div class='gotosignin_no' v-else @click="goto_singIn()">今日已签</div>
+                                                    <!-- <div class='gotosignin_no'><span v-if="is_signIn =='Y'">今日已签</span> <span v-else>今日未签</span> </div> -->
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div v-for="(i,c) in vip_recommend" :k="c" class="recommend_shop">
+                                                <div v-for="(a,d) in i" :k="d" class="left" @click="gotoactivityshopNew(c,d)">
+                                                    <img :src="a.imgPath" alt="">
+                                                </div>
+                                            </div>                                            
+                                            <div id="focus" class="focus">
+                                                <div class="bd">
+                                                    <ul>
+                                                        <li v-for="(item,c) in vip_ads" :k="c" v-if="c == vip_id" @click="gotoactivityshopNews(c)">
+                                                            <a href="javascript:void(0);"><img :src="item.imgPath" alt=""></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        <%}else{%>
+                        <div class="recharge_select">
+                            <div class="contain">
+                                <div class="recharge_select_title"></div>
+                                <div class="recharge_select_detail">
+                                    <div class="left">
+                                        <span class="little">￥</span>
+                                        <span>399</span>
+                                        <span class="little">/</span>
+                                        <span class="little">年</span>
+                                    </div>
+                                    <div class="right">
+                                        <%if(login_status == '1' && member == '0') {%>
+                                        <div class="up1">送 <span style="color:#924410">12</span> 张<span
+                                                style="color:#924410">399</span>元礼券<span
+                                                style="color:#924410">1314</span>个贝壳</div>
+                                        <div class="down1">预计为您节省<span style="color:#924410">6120.00</span>元</div>
+                                        <%}else{%>
+                                        <div class="up1">送 <span style="color:#924410">12</span> 张<span
+                                                style="color:#924410">399</span>元礼券<span
+                                                style="color:#924410">1314</span>个贝壳</div>
+                                        <div class="down1">预计为您节省<span style="color:#924410">6120.00</span>元</div>
+                                        <%}%>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="gotorecharge2" @click="gotoorderdetail()">立即开通,尊享特权 ></div>
+                                            </div>
+                                            <%}%>
+
+
+                                        <% if (login_status == '1') {%>
+                                        <div class="singIn_bgc" v-if="signIn == '1'"></div>
+                                        <div class="singIn" v-cloak v-if="signIn == '1'">
+                                            <div class="singIn"></div>
+                                            <div class="singIn_send" style="color:#FFFFFF"> 获得399礼券一张</div>
+                                            <div class="singIn_btn" @click="activateNow()">立即激活</div>
+                                            <div class="singIn_closebtn" @click="singInclose()"></div>
+                                        </div>
+                                        <div class="singIn_bgc" v-if="endSingIn_tishi"></div>
+                                        <div class="endSingIn_tishi" v-cloak v-if="endSingIn_tishi">
+                                            <div class="endSingIn_title">温馨提示</div>
+                                            <div class="endSingIn_content">您当前签到周期内，已成功领取礼包。
+                                                继续签到，不会计入下次签到的周期。</div>
+                                            <div class="endSingIn_kx"></div>
+                                            <div class="endSingIn_close" @click="endSingInClose()">知道了</div>
+                                        </div>
+
+
+
+
+                                        <%} else {%>
+                                        <div class="backgroundblack" v-if="alert_login != '0'">
+                                            <div class="alert1">
+                                                <div class="up">
+                                                    <div class="logintips">提示</div>
+                                                    <div class="agreetit">由于您还未登录账号</div>
+                                                    <div class="agreetit1">请登录后再进行此项操作</div>
+                                                    <div class="know" @click="gotologin()">登录</div>
+                                                </div>
+                                                <div class="notloginclose" v-on:click="changeclosestatus('')"></div>
+                                            </div>
+
+                                        </div>
+                                        <%}%>
+                            </div>
+                    </div>
+                    
+                </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+
+    function gotosumit_s(method, obj) {
+			if (window.jsObj) {  // Android
+				// 传递分享数据
+				if (window.jsObj[method]) {
+					window.jsObj[method](obj);
+				}
+			} else {    // IOS
+				setupWebViewJavascriptBridge(function (bridge) {
+					// 传递分享数据
+					bridge.callHandler(method, obj);
+				});
+			}
+		}
+
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                advertising_bg: false,
+                advertising_img: false,
+                singIn_tishi: false,
+                paymoney: '399',
+                member_id: "<%-member_id%>",
+                pointdown: false,
+                signIn: "0",
+                bgc: false,
+                need_signIn: "<%=need_signIn%>",
+                sinInTiShi: "",
+                singStates: "今日未签",
+                password: "",
+                alert_login: "<%-login_status%>",
+                marginLeft: 60,
+                level: "<%-level%>",
+                is_signIn: "<%-is_signIn%>",
+                endSingIn_tishi: false,
+                width: 0,
+                growth_value: "<%-growth_value%>",
+                iphonex: false,
+                is_activate: "<%-is_activate%>",
+                gg_imgsrc: "",
+                vip_recommend: [],  //格子广告
+                vip_ads: [],     //轮播广告
+                vip_id:0
+            }
+        },
+        computed: {
+            paymoney: function () {
+                return this.month ? 68 : (this.quarter ? 168 : (this.year ? 398 : 8));
+            }
+        },
+        watch: {
+            sinInTiShi: function (current) {
+                var self = this;
+                if (current != "") {
+                    setTimeout(function () {
+                        self.sinInTiShi = "";
+                        self.singIn_tishi = false;
+                    }, 1500);
+                }
+            },
+            vip_ads:function(){
+                var _this = this;
+                this.$nextTick(function(){
+                    _this.$options.methods.getlunbo(_this)
+                })
+            },
+        },    
+        methods: {
+            getlunbo: function (that) {
+                setInterval(function(){
+                    that.vip_id++;
+                    if(that.vip_id == that.vip_ads.length){
+                        that.vip_id = 0;
+                    }
+                },2500)
+            },
+            getAdvertising: function () {
+                var _this = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/member1/advertising',
+                    data: {},
+                    success: function (res) {
+                        if (res.rsp_code == "succ") {
+                            var vip_r = 0;
+                            var vip_r_s = 0;
+                            var vip_a = 0;
+                            var recomdList = [];
+                            _this.ceshi = true;
+                            res.data.forEach(function(datas){
+                                if (datas.category == 'vip_recommend') {
+                                    recomdList.push(datas);
+                                    if(vip_r != 0 && (vip_r+1)%2 == 0){
+                                        _this.$set(_this.vip_recommend,vip_r_s,recomdList);
+                                        recomdList = [];
+                                        vip_r_s++;
+                                    }
+                                    vip_r++;
+                                }
+                                if (datas.category == 'vip_ads') {
+                                    _this.$set(_this.vip_ads,vip_a,datas)
+                                    vip_a++;
+                                }
+                            });
+                        }
+                    }
+                })
+            },
+            gotocalender: function () {
+                                        <%if (have_next == "N") {%>
+                    this.signIn = "0";
+                    this.singIn_tishi = true;
+                    this.sinInTiShi = "抱歉，您当前没有可激活的礼券，暂时不能签到";
+                                        <%} else {%>
+                    gotosumit("gotocalender", {})
+                    <%}%>
+                
+            },
+            closeadv: function () {
+                this.advertising_bg = false;
+                this.advertising_img = false;
+            },
+            endSingInClose: function () {
+                this.endSingIn_tishi = false;
+            },
+            activateNow: function () {
+                this.signIn = "0";
+                this.singIn_tishi = true;
+                this.sinInTiShi = "激活成功,可在'我的-礼券'查看";
+            },
+            gotoactivityshop: function (goods_id) {
+                gotosumit("gotoactivityshop", { "goods_id": goods_id });
+            },
+            gotoactivityshopNew: function (a,b) {
+                var vip_gods = this.vip_recommend[a][b];
+                if(vip_gods.jump_type == 'goods'){
+                    gotosumit("gotonewactivityshop", { "goods_id": vip_gods.url,"type": JSON.parse(vip_gods.json_data)[0].title});
+
+                }else if(vip_gods.jump_type == 'h5'){
+                    gotosumit_s("gotonewhtml", vip_gods.url+"?")
+                }
+            },
+            gotoactivityshopNews: function (a) {
+                var vip_gods = this.vip_ads[a];
+                if(vip_gods.jump_type == 'goods'){
+                    gotosumit("gotonewactivityshop", { "goods_id": vip_gods.url,"type": JSON.parse(vip_gods.json_data)[0].title});
+
+                }else if(vip_gods.jump_type == 'h5'){
+                    gotosumit_s("gotonewhtml", vip_gods.url+"?")
+                }
+            },
+            gotoliquan: function () {
+                gotosumit("gotoliquan", {})
+            },
+            goto_singIn11: function () {
+                this.signIn = "0";
+                this.singIn_tishi = true;
+                this.sinInTiShi = "您当前没有可激活的礼券，签到功能暂不可用";
+            },
+            goto_singIn: function () {
+                var self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/signin',
+                    data: {
+                        member_coupons_id: "<%=member_coupons_id%>",
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                            self.singIn_tishi = true;
+                            self.sinInTiShi = data.error_msg
+                        } else {
+                            if (self.is_activate == "Y") {
+                                self.singIn_tishi = true;
+                                self.is_signIn = "Y";
+                                self.sinInTiShi = "您当前激活周期内，已成功领取礼包。继续签到，不会计入下次激活的周期"
+                            } else {
+                                if (data.data.signInDay == 25) {
+                                    self.signIn = "1";
+                                    self.need_signIn--;
+                                    self.is_signIn = "Y";
+                                } else if (data.data.signInDay > 25) {
+                                    self.endSingIn_tishi = true;
+                                    self.is_signIn = "Y";
+                                } else {
+                                    self.gg_imgsrc = data.data.url;
+                                    self.advertising_bg = true;
+                                    self.advertising_img = true;
+                                    self.need_signIn--;
+                                    self.singIn_tishi = true;
+                                    self.is_signIn = "Y";
+                                    self.sinInTiShi = "您已签到成功，离399礼券更近一步"
+                                    self.advertising_bg = true;
+                                    self.advertising_img = true;
+                                }
+
+                            }
+
+
+                        }
+                    }
+                });
+            },
+            singInclose: function () {
+                this.signIn = 0;
+            },
+            gotorealize: function (type) {
+                gotosumit("torealize1", { type: type })
+            },
+
+            changeclosestatus: function () {
+                this.alert_login = '0';
+                this.bgc = false;
+            },
+            gotoqy: function (type) {
+                gotosumit('goromemberqy', { type: type });
+            },
+            gotologin: function () {
+                gotosumit("login", {});
+            },
+            gotogrowthvalue: function () {
+                gotosumit("gotogrowthvalue", {});
+            },
+            gotoorderdetail: function () {
+                if (this.alert_login == 0) return this.alert_login = 1;
+                var memberlevel = this.paymoney;
+                var obj = {};
+                obj.memberlevel = 399;
+                gotosumit("gotoorderdetail", obj);
+            },
+            isiphonex: function () {
+                return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 &&
+                    screen.width == 375)
+            }
+        },
+
+        mounted: function () {
+            this.getAdvertising();
+            this.iphonex = this.isiphonex() == true ? true : false;
+                                        <%if (login_status == '1' && member == '1') {%>
+                                        var progresswidth = this.$refs.progress.clientWidth;
+                var width = 0;
+                switch (this.level) {
+                    case "1":
+                        width = this.growth_value / 400 * progresswidth;
+                        break;
+                    case "2":
+                        width = (this.growth_value - 400) / (1000 - 400) * progresswidth;
+                        break;
+                    case "3":
+                        width = (this.growth_value - 1000) / (2000 - 1000) * progresswidth;
+                        break;
+                    case "4":
+                        width = (this.growth_value - 2000) / (5000 - 2000) * progresswidth;
+                        break;
+                    case "5":
+                        width = (this.growth_value - 5000) / (10000 - 5000) * progresswidth;
+                        break;
+                    case "6":
+                        width = (this.growth_value - 10000) / (20000 - 10000) * progresswidth;
+                        break;
+                    case "7":
+                        width = this.growth_value / 20000 * progresswidth;
+                        break;
+                }
+                var self = this;
+                var WD = 0;
+                var timer = setInterval(function () {
+                    if (
+                        (self.level == '2' && self.growth_value == "400") ||
+                        (self.level == '3' && self.growth_value == "1000") ||
+                        (self.level == '4' && self.growth_value == "2000") ||
+                        (self.level == '5' && self.growth_value == "5000") ||
+                        (self.level == '6' && self.growth_value == "10000") ||
+                        (self.level == '7' && self.growth_value == "20000") ||
+                        (self.level == '1' && self.growth_value == "0")) {
+                        self.width += WD + "px";
+                        clearInterval(timer);
+                        return;
+                    }
+                    if (WD > width) {
+                        WD += 20;
+                        self.width += WD + "px";
+                        self.marginLeft += WD + 25 + "px";
+                        clearInterval(timer);
+                    } else {
+                        WD += 20;
+                        self.width = WD + "px";
+                        self.marginLeft = WD + 25 + "px";
+
+                    }
+
+                }, 40)
+                    <%}%>
+          
+        }
+    })
+        <% if (login_status == '1' && member == '1') {%>
+                                        var _sroll = document.querySelector('.downcontain');
+            var scrollheight = $(".downcontain").offset().top;
+            var outscroll = document.querySelector('.downcontain');
+            var _star = scrollheight;
+            _sroll.addEventListener('touchstart', function (event) {
+                var _touch = event.touches[0];
+                _star = _touch.pageY;
+            }, false);
+            //获取滑动的距离，添加一个触摸滑动的监听事件
+            _sroll.addEventListener('touchmove', function (event) {
+                //获取手指数组中的第一个（可以用targetTouches）
+
+                var _touch = event.touches[0], height;
+                if (_touch.pageY - _star > 40) {
+                    _sroll.style.top = 40 + 'px';
+                } else if (_touch.pageY - _star < 0) { _sroll.style.top = -1.6 + 'rem'; } else {
+                    _sroll.style.top = _touch.pageY - _star + 'px';
+                }
+            }, false); //添加屏幕触摸接触结束的事件
+            _sroll.addEventListener('touchend', function (event) {
+                _star = -1.6; var
+                    time = setInterval(function () {
+                        _sroll.style.top = _star + "rem";
+                        clearInterval(time);
+                    }, 2);
+            }, false); <%}%>
+
+
+
+</script>
+
+</html>

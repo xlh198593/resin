@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.finance.dao.MemberCashCouponDao">
+
+  	<insert id="insertFDMemberCashCoupon" parameterType="com.meitianhui.finance.entity.FDMemberCashCoupon">
+		INSERT INTO
+		fd_member_cash_coupon (
+		coupon_no
+		,member_id
+		,amount
+		,status
+		,created_time
+		,modified_time
+		,remark
+		)
+		VALUES (
+		#{coupon_no}
+		,#{member_id}
+		,#{amount}
+		,#{status}
+		,#{created_time}
+		,#{modified_time}
+		,#{remark}
+		)
+	</insert>
+	
+	<update id="updateFDMemberCashCouponStatus" parameterType="Map">
+		update fd_member_cash_coupon set 
+		modified_time = NOW(), status = #{status} WHERE coupon_no=#{coupon_no} AND member_id =#{member_id} 
+	</update>
+	
+	<select id="selectFDMemberCashCouponBy" parameterType="Map" resultType="com.meitianhui.finance.entity.FDMemberCashCoupon">
+		select coupon_no, member_id, amount, status, created_time, modified_time, remark 
+		from fd_member_cash_coupon where 1=1 
+		<if test="coupon_no !=null and coupon_no !='' ">
+		  AND coupon_no =#{coupon_no}
+		</if>
+		<if test="member_id !=null and member_id !='' ">
+		  AND member_id =#{member_id}
+		</if>
+		<if test="amount !=null and amount !='' ">
+		  AND amount =#{amount}
+		</if>
+	</select>
+	
+	
+	<insert id="insertFDMemberCashCouponLog" parameterType="com.meitianhui.finance.entity.FDMemberCashCouponLog">
+		INSERT INTO
+		fd_member_cash_coupon_log (
+		log_id
+		,member_type_key
+		,member_id
+		,category
+		,pre_balance
+		,amount
+		,balance
+		,transaction_no
+		,tracked_date
+		,remark
+		)
+		VALUES (
+		#{log_id}
+		,#{member_type_key}
+		,#{member_id}
+		,#{category}
+		,#{pre_balance}
+		,#{amount}
+		,#{balance}
+		,#{transaction_no}
+		,#{tracked_date}
+		,#{remark}
+		)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+</mapper>

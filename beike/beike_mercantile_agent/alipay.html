@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>支付宝</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+    <link type="text/css" rel="stylesheet" href="css/zdialog.css"/>
+	<link rel="stylesheet" type="text/css" href="css/pay_info.css">
+</head>
+<body>
+    <div class="container">
+    	<div class="header">
+    		<a onclick="javascript:history.go(-1);" class="back_btn"></a>
+    		支付宝
+    	</div>
+    	<div class="pay_info_con alipay_con">
+            <div class="alipay_status">已绑定支付宝</div>
+            <ul class="pay_info_list">
+                <li>
+                    <label for="pay_number" class="title">到账支付宝:</label>
+                    <input type="text" name="" class="input_val" id="pay_number" placeholder="输入支付宝账号" maxlength=11 value="131****8888">
+                </li>
+                <li style="border:none;">
+                    <label for="uname" class="title">真实姓名:</label>
+                    <input type="text" name="" class="input_val" id="uname" placeholder="输入与手机号对应的姓名" maxlength="6" value="老王">
+                </li>
+            </ul>
+
+            <div class="intro_text">
+                <label class="tit">提示：</label>
+                <p>为保障您的资金安全，暂不提供更换已绑定的支付宝账户，若需要 更换支付宝账户，请拨打客服电话： <span>075583225878</span></p>
+            </div>
+    	</div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/zdialog.js"></script>
+    <script type="text/javascript" src="js/pay_info.js"></script>
+    <script type="text/javascript">
+        function confirmL(){
+            console.log('aaaaaaaaa')
+            $.DialogByZ.Close();
+            $.DialogByZ.Alert({Title: "提示", Content: "您要求稍后开通",BtnL:"确定"})
+        }
+      
+        function alerts(){
+          $.DialogByZ.Close();
+        }
+        function Immediate(){
+             console.log('bbbbbbbbbb')
+             alert("取消");
+        }
+
+        $(".sub_btn").click(function(){
+           $.DialogByZ.Confirm({Title: "绑定成功", Content: " 恭喜您，绑定成功。是否立即提现？",FunL:confirmL,FunR:Immediate})
+        })
+    </script>
+</body>
+</html>

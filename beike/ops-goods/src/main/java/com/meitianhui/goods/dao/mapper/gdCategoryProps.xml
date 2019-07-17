@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meitianhui.goods.dao.GdCategoryPropsDao">
+
+	<insert id="insertGdCategoryProps" parameterType="GdCategoryProps">
+		INSERT INTO
+		gd_category_props (prop_id, 
+		cat_id, 
+		prop_name,
+		type, 
+        search, 
+        show_type, 
+        prop_type, 
+        prop_memo, 
+        create_time,
+        modified_time, 
+        disabled)
+		VALUES
+		(
+		#{prop_id}, #{cat_id}, #{prop_name}, 
+        #{type}, #{search}, 
+        #{show_type}, #{prop_type}, 
+        #{prop_memo}, #{create_time},#{modified_time}, 
+        #{disabled}
+		)
+	</insert> 
+
+	<select id="selectGdCategoryPropsList" parameterType="Map" resultType="Map">
+	    <![CDATA[
+	    SELECT 
+	    Y.prop_id, 
+		Y.cat_id, 
+		Y.prop_name,
+		Y.type, 
+        Y.search, 
+        Y.is_def, 
+        Y.show_type, 
+        Y.prop_type, 
+        Y.prop_memo, 
+        Y.order_sort, 
+        Y.create_time,
+        Y.modified_time, 
+        Y.disabled,
+        Y.cat_name,
+        Y.parent_id,
+        Y.two_cat_name,
+        Y.one_cat_name
+	    FROM 
+		(SELECT
+		p.prop_id, 
+		p.cat_id, 
+		p.prop_name,
+		p.type, 
+        p.search, 
+        p.is_def, 
+        p.show_type, 
+        p.prop_type, 
+        p.prop_memo, 
+        p.order_sort, 
+        p.create_time,
+        p.modified_time, 
+        p.disabled,
+        t.cat_name,
+        t.parent_id,
+        (SELECT ca.cat_name from gd_category_cat ca WHERE ca.cat_id = t.parent_id) as two_cat_name,
+        (SELECT cat.cat_name from gd_category_cat cat WHERE cat.cat_id in (SELECT ca.parent_id FROM gd_category_cat ca WHERE ca.cat_id = t.parent_id)) as one_cat_name
+		FROM
+		gd_category_props p
+		LEFT JOIN gd_category_cat t ON p.cat_id = t.cat_id ) Y
+		]]>
+		<where>
+		    Y.disabled = 0
+			<if test="cat_id != null and cat_id != ''">
+				AND Y.cat_id = #{cat_id}
+			</if>
+			<if test="prop_id != null and prop_id != ''">
+				AND Y.prop_id = #{prop_id}
+			</if>
+			<if test="prop_name != null and prop_name != ''">
+			    AND Y.prop_name = #{prop_name}
+			</if>
+			<if test="cat_name != null and cat_name != ''">
+			   AND Y.cat_name like CONCAT('%',#{cat_name},'%')
+			</if>
+		</where>
+		ORDER BY Y.create_time DESC
+	</select>
+	
+	<select id="selectGdCategoryProps" parameterType="Map" resultType="Map">
+	    <![CDATA[
+		SELECT p.*,t.cat_name as three_cat_name, (SELECT ca.cat_name from gd_category_cat ca WHERE ca.cat_id = t.parent_id) as two_cat_name,
+        (SELECT cat.cat_name from gd_category_cat cat WHERE cat.cat_id in (SELECT ca.parent_id FROM gd_category_cat ca WHERE ca.cat_id = t.parent_id)) as one_cat_name  FROM gd_category_props p 
+        LEFT JOIN gd_category_cat t  ON p.cat_id = t.cat_id WHERE  p.disabled = 0 AND prop_id = #{prop_id}
+		]]>
+	</select>
+
+
+	<update id="updateGdCategoryProps" parameterType="Map">
+		UPDATE gd_category_props SET
+		<trim suffixOverrides=",">
+			modified_time = UNIX_TIMESTAMP(SYSDATE()),
+			<if test="prop_name != null and prop_name != ''">
+				prop_name = #{prop_name},
+			</if>
+			<if test="order_sort != null and order_sort != ''">
+				order_sort = #{order_sort},
+			</if>
+			<if test="disabled != null and disabled != ''">
+				disabled = #{disabled},
+			</if>
+		</trim>
+		<where>
+			prop_id = #{prop_id} 
+		</where>
+	</update>
+
+	<delete id="deleteGdCategoryProps" parameterType="Map">
+		DELETE FROM gd_category_props WHERE prop_id = #{prop_id}
+	</delete>
+	
+
+</mapper>

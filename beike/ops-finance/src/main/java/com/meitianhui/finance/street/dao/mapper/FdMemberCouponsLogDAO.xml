@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meitianhui.finance.street.dao.FdMemberCouponsLogDAO">
+
+    <resultMap id="BaseResultMap" type="com.meitianhui.finance.street.entity.FdMemberCouponsLog">
+        <id column="oper_id" jdbcType="BIGINT" property="operId"/>
+        <result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+        <result column="oper_type" jdbcType="VARCHAR" property="operType"/>
+        <result column="coupons_type" jdbcType="VARCHAR" property="couponsType"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    oper_id, member_id, oper_type, coupons_type, order_no, created_time
+  </sql>
+
+    <insert id="insertSelective" parameterType="com.meitianhui.finance.street.entity.FdMemberCouponsLog">
+        insert into fd_member_coupons_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operId != null">
+                oper_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="operType != null">
+                oper_type,
+            </if>
+            <if test="couponsType != null">
+                coupons_type,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operId != null">
+                #{operId,jdbcType=BIGINT},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="operType != null">
+                #{operType,jdbcType=VARCHAR},
+            </if>
+            <if test="couponsType != null">
+                #{couponsType,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

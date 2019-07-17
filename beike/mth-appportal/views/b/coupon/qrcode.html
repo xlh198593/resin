@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+    <title>二维码</title>
+    <style type="text/css">
+
+     #qrcode {
+            text-align: center;
+            height: 17.7rem;
+            width: 10rem;
+            position: relative;
+            background-color: #ff8213;
+            margin:0 auto;
+        }
+
+        #qrcode img {
+            height: 11rem;
+            width: 9rem;
+        }
+
+        #qrcode #view_qrcode {
+            height: 5.06665rem;
+            width:  5.06665rem;
+            position: absolute;
+            left: 2.5rem;
+            top: 2.5rem;
+        }
+
+        .caution {
+            height: 70px;
+            width: 200px;
+            border: 1px solid block;
+            background-color: gray;
+            text-align: center;
+            line-height: 70px;
+            font-family: "PingFangHK-Regular";
+            font-size: 16px;
+            position: fixed;
+            border-radius: 5px;
+            top: 40%;
+            left: 28%;
+        }
+
+        #view_qrcode img {
+            height:100%;
+            width:100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="coupon">
+        <div id='qrcode'>
+            <img src="/image/cashcoupon/qrcode.png" alt="">
+            <div id="view_qrcode"></div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+
+    const vm = new Vue({
+        el: "#coupon",
+        data:{
+            requestParams:JSON.parse('<%-JSON.stringify(requestParams)%>'),
+        },
+        mounted:function() {
+           const self = this;
+            new QRCode("view_qrcode", {
+                    width: 50,
+                    height: 50, // 高度  
+                    text:self.requestParams.pscode,// 二维码内容  
+                    // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）  
+                    background: '#f0f',
+                    foreground: '#ff0'
+                })
+        }
+    })
+
+
+
+</script>
+
+</html>

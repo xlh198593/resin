@@ -1,0 +1,183 @@
+.pay_img{
+	height:9rem;
+	margin:0.5rem 0;
+	background:#fff url('../images/pay_img.png') no-repeat center;
+	background-size:60%;
+}
+.pay_info_list{
+	padding:0 1.2rem;
+	background:#fff;
+}
+.pay_info_list > li{
+	height:5rem;
+	font-size:1.6rem;
+	border-bottom:1px solid #D7D7D7;
+}
+.pay_info_list > li .title{
+	display:block;
+	width:30%;
+	height:5rem;
+	line-height:5rem;
+	float:left;
+	overflow:hidden;
+}
+
+
+
+.pay_info_list > li .input_val{
+	width:66%;
+	height:3.8rem;
+	line-height:3.8rem;
+	float:left;
+	font-size:1.6rem;
+	margin-left:0.5rem;
+	margin-top:0.5rem;
+	color:#999;
+	border-color:transparent;
+}
+
+.pay_info_list > li .code_btn{
+    display:block;
+    max-width:38%;
+    height:2rem;
+    line-height:1rem;
+    float:right;
+
+    margin-top:1.6rem;
+    font-size:1.2rem;
+    color:#999;
+    background:#fff;
+    border-color:transparent;
+}
+.pay_info_con .sub_btn{
+	display:block;
+	width:90%;
+	height:4.5rem;
+	line-height:4.5rem;
+	text-align:center;
+	background:#37CF84;
+	color:#fff;
+	margin:4rem auto;
+	border:none;
+	border-radius:0.5rem;
+	font-size:1.7rem;
+}
+
+
+.alipay_status{
+	height:4.9rem;
+	line-height:4.9rem;
+	font-size:1.6rem;
+	padding:0 1.1rem;
+
+	color:#0E9F58;
+}
+
+.alipay_con .intro_text{
+	margin-top:3rem;
+	padding:0 1.2rem;
+}
+.alipay_con .intro_text .tit{
+	display:block;
+	height:1.5rem;
+	line-height:1.5rem;
+	font-size:1.4rem;
+	overflow:hidden;
+	margin-bottom:1.5rem;
+}
+.alipay_con .intro_text p{
+	font-size:1.2rem;
+	line-height:1.8rem;
+	color:#666;
+}
+.alipay_con .intro_text p span{
+	color:#E2567C;
+}
+
+.withdraw{
+	margin:0.5rem 0 4rem;
+	padding:0 1.2rem;
+	background:#fff;
+	overflow:hidden;
+}
+.withdraw .title{
+	display:block;
+	height:1.5rem;
+	line-height:1.5rem;
+	margin:1.5rem 0 2.4rem;
+	overflow:hidden;
+	font-size:1.6rem;
+
+	color:#666;
+}
+.withdraw .money{
+	overflow:hidden;
+}
+.withdraw .money .unit{
+	display:block;
+	height:3.3rem;
+	line-height:3.3rem;
+	float:left;
+	font-size:3rem;
+}
+
+.withdraw .money .count{
+	display:block;
+	width:87%;
+	height:3.3rem;
+	line-height:3.3rem;
+	float:left;
+	font-size:4.3rem;
+	line-height:3rem;
+	background:transparent;
+	border:none;
+}
+
+
+.withdraw .money .msg{
+	width:100%;
+	display:block;
+	height:2rem;
+
+	line-height:2rem;
+	overflow:hidden;
+	margin:2rem 0;
+	float:left;
+	color:#F12E5C;
+}
+.withdraw .cash_con{
+	height:3.8rem;
+	line-height:3.8rem;
+	border-top:1px solid #D7D7D7;
+	margin-bottom:1rem;
+	font-size:1.4rem;
+	color:#666;
+	overflow:hidden;
+}
+.withdraw .cash_con label{
+	float:left;
+	display:block;
+	max-width:60%;
+	overflow:hidden;
+}
+.withdraw .cash_con  .cash_btn{
+	display:block;
+	max-width:30%;
+	float:right;
+	color:#0E9F58;
+}
+.withdraw_con .should_know{
+    padding:0 1.2rem;
+}
+.withdraw_con .should_know .title{
+	display:block;
+	height:2rem;
+	line-height:2rem;
+	font-size:1.6rem;
+	font-weight:bold;
+}
+.withdraw_con .should_know p{
+	font-size:1.4rem;
+	line-height:2rem;
+	padding:1rem 0 3.5rem;
+}

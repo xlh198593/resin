@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>登录</title>
+  <link rel="stylesheet" type="text/css" href="./css/common.css">
+  <link rel="stylesheet" href="./layui/layui/css/layui.css"  media="all">
+  <link rel="stylesheet" type="text/css" href="./css/login.css">
+</head>
+<body>
+  
+
+    <div class="layui-container  login">
+        <div class="title">
+            <a href="#" class="logo"></a>
+            <h1 class="tit">贝壳传奇管理后台</h1>
+        </div>
+        <form class="layui-form login_form">
+            <h2>登录</h2>
+            <div class="row_item">
+               <label>账号:</label>
+               <div class="input_con">
+                  <input type="text" name="username" class="input_val uname" autocomplete="off">
+                  <p class="msg msg1">请输入用户名</p>
+               </div>
+            </div>
+            <div class="row_item">
+               <label>密码:</label>
+               <div class="input_con">
+                  <input type="text" name="password" class="input_val pword" autocomplete="off" maxlength="21">
+                  <p class="msg msg2">请输入正确密码</p>
+               </div>
+            </div>
+            <div class="row_item">
+               <label>验证码:</label>
+
+               <div class="input_con">
+                  <input type="text" name="code" class="input_val identifying_code" autocomplete="off" style="width:131px;">
+                  <div class="code_img">aaa</div>
+                  <p class="msg msg3">请输入有效验证码</p>
+               </div>
+            </div>
+
+            <input type="button" class="sub_btn" value="登录">
+        </form>
+ 
+  </div>
+  <script src="./layui/layui/layui.js" charset="utf-8"></script>
+ <!--  <script type="text/javascript" src="./js/login.js"></script> -->
+    <script type="text/javascript">
+      layui.config({
+        base: '../../js/'
+      }).use('login');  
+    </script>
+</body>
+</html>
+ 

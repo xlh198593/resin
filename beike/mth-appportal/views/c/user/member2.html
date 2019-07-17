@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>会员中心</title>
+        <link rel="stylesheet" href="/css/payback/user_memeber1.css?v20181126">
+        <style>
+            
+        </style>
+        <script type="text/javascript" src="/js/third-part/md5.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <% if(login_status == '0') {%>
+            <div class="nologin">
+                <div class="title">超级会员</div>
+                <div class="headcontain">
+                    <div class="header">
+                        <img src="/image/newmember/headimg.png" alt="">
+                    </div>
+                    <div class="message">
+                        <div class="loginstatus">未登录</div>
+                        <div class="logintishi">登录后可享受svip特权</div>
+                    </div>
+                    <% if(entry == "h5") {%>
+                        <div class="loginbtn" @click="gotologinh5()">立即登录</div>
+                        <%} else {%>
+                            <div class="loginbtn" @click="gotologin()">立即登录</div>
+                            <%}%>
+
+                </div>
+            </div>
+            <div class="memberlegal">
+                <div class="membertitle"></div>
+                <div class="huiyuanquanyi">
+                    <%if(entry == "h5") {%>
+                        <div class="sigle">
+                            <div class="super common" @click="gotoqyh5('8')">
+                                <div class="icon supericon1"></div>
+                                <div class="explain">超级会员日</div>
+                                <div class="explainfu">专属购物节</div>
+                            </div>
+                            <div class="remendermember common" @click="gotoqyh5('4')">
+                                <div class="icon remendermembericon1"></div>
+                                <div class="explain">邀请得奖励</div>
+                                <div class="explainfu">更高邀请奖励</div>
+                            </div>
+                            <div class="zanding common" @click="gotoqyh5('2')">
+                                <div class="icon shengriliquanicon1"></div>
+                                <div class="explain">生日礼包</div>
+                                <div class="explainfu">不一样的礼物</div>
+                            </div>
+                            <div class="zanding common" @click="gotoqyh5('3')">
+                                <div class="icon mianyouicon1"></div>
+                                <div class="explain">免邮券</div>
+                                <div class="explainfu">免邮更优惠</div>
+                            </div>
+                            <div class="placeanorder common" @click="gotoqyh5('1')">
+                                <div class="icon placeanordericon1"></div>
+                                <div class="explain">赠送礼券</div>
+                                <div class="explainfu">价值399元</div>
+                            </div>
+                            <div class="sendbeike common" @click="gotoqyh5('5')">
+                                <div class="icon sendbeike11"></div>
+                                <div class="explain">赠送贝壳</div>
+                                <div class="explainfu">价值1314元</div>
+                            </div>
+
+                            <div class="honorable common" @click="gotoqyh5('6')">
+                                <div class="icon honorableicon1"></div>
+                                <div class="explain">尊贵标识</div>
+                                <div class="explainfu">贵族名片</div>
+
+                            </div>
+                            <div class="zanding monthq common" @click="gotoqyh5('7')">
+                                <div class="icon meiriliquanicon1"></div>
+                                <div class="explain">每月优惠</div>
+                                <div class="explainfu">超值优惠券</div>
+
+                            </div>
+
+
+                        </div>
+                        <%}else {%>
+                            <div class="sigle">
+                                <div class="super common" @click="gotoqy('8')">
+                                    <div class="icon supericon1"></div>
+                                    <div class="explain">超级会员日</div>
+                                    <div class="explainfu">专属购物节</div>
+                                </div>
+                                <div class="remendermember common" @click="gotoqy('4')">
+                                    <div class="icon remendermembericon1"></div>
+                                    <div class="explain">邀请得奖励</div>
+                                    <div class="explainfu">更高邀请奖励</div>
+                                </div>
+                                <div class="zanding common" @click="gotoqy('2')">
+                                    <div class="icon shengriliquanicon1"></div>
+                                    <div class="explain">生日礼包</div>
+                                    <div class="explainfu">不一样的礼物</div>
+                                </div>
+                                <div class="zanding common" @click="gotoqy('3')">
+                                    <div class="icon mianyouicon1"></div>
+                                    <div class="explain">免邮券</div>
+                                    <div class="explainfu">免邮更优惠</div>
+                                </div>
+                                <div class="placeanorder common" @click="gotoqy('1')">
+                                    <div class="icon placeanordericon1"></div>
+                                    <div class="explain">赠送礼券</div>
+                                    <div class="explainfu">价值399元</div>
+                                </div>
+                                <div class="sendbeike common" @click="gotoqy('5')">
+                                    <div class="icon sendbeike11"></div>
+                                    <div class="explain">赠送贝壳</div>
+                                    <div class="explainfu">价值1314元</div>
+                                </div>
+
+                                <div class="honorable common" @click="gotoqy('6')">
+                                    <div class="icon honorableicon1"></div>
+                                    <div class="explain">尊贵标识</div>
+                                    <div class="explainfu">贵族名片</div>
+
+                                </div>
+                                <div class="zanding monthq common" @click="gotoqy('7')">
+                                    <div class="icon meiriliquanicon1"></div>
+                                    <div class="explain">每月优惠</div>
+                                    <div class="explainfu">超值优惠券</div>
+
+                                </div>
+
+
+                            </div>
+                            <%}%>
+                </div>
+                <div class="loginorregister" v-if="loginorregister">
+                    <div class="login_close" @click="login_close()"></div>
+                    <div class="title">登录/注册</div>
+                    <div class="phonemobile">
+                        <div class="loginicon"></div>
+                        <input type="text" class="stdin" @blur="bulr('mobile')" maxlength="11" placeholder="请输入手机号" v-model="mobile">
+                    </div>
+                    <div class="yzm">
+                        <div class="loginicon"></div>
+                        <input type="text" class="stdin" @blur="bulr('yzm')" maxlength="4" placeholder="请输入验证码" v-model="yzm">
+                        <div class="getyzm" v-if="miao">{{miaozhi}}s</div>
+                        <div class="getyzm" v-else @click="getyzm()">获取</div>
+                    </div>
+                    <div class="pwd">
+                        <div class="loginicon"></div>
+                        <input type="password" class="stdin" maxlength="20" @blur="bulr('pwd')" @keyup="getFullPassword()" placeholder="请输入密码" v-model="password">
+                    </div>
+                    <div class="gotologinorregister btnbgc" v-if="btnbgc" @click="gotologinorregister()">立即登录/注册</div>
+                    <div class="gotologinorregister" v-else>立即登录/注册</div>
+                    <div class="tishikuan">{{tishi}}</div>
+
+                </div>
+                <div class="bgc" v-if="bgc"></div>
+            </div>
+            <%} else if(login_status == '1' && member == '1') {%>
+                <div class="usercontain">
+                    <div class="usermessage">
+                        <div class="head">
+                            <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" class="headimg" />
+                            <div class="username">
+                                <%=nick_name%>
+                            </div>
+                            <div class="year_icon"></div>
+                            <div class="remew" @click="gotoorderdetail()">
+                                <div class="up1">立即续费></div>
+                                <div class="down1">
+                                    <%=end_time%>到期</div>
+                            </div>
+                        </div>
+                        <div class="progressendtime">
+                            <div class="left">
+                                <% if(level == "1") {%>
+                                    <div class="leftnode leftnode1"></div>
+                                    <div class='progress' ref="progress">
+                                        <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                    </div>
+                                    <div class='rightnode rightnode2'></div>
+                                    <%} else if(level == "7") {%>
+                                        <div class="leftnode leftnode6"></div>
+                                        <div class='progress' ref="progress">
+                                            <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                        </div>
+                                        <div class='rightnode rightnode7'></div>
+                                        <%}else{%>
+                                            <div class="leftnode leftnode<%=level%>"></div>
+                                            <div class='progress' ref="progress">
+                                                <div v-bind:style="{width:width}" ref="progressin" class="progressin"></div>
+                                            </div>
+                                            <div class='rightnode rightnode<%=level+1%>'></div>
+                                            <%}%>
+                                            <div class="growth_value" v-bind:style="{'margin-left':marginLeft}">{{growth_value}}</div>
+                                        
+                            </div>
+                            <div class="endtime" @click="gotogrowthvalue()">
+                                查看成长值>
+                            </div>
+                            
+                            
+
+                        </div>
+                        <div class="rend">
+                            <div class="title">
+                                <div>已为您节省</div>
+                                <div @click="gotoliquan()">礼券</div>
+                                <div @click="gotoliquan()">免邮券</div>
+                            </div>
+                            <div class="detail">
+                                <div>
+                                    <%-beike_credit?beike_credit:0%>元</div>
+                                <div>
+                                    <%-youhui?youhui:0%>张</div>
+                                <div>
+                                    <%-mianyou?mianyou:0%>张</div>
+                            </div>
+                        </div>
+                        <div class="downpic downpic<%=level%>"></div>
+                       
+                    </div>
+                   
+
+                </div>
+
+                <div class="downcontain">
+
+                    <div class="downsilder">
+                        <div class="ellipse"></div>
+                        <div class="invio">
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/maishoujingxuan.png" alt="">
+                                <div>正品保障</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/chaozhiyouhui.png" alt="">
+                                <div>超值优惠</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/jisufahuo.png" alt="">
+                                <div>急速发货</div>
+                            </div>
+                            <div class="invio_sigle">
+                                <img src="/image/newmember/fanyong.png" alt="">
+                                <div>超高奖励</div>
+                            </div>
+                        </div>
+
+                        <% } else {%>
+                            <div class="nologin">
+                                <div class="title">超级会员</div>
+                                <div class="headcontain">
+                                    <div class="headerout">
+                                        <img onerror='this.src="/image/newmember/headimg.png"' src="<%-imagePath%>" />
+                                    </div>
+                                    <div class="message">
+                                        <div class="loginstatus">
+                                            <%-nick_name%>
+                                        </div>
+                                        <div class="logintishi1">您还没有成为超级会员</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="memberlegal">
+                                <div class="membertitle"></div>
+                                <div class="huiyuanquanyi">
+                                    <div class="sigle">
+                                        <div class="super common" @click="gotoqy('8')">
+                                            <div class="icon supericon1"></div>
+                                            <div class="explain">超级会员日</div>
+                                            <div class="explainfu">专属购物节</div>
+                                        </div>
+                                        <div class="remendermember common" @click="gotoqy('4')">
+                                            <div class="icon remendermembericon1"></div>
+                                            <div class="explain">邀请得奖励</div>
+                                            <div class="explainfu">更高邀请奖励</div>
+                                        </div>
+                                        <div class="zanding common" @click="gotoqy('2')">
+                                            <div class="icon shengriliquanicon1"></div>
+                                            <div class="explain">生日礼包</div>
+                                            <div class="explainfu">不一样的礼物</div>
+                                        </div>
+                                        <div class="zanding common" @click="gotoqy('3')">
+                                            <div class="icon mianyouicon1"></div>
+                                            <div class="explain">免邮券</div>
+                                            <div class="explainfu">免邮更优惠</div>
+                                        </div>
+                                        <div class="placeanorder common" @click="gotoqy('1')">
+                                            <div class="icon placeanordericon1"></div>
+                                            <div class="explain">赠送礼券</div>
+                                            <div class="explainfu">价值399元</div>
+                                        </div>
+                                        <div class="sendbeike common" @click="gotoqy('5')">
+                                            <div class="icon sendbeike11"></div>
+                                            <div class="explain">赠送贝壳</div>
+                                            <div class="explainfu">价值1314元</div>
+                                        </div>
+
+                                        <div class="honorable common" @click="gotoqy('6')">
+                                            <div class="icon honorableicon1"></div>
+                                            <div class="explain">尊贵标识</div>
+                                            <div class="explainfu">贵族名片</div>
+
+                                        </div>
+                                        <div class="zanding monthq common" @click="gotoqy('7')">
+                                            <div class="icon meiriliquanicon1"></div>
+                                            <div class="explain">每月优惠</div>
+                                            <div class="explainfu">超值优惠券</div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <%}%>
+                                    <%if(login_status == '1' && member == '1') {%>
+                                        <div class="SVIP_title"></div>
+                                        <div class="huiyuanquanyi">
+                                            <div class="sigle">
+                                                <div class="super common" @click="gotoqy('8')">
+                                                    <div class="icon supericon"></div>
+                                                    <div class="explain2">超级会员日</div>
+                                                    <div class="explainfu">专属购物节</div>
+                                                </div>
+                                                <div class="remendermember common" @click="gotoqy('4')">
+                                                    <div class="icon remendermembericon"></div>
+                                                    <div class="explain2">邀请得奖励</div>
+                                                    <div class="explainfu">更高邀请奖励</div>
+                                                </div>
+                                                <div class="zanding common" @click="gotoqy('2')">
+                                                    <div class="icon shengriliquanicon"></div>
+                                                    <div class="explain2">生日礼包</div>
+                                                    <div class="explainfu">不一样的礼物</div>
+                                                </div>
+                                                <div class="zanding common" @click="gotoqy('3')">
+                                                    <div class="icon mianyouicon"></div>
+                                                    <div class="explain2">免邮券</div>
+                                                    <div class="explainfu">免邮更优惠</div>
+                                                </div>
+                                                <div class="placeanorder common" @click="gotoqy('1')">
+                                                    <div class="icon placeanordericon"></div>
+                                                    <div class="explain2">赠送礼券</div>
+                                                    <div class="explainfu">价值399元</div>
+                                                </div>
+                                                <div class="sendbeike common" @click="gotoqy('5')">
+                                                    <div class="icon sendbeike1"></div>
+                                                    <div class="explain2">赠送贝壳</div>
+                                                    <div class="explainfu">价值1314元</div>
+                                                </div>
+
+                                                <div class="honorable common" @click="gotoqy('6')">
+                                                    <div class="icon honorableicon"></div>
+                                                    <div class="explain2">尊贵标识</div>
+                                                    <div class="explainfu">贵族名片</div>
+
+                                                </div>
+                                                <div class="zanding monthq common" @click="gotoqy('7')">
+                                                    <div class="icon meiriliquanicon"></div>
+                                                    <div class="explain2">每月优惠</div>
+                                                    <div class="explainfu">超值优惠券</div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="gotorecharge public" @click="gotorealize('yqhydlq')">分享会员,最高得120元红包></div>
+                                        <%}else{%>
+                                            <div class="recharge_select">
+                                                <div class="contain">
+                                                    <div class="recharge_select_title">SVIP年度会员</div>
+                                                    <div class="recharge_select_detail">
+                                                        <div class="left">
+                                                            <span class="little">￥</span>
+                                                            <span>399</span>
+                                                            <span class="little">/</span>
+                                                            <span class="little">年</span>
+                                                        </div>
+                                                        <div class="right">
+                                                            <%if(login_status == '1' && member == '0') {%>
+                                                            <div class="up2">送399元礼券1314个贝壳</div>
+                                                            <div class="down1">预计为您节省2120.00元</div>
+                                                            <%}else{%>
+                                                            <div class="up1">超值会员超值价</div>
+                                                            <div class="down1">送399元礼券1314个贝壳</div>
+                                                            <%}%>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <%if(entry == 'h5') {%>
+                                                        <div class="gotorecharge2" @click="gotologinh5()">立即开通,尊享特权 ></div>
+                                                        <%}else{%>
+                                                            <div class="gotorecharge2" @click="gotoorderdetail()">立即开通,尊享特权 ></div>
+                                                            <%}%>
+
+                                                </div>
+                                            </div>
+                                            <%}%>
+
+                                                <%if(isios == "0"){%>
+                                                    <div class="download" v-if="download">
+                                                        <div class="close3" @click="changeclosestatus('down')"></div>
+                                                        <div class="img"></div>
+                                                        <div class="downloadapp">下载app</div>
+                                                        <div class="downloadappfu">立即下载app,充值享受更多特权</div>
+                                                        <div class="getbtn" @click="downloadapp()">立即下载</div>
+                                                    </div>
+                                                    <%}else{%>
+                                                        <div class="download" v-if="download">
+                                                            <div class="close3" @click="changeclosestatus('down')"></div>
+                                                            <div class="img"></div>
+                                                            <div class="downloadapp">下载APP</div>
+                                                            <!-- <div class="downloadappfu">请到小米、华为、OPPO应用商店下载贝壳传奇APP，体验更多精彩！</div> -->
+                                                            <div class="getbtn" @click="downloadapp()">立即下载</div>
+                                        <!-- <a class="app-download-btn" id="BtnClick" href="javascript:;"> 点此继续访问 </a> -->
+                                                        </div>
+                                                        <%}%>
+
+                                                            <% if (login_status == '1') {%>
+
+                                                                <%} else {%>
+                                                                    <div class="backgroundblack" v-if="alert_login != '0'">
+                                                                        <div class="alert1">
+                                                                            <div class="up">
+                                                                                <div class="logintips">提示</div>
+                                                                                <div class="agreetit">由于您还未登录账号</div>
+                                                                                <div class="agreetit1">请登录后再进行此项操作</div>
+                                                                                <div class="know" @click="gotologin()">登录</div>
+                                                                            </div>
+                                                                            <div class="notloginclose" v-on:click="changeclosestatus('')"></div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <%}%>
+                            </div>
+                    </div>
+                </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+    function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                agreement: true,
+                paymoney: '399',
+                member_id: "<%-member_id%>",
+                download: false,
+                miao: false,
+                pointdown: false,
+                miaozhi: 60,
+                bgc: false,
+                btnbgc: false,
+                tishi: "",
+                loginorregister: false,
+                camputer: "<%-isios%>",
+                mobile: "",
+                yzm: "",
+                password: "",
+                alert_login: "<%-login_status%>",
+                marginLeft: 60,
+                list: [],
+                appBaseName: "<%-appBaseName%>",
+                level: "<%-level%>",
+                width: 0,
+                growth_value: "<%-growth_value%>",
+                passwordreg:/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/,
+                yzmreg :/^[0-9]{4}$/,
+                mobilereg:/^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/,
+            }
+        },
+        computed: {
+            paymoney: function () {
+                return this.month ? 68 : (this.quarter ? 168 : (this.year ? 398 : 8));
+            }
+        },
+        methods: {
+            getFullPassword: function () {
+                if (this.mobile != "" && this.yzm != "" && this.password.length >= 6) {
+                    this.btnbgc = true;
+                }
+            },
+            gotoliquan:function() {
+                gotosumit("gotoliquan",{})
+            },
+            bulr: function (type) {
+                if (type == 'pwd') {
+                    if (!this.passwordreg.test(this.password)) {
+                        this.tishi = "密码必须同时包含字母和数字";
+                    }
+                } else if (type == 'yzm') {
+                    if (!this.yzmreg.test(this.yzm)) {
+                        this.tishi = "验证码与手机号不匹配";
+                    }
+                } else {
+                    if (!this.mobilereg.test(this.mobile)) {
+                        this.tishi = "请输入正确的手机号";
+                    }
+                }
+            },
+            downloadapp: function () {
+                if (this.camputer == "0") {
+                    window.location.href = "https://itunes.apple.com/cn/app/%E8%B4%9D%E5%A3%B3%E4%BC%A0%E5%A5%87/id1431647984?mt=8&uo=4"
+                } else {
+                    // window.location.href = "https://mps-static.huigujia.cn/apps/bkcq/bkcq-lastast-release.apk?mp.wexin.qq.com"
+                    window.location.href = "<%=appBaseName%>/openapi/h5/c/activity/download"
+                }
+            },
+            changeSelectStatus: function (methods) {
+                if (methods == "month") {
+                    this.month = true,
+                        this.quarter = false,
+                        this.year = false
+                } else if (methods == 'quarter') {
+                    this.month = false,
+                        this.quarter = true,
+                        this.year = false
+                } else if (methods == 'year') {
+                    this.month = false,
+                        this.quarter = false,
+                        this.year = true
+                } else {
+                    this.agreement = !this.agreement;
+
+                }
+
+            },
+            gotorealize:function(type) {
+                gotosumit("torealize1",{type:type})
+            },
+
+            changeclosestatus: function (closemethos) {
+                if (closemethos == 'down') {
+                    this.download = false;
+                    this.bgc = false;
+                } else {
+                    this.alert_login = '0';
+                    this.bgc = false;
+                }
+            },
+            gotoqy: function (type) {
+                gotosumit('goromemberqy', { type: type });
+            },
+            gotoqyh5: function (type) {
+                window.location.href = "<%-appBaseName%>/openapi/h5/c/member/qy?type=" + type + "&entry=h5";
+            },
+            gotoprotol: function () {
+                gotosumit("gotoprotol", {});
+            },
+            gotologin: function () {
+                gotosumit("login", {});
+            },
+            gotologinh5: function () {
+                this.loginorregister = true;
+                this.bgc = true;
+            },
+            gotogrowthvalue: function () {
+                gotosumit("gotogrowthvalue", {});
+            },
+            getyzm: function () {
+                console.log(this)
+                var self = this;
+                console.log(this.mobile)
+                if (this.mobile == "") {
+                    this.tishi = "手机号不能为空";
+                    return;
+                }
+                if (!this.mobilereg.test(this.mobile)) {
+                    this.tishi = "手机号不符合规则";
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/send_sms_code_lyh',
+                    data: {
+                        sms_source: 'llm',
+                        mobile: self.mobile,
+                        check_code: self.yzm,
+                        type: 'h5'
+                    },
+                    success: function (data) {
+                        if (data && data.rsp_code == "fail") {
+                            self.tishi = data.error_msg
+                        } else {
+                            self.miao = true;
+                            var time = setInterval(function() {
+                                self.miaozhi -= 1;
+                                if (self.miaozhi == 0) {
+                                    self.miao = false;
+                                    clearInterval(time);
+
+                                }
+                            }, 1000)
+                        }
+                    }
+                });
+            },
+            gotologinorregister: function () {
+                if (this.mobile == "") {
+                    this.tishi = "手机号不能为空";
+                    return;
+                }
+                if(!this.mobilereg.test(this.mobile)) {
+                    this.tishi = "手机号格式不正确";
+                    return;
+                }
+                if (this.yzm == "") {
+                    this.tishi = "验证码不能为空";
+                    return;
+                }
+                if(!this.yzmreg.test(this.yzm)) {
+                    this.tishi = "验证码错误";
+                    return;
+                }
+                if (this.password == "") {
+                    this.tishi = "密码不能为空";
+                    return;
+                }
+                if(!this.passwordreg.test(this.password)) {
+                    this.tishi = "密码必须是数字+字母不能小于6大于20位";
+                    return;
+                }
+                var self = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/openapi/h5/c/login',
+                    data: {
+                        password: hex_md5("wangzhonghulian" + self.password),
+                        mobile: self.mobile,
+                        type: 'h5',
+                        request_info: "h5",
+                        check_code: self.yzm,
+                        member_id: this.member_id
+                    },
+                    success: function (data) {
+                        if (data.rsp_code == "fail") {
+                            self.tishi = data.error_msg;
+                        } else {
+                            self.download = true;
+                            self.loginorregister = false;
+                        }
+                    }
+                });
+            },
+            login_close: function () {
+                this.loginorregister = false;
+                this.bgc = false;
+            },
+            gotoorderdetail: function () {
+                if (this.alert_login == 0) return this.alert_login = 1;
+                var memberlevel = this.paymoney;
+                var obj = {};
+                obj.memberlevel = 399;
+                gotosumit("gotoorderdetail", obj);
+            }
+        },
+        watch: {
+            mobile:function(current) {
+               if(current.length <11 || current == "") {
+                   this.btnbgc = false;
+                   this.tishi ="手机号不符合规则";              
+                 }
+            },
+            password:function(current) {
+                if(current.length < 6) {
+                   this.btnbgc = false;
+                   this.tishi ="密码不能小于6位"; 
+              }
+            },
+            tishi: function (current) {
+                var self = this;
+                if (current != "") {
+                    setTimeout(function() {
+                        self.tishi = "";
+                    }, 1500)
+                }
+            },
+            miaozhi: function (current) {
+                if (current == "0") {
+                    this.miaozhi = 60;
+                }
+            }
+        },
+        mounted: function () {
+            <%if (login_status == '1' && member == '1') {%>
+                var progresswidth = this.$refs.progress.clientWidth;
+                var width = 0;
+                switch (this.level) {
+                    case "1":
+                        width = this.growth_value / 400 * progresswidth;
+                        break;
+                    case "2":
+                        width = (this.growth_value - 400) / (1000 - 400) * progresswidth;
+                        break;
+                    case "3":
+                        width = (this.growth_value - 1000) / (2000 - 1000) * progresswidth;
+                        break;
+                    case "4":
+                        width = (this.growth_value - 2000) / (5000 - 2000) * progresswidth;
+                        break;
+                    case "5":
+                        width = (this.growth_value - 5000) / (10000 - 5000) * progresswidth;
+                        break;
+                    case "6":
+                        width = (this.growth_value - 10000) / (20000 - 10000) * progresswidth;
+                        break;
+                    case "7":
+                        width = this.growth_value / 20000 * progresswidth;
+                        break;
+                }
+                var self = this;
+                var WD = 0;
+                var timer = setInterval(function () {
+                    if (
+                        (self.level == '2' && self.growth_value == "400") ||
+                        (self.level == '3' && self.growth_value == "1000") ||
+                        (self.level == '4' && self.growth_value == "2000") ||
+                        (self.level == '5' && self.growth_value == "5000") ||
+                        (self.level == '6' && self.growth_value == "10000") ||
+                        (self.level == '7' && self.growth_value == "20000") ||
+                        (self.level == '1' && self.growth_value == "0")) {
+                        self.width += WD + "px";
+                        clearInterval(timer);
+                        return;
+                    }
+                    if (WD > width) {
+                        WD += 20;
+                        self.width += WD + "px";
+                        self.marginLeft += WD+25+"px";
+                        clearInterval(timer);
+                    } else {
+                        WD += 20;
+                        self.width = WD+ "px";
+                        self.marginLeft = WD+25+"px";
+
+                    }
+
+                }, 40)
+                    <%}%>
+          
+        }
+    })
+        <% if (login_status == '1' && member == '1') {%>
+            var _sroll = document.querySelector('.downsilder');
+            var scrollheight = $(".downcontain").offset().top;
+            var outscroll = document.querySelector('.downcontain');
+            var _star = 0;
+            _sroll.addEventListener('touchstart', function (event) {
+                var _touch = event.touches[0];
+                _star = _touch.pageY;
+            }, false);
+            //获取滑动的距离，添加一个触摸滑动的监听事件
+            _sroll.addEventListener('touchmove', function (event) {
+                //获取手指数组中的第一个（可以用targetTouches）
+
+                var _touch = event.touches[0], height;
+                if (_touch.pageY - _star > 70) {
+                    _sroll.style.top = 70 + 'px';
+                } else if (_touch.pageY - _star < 0) {
+                    _sroll.style.top = 0 + 'px';
+                } else {
+                    _sroll.style.top = _touch.pageY - _star + 'px';
+                }
+
+            }, false);
+            //添加屏幕触摸接触结束的事件
+            _sroll.addEventListener('touchend', function (event) {
+                _star = 0;
+                var time = setInterval(function () {
+                    _sroll.style.top = _star + "px";
+                    clearInterval(time);
+                }, 2);
+            }, false);
+
+  <%}%>
+
+
+
+</script>
+
+</html>

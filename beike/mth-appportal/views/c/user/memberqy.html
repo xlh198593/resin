@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../commonHead.html %>
+        <title>会员特权</title>
+        <link rel="stylesheet" href="/css/payback/swiper.min.css">
+
+        <style>
+            #certify {
+                position: relative;
+                width: 10rem;
+                margin: 0 auto;
+                margin-bottom:0.65rem;
+            }
+
+            #certify .swiper-container {
+                padding-bottom: 60px;
+                margin-top: .813333rem
+            }
+
+            #certify .swiper-slide {
+                width: 7.066667rem;
+                height: 11.466667rem;
+            }
+
+            #certify .swiper-slide img {
+                display: block;
+                width: 7.066667rem;
+                height: 11.466667rem;
+                box-shadow:1px 8px 17px 0px rgba(0, 0, 0, 0.15);
+                border-radius: .28rem;
+            }
+
+            #certify .swiper-slide p {
+                line-height: 98px;
+                padding-top: 0;
+                text-align: center;
+                color: #636363;
+                font-size: 1.1em;
+                margin: 0;
+            }
+
+            #certify .swiper-pagination {
+                width: 4rem;
+                bottom: 10rem;
+                height:0.4rem;
+                bottom:-0.3rem;
+                left:5rem;
+                margin-left:-2rem;
+            }
+
+            #certify .swiper-pagination-bullets .swiper-pagination-bullet {
+                margin: 0 5px;
+                border: 3px solid #fff;
+                background-color: #d5d5d5;
+                width: 15px;
+                height: 15px;
+                opacity: 1;
+            }
+
+            #certify .swiper-pagination-bullets .swiper-pagination-bullet-active {
+                background-color: rgba(242,217,161,1);
+            }
+
+            #certify .swiper-button-prev {
+                left: -30px;
+                width: 45px;
+                height: 45px;
+                background: url(../images/wm_button_icon.png) no-repeat;
+                background-position: 0 0;
+                background-size: 100%;
+            }
+
+            #certify .swiper-button-prev:hover {
+                background-position: 0 -46px;
+                background-size: 100%
+            }
+
+            #certify .swiper-button-next {
+                right: -30px;
+                width: 45px;
+                height: 45px;
+                background: url(../images/wm_button_icon.png) no-repeat;
+                background-position: 0 -93px;
+                background-size: 100%;
+            }
+
+            #certify .swiper-button-next:hover {
+                background-position: 0 -139px;
+                background-size: 100%
+            }
+            .goto {
+                height:1.253333rem;
+                width:8.72rem;
+                background:rgba(242,217,161,1);
+                box-shadow:0px 0px 0px 0px rgba(173,146,86,0.27);
+                border-radius:.626667rem;
+                margin:0 auto;
+                text-align: center;
+                line-height: 1.253333rem;
+                color:rgba(44,43,42,1);
+                font-size:.48rem;
+            }
+            .none {
+                display: none;
+            }
+            .show {
+                display: block;
+            }
+        </style>
+</head>
+
+<body>
+    <div id="certify">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img data-caption="cjhy" data-right="yqhydlq" data-left="mrlq"src="/image/newmember/chaojihuiyuanr_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="yqhydlq" data-right="srlq" data-left="cjhy" src="/image/newmember/zengsongliquan_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="srlq" data-right="myq" data-left="yqhydlq" src="/image/newmember/shengrilibao_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="myq" data-right="yqxdfl" data-left="srlq" src="/image/newmember/mianyouquan_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="yqxdfl" data-right="zsbk" data-left="myq" src="/image/newmember/yaoqingfanli_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="zsbk" data-right="zgsf" data-left="yqxdfl" src="/image/newmember/zengsongbeike_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="zgsf"  data-right="mrlq" data-left="zsbk" src="/image/newmember/zunguibiaoshi_qy@2x.png" /></div>
+                <div class="swiper-slide"><img data-caption="mrlq" data-right="cjhy" data-left="zgsf" src="/image/newmember/meiyueliquan_qy@2x.png" /></div>
+                
+                
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <%if(loginstatus == '0') {%>
+        <%if(entry == "h5") {%>
+            <div data-caption="yqxdfl" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="yqhydlq" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="zgsf" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="mrlq" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="srlq" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="myq" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="cjhy" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+            <div data-caption="zsbk" class="goto" onclick="gotoMemberOrder()">立即开通</div>
+        <%}else{%>
+            <div data-caption="yqxdfl" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="yqhydlq" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="zgsf" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="mrlq" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="srlq" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="myq" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="cjhy" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+            <div data-caption="zsbk" class="goto" onclick="gotoMemberOrder('ljkt')">立即开通</div>
+        <%}%>
+       
+    <%}else{%>
+        <%if(is_vip == "New") {%>
+            <div data-caption="yqxdfl" class="goto" onclick="gotoMemberOrder('yqxdfl')">立即开通</div>
+            <div data-caption="yqhydlq" class="goto" onclick="gotoMemberOrder('yqhydlq')">立即开通</div>
+            <div data-caption="zgsf" class="goto" onclick="gotoMemberOrder('zgsf')">立即开通</div>
+            <div data-caption="mrlq" class="goto" onclick="gotoMemberOrder('mrlq')">立即开通</div>
+            <div data-caption="srlq" class="goto" onclick="gotoMemberOrder('srlq')">立即开通</div>
+            <div data-caption="myq" class="goto" onclick="gotoMemberOrder('myq')">立即开通</div>
+            <div data-caption="cjhy" class="goto" onclick="gotoMemberOrder('cjhy')">立即开通</div>
+            <div data-caption="zsbk" class="goto" onclick="gotoMemberOrder('zsbk')">立即开通</div>
+        <%}else{%>
+            <div data-caption="yqxdfl" class="goto" onclick="gotoMemberOrder('yqxdfl')">立即续费</div>
+            <div data-caption="yqhydlq" class="goto" onclick="gotoMemberOrder('yqhydlq')">立即续费</div>
+            <div data-caption="zgsf" class="goto" onclick="gotoMemberOrder('zgsf')">立即续费</div>
+            <div data-caption="mrlq" class="goto" onclick="gotoMemberOrder('mrlq')">立即续费</div>
+            <div data-caption="srlq" class="goto" onclick="gotoMemberOrder('srlq')">立即续费</div>
+            <div data-caption="myq" class="goto" onclick="gotoMemberOrder('myq')">立即续费</div>
+            <div data-caption="cjhy" class="goto" onclick="gotoMemberOrder('cjhy')">立即续费</div>
+            <div data-caption="zsbk" class="goto" onclick="gotoMemberOrder('zsbk')">立即续费</div>
+        <%}%>
+            
+     <%}%>
+   
+   
+
+   
+
+
+</body>
+<script>
+     function gotosumit(method, obj) {
+        if (window.jsObj) {  // Android
+            // 传递分享数据
+            if (window.jsObj[method]) {
+                window.jsObj[method](JSON.stringify(obj));
+            }
+        } else {    // IOS
+            setupWebViewJavascriptBridge(function (bridge) {
+                // 传递分享数据
+                bridge.callHandler(method, obj);
+            });
+        }
+    }
+    var certifySwiper = new Swiper('#certify .swiper-container', {
+        uniqueNavElements: true,
+        watchSlidesProgress : true,
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        threshold : 0,
+        // followFinger : false,
+        // touchRatio : 1,
+        loop: true,
+        loopedSlides: 8,
+        autoplay: false,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            //clickable :true,
+        },
+        on: {
+            touchEnd: function(event){
+                let caption =event.target.dataset.caption;
+                let right =event.target.dataset.right;
+                let left = event.target.dataset.left;
+                    let length = $(".goto");
+                    for(let i= 0; i<length.length;i++) {
+                        if(certifySwiper.swipeDirection == 'next') {
+                            if($(length[i]).context.dataset.caption == right) {
+                            $(length[i]).addClass("show");
+                           $(length[i]).removeClass("none");
+                        } else {
+                           $(length[i]).addClass("none");
+                           $(length[i]).removeClass("show");
+                        }
+                        } else {
+                            if($(length[i]).context.dataset.caption == left) {
+                            $(length[i]).addClass("show");
+                           $(length[i]).removeClass("none");
+                        } else {
+                           $(length[i]).addClass("none");
+                           $(length[i]).removeClass("show");
+                        }
+                        }
+                       
+                }
+                //  console.log(event.target.attributes[0])
+            },
+            progress: function (progress) {
+                for (i = 0; i < this.slides.length; i++) {
+                    var slide = this.slides.eq(i);
+                    var slideProgress = this.slides[i].progress;
+                    modify = 1;
+                    if (Math.abs(slideProgress) > 1) {
+                        modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+                    }
+                    translate = slideProgress * modify + 'px';
+                    scale = 1 - Math.abs(slideProgress) / 5;
+                    zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+                    slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+                    slide.css('zIndex', zIndex);
+                    slide.css('opacity', 1);
+                    if (Math.abs(slideProgress) > 3) {
+                        slide.css('opacity', 0);
+                    }
+                }
+            },
+            setTransition: function (transition) {
+                for (var i = 0; i < this.slides.length; i++) {
+                    var slide = this.slides.eq(i)
+                    slide.transition(transition);
+                }
+
+            }
+        }
+
+    });
+    function gotoback() {
+        window.history.go(-1);
+    }
+    function gotoMemberOrder(type) {
+            gotosumit("gotoMemberOrder",{type:type})
+        }
+    <% if( type != undefined && type != "0") {%>
+        certifySwiper.slideTo("<%-type%>", 1000, false);
+        let length = $(".goto");
+        for(let i= 0; i<length.length;i++) {
+           if(i == ("<%-type%>"-1)) {
+              $(length[i]).addClass("show");
+              $(length[i]).removeClass("none");
+            } else {
+              $(length[i]).addClass("none");
+              $(length[i]).removeClass("show");
+            }
+        }
+
+    <%}%>
+
+</script>
+
+</html>

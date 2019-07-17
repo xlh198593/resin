@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>提现</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link type="text/css" rel="stylesheet" href="css/zdialog.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pay_info.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a onclick="javascript:history.go(-1);" class="back_btn"></a>
+            提现
+        </div>
+        <div class="pay_info_con withdraw_con">
+            <div class="pay_img"></div>
+            <ul class="pay_info_list">
+                <li>
+                    <label for="pay_number" class="title">到账支付宝:</label>
+                    <input type="text" name="" class="input_val" id="pay_number" placeholder="输入支付宝账号" maxlength=11 value="131****8888">
+                </li>
+                <li style="border:none;">
+                    <label for="uname" class="title">真实姓名:</label>
+                    <input type="text" name="" class="input_val" id="uname" placeholder="输入与手机号对应的姓名" maxlength="6" value="老王">
+                </li>
+ 
+            </ul>
+            <div class="withdraw">
+            	<label class="title">提现金额:</label>
+            	<div class="money">
+            		<span class="unit">￥</span>
+            		<input type="text" name="" class="count" placeholder="12000">
+            		<span class="msg">输入金额超出可提现金额</span>
+            	</div>
+            	<div class="cash_con">
+
+            		<label>可提现金额 <span>120.00</span></label>
+                    <span class="cash_btn">全部提现</span>
+            	</div>
+            </div>
+            <input type="button" class="sub_btn" value="申请提现">
+
+
+            <div class="should_know">
+            	<label class="title">提现须知:</label>
+            	<p>
+            		1、提现金额：单笔提现金额 <span>100-100000</span>元； 2、手续费：免手续费； 3、到账时间：提交提现申请后，系统会在3个工作日内<br/>
+            		2、手续费：免手续费；<br/>
+                    3、到账时间：提交提现申请后，系统会在 <span>3</span>个工作日内处理；<br/>
+                    4、提现次数：每月可提现 <span>2</span>次
+            	</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/zdialog.js"></script>
+    <script type="text/javascript" src="js/withdraw.js"></script>
+</body>
+</html>
