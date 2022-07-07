@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<!-- spring版本号 -->
-		<org.springframework.version>4.1.3.RELEASE</org.springframework.version>
+		<org.springframework.version>5.2.21.RELEASE</org.springframework.version>
 		<!-- log日志版本号 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
